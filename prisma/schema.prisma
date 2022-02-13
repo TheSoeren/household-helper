@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+//
+// npx prisma studio -> visual db
+// npx prisma migrate dev -> update db with prisma schema
+// npx prisma migrate reset -> update db with prisma schema, data will be lost
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Icon {
+  id Int @id @default(autoincrement())
+  faclass String
+  color String
+
+  chore Chore? @relation(fields: [choreId], references: [id], onDelete: Cascade)
+  choreId String?
+  event Event? @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId String?
+}
+
+model Chore {
+  id String @id @default(cuid())
+  title String
+  description String @default("")
+  responsible String
+  icon Icon?
+  vEvent String
+}
+
+model Event {
+  id String @id @default(cuid())
+  title String
+  description String @default("")
+  responsible String
+  icon Icon?
+  vEvent String
+}
