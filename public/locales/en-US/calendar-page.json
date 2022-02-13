@@ -1,0 +1,9 @@
+{
+  "today": "Today",
+  "week-view": {
+    "label": "Week"
+  },
+  "month-view": {
+    "label": "Month"
+  }
+}

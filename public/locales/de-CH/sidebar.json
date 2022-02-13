@@ -1,0 +1,10 @@
+{
+  "brand": "Infoscreen",
+  "categories": {
+    "household": "Haushalt"
+  },
+  "elements": {
+    "chores": "Aufgaben",
+    "calendar": "Kalender"
+  }
+}

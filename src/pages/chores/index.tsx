@@ -7,8 +7,8 @@ import ChoresPageSkeleton from "@/components/Skeletons/ChoresPageSkeleton";
 import useChores from "@/hooks/useChores";
 import Icon from "@/models/Icon";
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetStaticProps } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 export default function Chores() {
   const { postRequest } = useHttp();
@@ -72,7 +72,10 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   let translations = {};
 
   if (locale) {
-    translations = await serverSideTranslations(locale, ["chores-page"]);
+    translations = await serverSideTranslations(locale, [
+      "sidebar",
+      "chores-page",
+    ]);
   }
 
   return {

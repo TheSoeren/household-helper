@@ -1,9 +1,13 @@
 export default [
   {
-    category: 'Haushalt',
+    category: "categories.household",
     elements: [
-      { label: 'Aufgaben', route: '/chores', icon: 'fas fa-tasks' },
-      { label: 'Kalender', route: '/calendar', icon: 'fas fa-calendar' }
-    ]
-  }
-]
+      { label: "elements.chores", route: "/chores", icon: "fas fa-tasks" },
+      {
+        label: "elements.calendar",
+        route: "/calendar",
+        icon: "fas fa-calendar",
+      },
+    ],
+  },
+];
