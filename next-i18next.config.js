@@ -1,7 +1,7 @@
 module.exports = {
   i18n: {
-    defaultLocale: "en",
-    locales: ["en", "de"],
+    defaultLocale: "en-US",
+    locales: ["en-US", "de-CH"],
     reloadOnPrerender: true, // This enables hot-reload on translation .json changes
     defaultNS: "sidebar",
   },

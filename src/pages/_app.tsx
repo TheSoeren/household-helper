@@ -2,12 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "next/app";
 import Head from "next/head";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 import { Toaster } from "react-hot-toast";
 
 import PageChange from "@/components/PageChange/PageChange";
-import Dashboard from "@/layouts/Dashboard";
+import Dashboard, { DashboardProps } from "@/layouts/Dashboard";
 import AuthContext from "@/contexts/AuthContext";
 import { appWithTranslation } from "next-i18next";
 
@@ -64,7 +64,7 @@ class MyApp extends App {
 
     const Layout =
       Component.layout ||
-      (({ children }: any) => <Dashboard>{children}</Dashboard>);
+      (({ children }: DashboardProps) => <Dashboard>{children}</Dashboard>);
 
     return (
       <>
