@@ -23,11 +23,10 @@ export default function useChores(initialValues?: Chore[]) {
     return chores.filter((chore) => chore.responsible === user.name);
   };
 
-  const getChoresToday = () =>
-    data.filter(({ vEvent }) => vEvent.some(isToday));
+  const getChoresToday = () => data.filter(({ vEvent }) => isToday(vEvent));
 
   const getChoresThisMonth = () =>
-    data.filter(({ vEvent }) => vEvent.some(isThisMonth));
+    data.filter(({ vEvent }) => isThisMonth(vEvent));
 
   const ownChores = getOwnChores();
   const choresToday = getChoresToday();

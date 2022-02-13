@@ -7,7 +7,7 @@ class Occurrence {
   title: string;
   description: string;
   icon: Icon | null;
-  vEvent: VEvent[];
+  vEvent: VEvent;
 
   constructor(
     id: string | undefined,
@@ -15,7 +15,7 @@ class Occurrence {
     title: string,
     description: string,
     icon: Icon,
-    vEvent: VEvent[]
+    vEvent: VEvent
   ) {
     this.id = id;
     this.responsible = responsible;
@@ -28,7 +28,7 @@ class Occurrence {
   toString() {
     return JSON.stringify({
       ...this,
-      vEvent: this.vEvent.map((e) => e.toICal()).join(";"),
+      vEvent: this.vEvent.toICal(),
     });
   }
 }

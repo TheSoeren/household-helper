@@ -23,11 +23,10 @@ export default function useEvents(initialValues?: Event[]) {
     return events.filter((event) => event.responsible === user.name);
   };
 
-  const getEventsToday = () =>
-    data.filter(({ vEvent }) => vEvent.some(isToday));
+  const getEventsToday = () => data.filter(({ vEvent }) => isToday(vEvent));
 
   const getEventsThisMonth = (): Event[] =>
-    data.filter(({ vEvent }) => vEvent.some(isThisMonth));
+    data.filter(({ vEvent }) => isThisMonth(vEvent));
 
   const ownEvents = getOwnEvents();
   const eventsToday = getEventsToday();

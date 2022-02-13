@@ -204,7 +204,7 @@ export default function useDataConverter() {
       icon,
       responsible,
       description,
-      vEvent: VEvent.fromICal(vEvent),
+      vEvent: VEvent.fromICal(vEvent)[0],
     };
   };
 

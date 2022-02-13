@@ -1,6 +1,6 @@
 import ChoreList from "@/components/Lists/ChoreList";
 import Chore from "@/models/Chore";
-import { RRule, VEvent } from "@/setups/rschedule";
+import { DateAdapter, RRule, VEvent } from "@/setups/rschedule";
 import dayjs from "dayjs";
 import useHttp from "@/hooks/useHttp";
 import ChoresPageSkeleton from "@/components/Skeletons/ChoresPageSkeleton";
@@ -24,19 +24,16 @@ export default function Chores() {
     const rule = new RRule({
       frequency: "WEEKLY",
       byDayOfWeek: ["SU"],
-      byHourOfDay: [18],
-      byMinuteOfHour: [0],
-      duration: 120,
+      byHourOfDay: [dayjs().hour() as DateAdapter.Hour],
       start,
     });
 
     const icon = new Icon("fas fa-calendar", "bg-slate-500");
-    const vevent = [
-      new VEvent({
-        start,
-        rrules: [rule],
-      }),
-    ];
+    const vevent = new VEvent({
+      start,
+      rrules: [rule],
+      duration: 2 * 60 * 60 * 1000,
+    });
     const chore = new Chore(
       undefined,
       "Fabian",

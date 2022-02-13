@@ -2153,6 +2153,13 @@
   dependencies:
     i18next "*"
 
+"@types/ical@0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@types/ical/-/ical-0.8.0.tgz#fca26f84625e158eabef4c44df72c57f2e8d93a4"
+  integrity sha512-46KAYxAwRuCh+jRgl9k5cTaXJJkB16gWpvMVPuog9UBBb2zXTf9M0MsfWYBQ21JohFSuMZfPTvk6tohqGr1tCg==
+  dependencies:
+    rrule "2.6.4"
+
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.4.tgz#8467d4b3c087805d63580480890791277ce35c44"
