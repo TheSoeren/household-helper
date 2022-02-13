@@ -11,7 +11,7 @@ const inactiveLinkIcon = "text-slate-300";
 
 export default function Sidebar() {
   const [collapseShow] = useState("hidden");
-  const router = useRouter();
+  const { pathname } = useRouter();
   const { t } = useTranslation();
 
   return (
@@ -41,14 +41,14 @@ export default function Sidebar() {
 
                 {/* Heading */}
                 <h6 className="md:min-w-full text-slate-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-                  {data.category}
+                  {t(data.category)}
                 </h6>
 
                 {/* Navigation */}
                 <ul className="md:flex-col md:min-w-full flex flex-col list-none">
                   {data.elements.map((element) => {
                     const isCurrentRoute =
-                      router.pathname.indexOf(element.route) !== -1;
+                      pathname.indexOf(element.route) !== -1;
 
                     return (
                       <li className="items-center" key={element.label}>
@@ -65,7 +65,7 @@ export default function Sidebar() {
                                   : inactiveLinkIcon
                               }`}
                             ></i>
-                            {element.label}
+                            {t(element.label)}
                           </a>
                         </Link>
                       </li>

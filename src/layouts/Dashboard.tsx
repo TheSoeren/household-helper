@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import Sidebar from "@/components/Sidebar/Sidebar";
 
-type DashboardProps = {
+export type DashboardProps = {
   children: ReactNode;
 };
 
