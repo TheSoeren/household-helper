@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import Chore from "@/models/Chore";
-import { dbChoresToChores } from "@/utils/dataConverter";
 
 const prisma = new PrismaClient();
 

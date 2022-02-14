@@ -1,7 +1,7 @@
 import { VEvent } from "@/setups/rschedule";
 import Icon from "./Icon";
 
-class Occurrence {
+class Appointment {
   id?: string;
   responsible: string;
   title: string;
@@ -10,14 +10,12 @@ class Occurrence {
   vEvent: VEvent;
 
   constructor(
-    id: string | undefined,
     responsible: string,
     title: string,
     description: string,
     icon: Icon,
     vEvent: VEvent
   ) {
-    this.id = id;
     this.responsible = responsible;
     this.description = description;
     this.title = title;
@@ -33,4 +31,4 @@ class Occurrence {
   }
 }
 
-export default Occurrence;
+export default Appointment;

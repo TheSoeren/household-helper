@@ -23,7 +23,7 @@ export default function Chores() {
     const start = dayjs().subtract(1, "month");
     const rule = new RRule({
       frequency: "WEEKLY",
-      byDayOfWeek: ["SU"],
+      byDayOfWeek: ["MO"],
       byHourOfDay: [dayjs().hour() as DateAdapter.Hour],
       start,
     });
@@ -34,14 +34,7 @@ export default function Chores() {
       rrules: [rule],
       duration: 2 * 60 * 60 * 1000,
     });
-    const chore = new Chore(
-      undefined,
-      "Fabian",
-      "Abstauben",
-      "description",
-      icon,
-      vevent
-    );
+    const chore = new Chore("Fabian", "Abstauben", "description", icon, vevent);
 
     // https://swr.vercel.app/docs/mutation#mutation-and-post-request
     mutateChores([...chores, chore], false);

@@ -1,5 +1,5 @@
-import Occurrence from "./Occurrence";
+import Appointment from "./Appointment";
 
-class Chore extends Occurrence {}
+class Chore extends Appointment {}
 
 export default Chore;
