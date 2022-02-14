@@ -1,35 +1,35 @@
-import Occurrence from "@/models/Occurrence";
 import useEvents from "@/hooks/useEvents";
 import useChores from "@/hooks/useChores";
-import { useState } from "react";
-import OccurrenceList from "@/components/Lists/OccurrenceList";
+import AppointmentList from "@/components/Lists/AppointmentList";
 import { useTranslation } from "next-i18next";
 import { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import dayjs from "dayjs";
+import AppointmentBuilder from "@/builders/AppointmentBuilder";
 
 export default function Home() {
+  const now = dayjs();
   const { t } = useTranslation("home-page");
-  const { choresToday, ownChoresToday } = useChores([]);
-  const { eventsToday, ownEventsToday } = useEvents([]);
+  const { chores } = useChores([]);
+  const { events } = useEvents([]);
 
-  const [vEventsToday] = useState<Occurrence[]>([
-    ...choresToday,
-    ...eventsToday,
-  ]);
-  const [ownVEventsToday] = useState<Occurrence[]>([
-    ...ownChoresToday,
-    ...ownEventsToday,
-  ]);
+  const todayBuilder = new AppointmentBuilder([
+    ...chores,
+    ...events,
+  ]).appointmentsInDay(now);
+
+  const appointmentsToday = todayBuilder.build();
+  const ownAppointmentsToday = todayBuilder.ownAppointments().build();
 
   return (
     <>
-      <OccurrenceList
-        title={t("my-occurrences-today")}
-        occurrences={ownVEventsToday}
+      <AppointmentList
+        title={t("my-appointments-today")}
+        appointments={ownAppointmentsToday}
       />
-      <OccurrenceList
-        title={t("occurrences-today")}
-        occurrences={vEventsToday}
+      <AppointmentList
+        title={t("appointments-today")}
+        appointments={appointmentsToday}
       />
     </>
   );

@@ -1,5 +1,5 @@
-import Occurrence from "./Occurrence";
+import Appointment from "./Appointment";
 
-class Event extends Occurrence {}
+class Event extends Appointment {}
 
 export default Event;

@@ -2,7 +2,7 @@ import useChores from "@/hooks/useChores";
 import useHttp from "@/hooks/useHttp";
 import Chore from "@/models/Chore";
 import toast from "react-hot-toast";
-import BasicREventCard from "./OccurrenceCard";
+import AppointmentCard from "./AppointmentCard";
 
 export default function ChoreCard(chore: Chore) {
   const { deleteRequest } = useHttp();
@@ -23,5 +23,5 @@ export default function ChoreCard(chore: Chore) {
     mutateChores();
   };
 
-  return <BasicREventCard occurrence={chore} onDelete={deleteChoreHandler} />;
+  return <AppointmentCard appointment={chore} onDelete={deleteChoreHandler} />;
 }

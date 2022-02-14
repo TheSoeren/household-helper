@@ -1,6 +1,6 @@
 import ChoreList from "@/components/Lists/ChoreList";
 import Chore from "@/models/Chore";
-import { RRule, VEvent } from "@/setups/rschedule";
+import { DateAdapter, RRule, VEvent } from "@/setups/rschedule";
 import dayjs from "dayjs";
 import useHttp from "@/hooks/useHttp";
 import ChoresPageSkeleton from "@/components/Skeletons/ChoresPageSkeleton";
@@ -9,42 +9,35 @@ import Icon from "@/models/Icon";
 import { useTranslation } from "next-i18next";
 import { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import AppointmentBuilder from "@/builders/AppointmentBuilder";
 
 export default function Chores() {
   const { postRequest } = useHttp();
-  const { chores, ownChores, mutateChores } = useChores([]);
+  const { chores, mutateChores } = useChores([]);
   const { t } = useTranslation("chores-page");
 
   if (!chores) {
     return <ChoresPageSkeleton />;
   }
 
+  const ownChores = new AppointmentBuilder(chores).ownAppointments().build();
+
   const createChoreHandler = async () => {
     const start = dayjs().subtract(1, "month");
     const rule = new RRule({
       frequency: "WEEKLY",
-      byDayOfWeek: ["SU"],
-      byHourOfDay: [18],
-      byMinuteOfHour: [0],
-      duration: 120,
+      byDayOfWeek: ["MO"],
+      byHourOfDay: [dayjs().hour() as DateAdapter.Hour],
       start,
     });
 
     const icon = new Icon("fas fa-calendar", "bg-slate-500");
-    const vevent = [
-      new VEvent({
-        start,
-        rrules: [rule],
-      }),
-    ];
-    const chore = new Chore(
-      undefined,
-      "Fabian",
-      "Abstauben",
-      "description",
-      icon,
-      vevent
-    );
+    const vevent = new VEvent({
+      start,
+      rrules: [rule],
+      duration: 2 * 60 * 60 * 1000,
+    });
+    const chore = new Chore("Fabian", "Abstauben", "description", icon, vevent);
 
     // https://swr.vercel.app/docs/mutation#mutation-and-post-request
     mutateChores([...chores, chore], false);

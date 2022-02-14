@@ -29,7 +29,7 @@ const dbChoreToChore = ({
   icon: icon ? new Icon(icon.faclass, icon.color) : null,
   responsible,
   description,
-  vEvent: VEvent.fromICal(vEvent),
+  vEvent: VEvent.fromICal(vEvent)[0],
 });
 
 const dbChoresToChores = (dbChores: DBChore[]): Chore[] => {
@@ -49,7 +49,7 @@ const dbEventToEvent = ({
   icon,
   responsible,
   description,
-  vEvent: VEvent.fromICal(vEvent),
+  vEvent: VEvent.fromICal(vEvent)[0],
 });
 
 const dbEventsToEvents = (dbEvents: DBEvent[]): Event[] => {

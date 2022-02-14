@@ -1,6 +1,6 @@
 import Event from "@/models/Event";
 import toast from "react-hot-toast";
-import BasicREventCard from "./OccurrenceCard";
+import AppointmentCard from "./AppointmentCard";
 
 export default function EventCard(event: Event) {
   const deleteDeleteHandler = async () => {
@@ -12,7 +12,7 @@ export default function EventCard(event: Event) {
     // ToDo: Delete Event
   };
 
-  return <BasicREventCard occurrence={event} onDelete={deleteDeleteHandler} />;
+  return <AppointmentCard appointment={event} onDelete={deleteDeleteHandler} />;
 }
 
 EventCard.defaultProps = {

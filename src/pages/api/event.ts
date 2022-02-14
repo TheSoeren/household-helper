@@ -52,7 +52,7 @@ function createEvent(body: string) {
   const createEvent = {
     ...event,
     icon,
-    vEvent: event.vEvent.map((vEvent) => vEvent.toICal()).join(";"),
+    vEvent: event.vEvent.toICal(),
   };
 
   return prisma.event.create({

@@ -1,16 +1,16 @@
-import Occurrence from "@/models/Occurrence";
+import Appointment from "@/models/Appointment";
 import CardDeleteButton from "./CardDeleteButton";
 
-interface OccurrenceCardProps {
-  occurrence: Occurrence;
+interface AppointmentCardProps {
+  appointment: Appointment;
   onDelete?: () => void;
 }
 
-export default function OccurrenceCard({
-  occurrence,
+export default function AppointmentCard({
+  appointment,
   onDelete,
-}: OccurrenceCardProps) {
-  const { title, icon, responsible } = occurrence;
+}: AppointmentCardProps) {
+  const { title, icon, responsible } = appointment;
 
   return (
     <div className="group relative flex flex-col min-w-0 h-28 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">

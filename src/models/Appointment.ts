@@ -1,23 +1,21 @@
 import { VEvent } from "@/setups/rschedule";
 import Icon from "./Icon";
 
-class Occurrence {
+class Appointment {
   id?: string;
   responsible: string;
   title: string;
   description: string;
   icon: Icon | null;
-  vEvent: VEvent[];
+  vEvent: VEvent;
 
   constructor(
-    id: string | undefined,
     responsible: string,
     title: string,
     description: string,
     icon: Icon,
-    vEvent: VEvent[]
+    vEvent: VEvent
   ) {
-    this.id = id;
     this.responsible = responsible;
     this.description = description;
     this.title = title;
@@ -28,9 +26,9 @@ class Occurrence {
   toString() {
     return JSON.stringify({
       ...this,
-      vEvent: this.vEvent.map((e) => e.toICal()).join(";"),
+      vEvent: this.vEvent.toICal(),
     });
   }
 }
 
-export default Occurrence;
+export default Appointment;
