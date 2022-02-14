@@ -1,25 +1,25 @@
-import Appointment from "@/models/Appointment";
 import useEvents from "@/hooks/useEvents";
 import useChores from "@/hooks/useChores";
-import { useState } from "react";
 import AppointmentList from "@/components/Lists/AppointmentList";
 import { useTranslation } from "next-i18next";
 import { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import dayjs from "dayjs";
+import AppointmentBuilder from "@/builders/AppointmentBuilder";
 
 export default function Home() {
+  const now = dayjs();
   const { t } = useTranslation("home-page");
-  const { choresToday, ownChoresToday } = useChores([]);
-  const { eventsToday, ownEventsToday } = useEvents([]);
+  const { chores } = useChores([]);
+  const { events } = useEvents([]);
 
-  const [ownAppointmentsToday] = useState<Appointment[]>([
-    ...ownChoresToday,
-    ...ownEventsToday,
-  ]);
-  const [appointmentsToday] = useState<Appointment[]>([
-    ...choresToday,
-    ...eventsToday,
-  ]);
+  const todayBuilder = new AppointmentBuilder([
+    ...chores,
+    ...events,
+  ]).appointmentsInDay(now);
+
+  const appointmentsToday = todayBuilder.build();
+  const ownAppointmentsToday = todayBuilder.ownAppointments().build();
 
   return (
     <>

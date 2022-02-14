@@ -9,15 +9,18 @@ import Icon from "@/models/Icon";
 import { useTranslation } from "next-i18next";
 import { GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import AppointmentBuilder from "@/builders/AppointmentBuilder";
 
 export default function Chores() {
   const { postRequest } = useHttp();
-  const { chores, ownChores, mutateChores } = useChores([]);
+  const { chores, mutateChores } = useChores([]);
   const { t } = useTranslation("chores-page");
 
   if (!chores) {
     return <ChoresPageSkeleton />;
   }
+
+  const ownChores = new AppointmentBuilder(chores).ownAppointments().build();
 
   const createChoreHandler = async () => {
     const start = dayjs().subtract(1, "month");
