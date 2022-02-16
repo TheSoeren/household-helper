@@ -12,8 +12,8 @@ export default function useChores(initialValues?: Chore[]) {
       fetcher
     );
 
-  return {
-    chores: data,
-    mutateChores: mutate,
-  };
+      return {
+        chores: data,
+        mutateChores: mutate,
+      };
 }
