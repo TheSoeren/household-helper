@@ -1,11 +1,10 @@
 import useChores from "@/hooks/useChores";
-import useHttp from "@/hooks/useHttp";
+import { deleteRequest } from "@/utils/httpRequests";
 import Chore from "@/models/Chore";
 import toast from "react-hot-toast";
 import AppointmentCard from "./AppointmentCard";
 
 export default function ChoreCard(chore: Chore) {
-  const { deleteRequest } = useHttp();
   const { chores, mutateChores } = useChores();
 
   const deleteChoreHandler = async () => {

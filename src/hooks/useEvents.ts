@@ -1,11 +1,9 @@
 import Event from "@/models/Event";
 import { dbEventsToEvents } from "@/utils/dataConverter";
 import useSWR from "swr";
-import useHttp from "./useHttp";
+import { getRequest } from "@/utils/httpRequests";
 
 export default function useEvents(initialValues?: Event[]) {
-  const { getRequest } = useHttp();
-
   const fetcher = (url: string) =>
     getRequest(url).then((json) => dbEventsToEvents(json));
 
