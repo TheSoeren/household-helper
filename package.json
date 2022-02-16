@@ -60,10 +60,5 @@
         "@types/tailwindcss": "3.0.2",
         "@types/i18next": "13.0.0",
         "@types/ical": "0.8.0"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "yarn pretty-quick --staged"
-        }
     }
 }
