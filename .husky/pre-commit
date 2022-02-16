@@ -1,0 +1,4 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx -p prettier@2.5.1 -p pretty-quick pretty-quick

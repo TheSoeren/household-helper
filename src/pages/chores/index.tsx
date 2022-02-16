@@ -2,7 +2,7 @@ import ChoreList from "@/components/Lists/ChoreList";
 import Chore from "@/models/Chore";
 import { DateAdapter, RRule, VEvent } from "@/setups/rschedule";
 import dayjs from "dayjs";
-import useHttp from "@/hooks/useHttp";
+import { postRequest } from "@/utils/httpRequests";
 import ChoresPageSkeleton from "@/components/Skeletons/ChoresPageSkeleton";
 import useChores from "@/hooks/useChores";
 import Icon from "@/models/Icon";
@@ -12,7 +12,6 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import AppointmentBuilder from "@/builders/AppointmentBuilder";
 
 export default function Chores() {
-  const { postRequest } = useHttp();
   const { chores, mutateChores } = useChores([]);
   const { t } = useTranslation("chores-page");
 
@@ -26,7 +25,7 @@ export default function Chores() {
     const start = dayjs().subtract(1, "month");
     const rule = new RRule({
       frequency: "WEEKLY",
-      byDayOfWeek: ["MO"],
+      byDayOfWeek: [DateAdapter.WEEKDAYS[dayjs().day()]],
       byHourOfDay: [dayjs().hour() as DateAdapter.Hour],
       start,
     });

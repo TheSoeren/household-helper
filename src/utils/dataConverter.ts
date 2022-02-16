@@ -8,11 +8,11 @@ import Event from "@/models/Event";
 import { VEvent } from "@/setups/rschedule";
 import Icon from "@/models/Icon";
 
-type DBChore = PrismaChore & {
+export type DBChore = PrismaChore & {
   icon: PrismaIcon | null;
 };
 
-type DBEvent = PrismaEvent & {
+export type DBEvent = PrismaEvent & {
   icon: PrismaIcon | null;
 };
 
