@@ -7,7 +7,8 @@
         "start": "next start",
         "lint": "next lint",
         "build:tailwind": "tailwind build src/styles/globals.css -o src/styles/tailwind.css",
-        "db": "prisma studio"
+        "db": "prisma studio",
+        "prepare": "husky install"
     },
     "dependencies": {
         "next": "12.0.8",
@@ -62,7 +63,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "pretty-quick --staged"
+            "pre-commit": "yarn pretty-quick --staged"
         }
     }
 }
