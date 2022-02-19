@@ -11,9 +11,11 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import AppointmentBuilder from '@/builders/AppointmentBuilder'
 import Dashboard from '@/layouts/Dashboard'
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
+import { useUser } from '@supabase/supabase-auth-helpers/react'
 
 export default function Chores() {
   const { chores, mutateChores } = useChores([])
+  const { user } = useUser()
   const { t } = useTranslation('chores-page')
 
   if (!chores) {
@@ -23,6 +25,8 @@ export default function Chores() {
   const ownChores = new AppointmentBuilder(chores).ownAppointments().build()
 
   const createChoreHandler = async () => {
+    if (!user) return
+
     const start = dayjs().subtract(1, 'month')
     const rule = new RRule({
       frequency: 'WEEKLY',
@@ -37,13 +41,7 @@ export default function Chores() {
       rrules: [rule],
       duration: 2 * 60 * 60 * 1000,
     })
-    const chore = new Chore(
-      '7e28b771-0570-4e02-bcab-bf8229feaa14',
-      'Abstauben',
-      'description',
-      icon,
-      vevent
-    )
+    const chore = new Chore(user.id, 'Abstauben', 'description', icon, vevent)
 
     // https://swr.vercel.app/docs/mutation#mutation-and-post-request
     mutateChores([...chores, chore], false)

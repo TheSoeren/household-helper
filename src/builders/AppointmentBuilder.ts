@@ -17,7 +17,7 @@ class AppointmentBuilder {
       return new AppointmentBuilder([])
     }
 
-    const result = this.data.filter((a) => a.responsible === user.id)
+    const result = this.data.filter((a) => a.userId === user.id)
     return new AppointmentBuilder(result)
   }
 
