@@ -1,16 +1,21 @@
-import Appointment from "@/models/Appointment";
-import CardDeleteButton from "./CardDeleteButton";
+import Appointment from '@/models/Appointment'
+import User from '@/models/User'
+import useSWR from 'swr'
+import CardDeleteButton from './CardDeleteButton'
+import { getRequest } from '@/utils/httpRequests'
 
 interface AppointmentCardProps {
-  appointment: Appointment;
-  onDelete?: () => void;
+  appointment: Appointment
+  onDelete?: () => void
 }
 
 export default function AppointmentCard({
   appointment,
   onDelete,
 }: AppointmentCardProps) {
-  const { title, icon, responsible } = appointment;
+  const { title, icon, userId } = appointment
+
+  const { data: user } = useSWR<User>(`/api/user?id=${userId}`, getRequest)
 
   return (
     <div className="group relative flex flex-col min-w-0 h-28 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
@@ -30,7 +35,7 @@ export default function AppointmentCard({
             <div className="relative w-auto pl-4 flex-initial">
               <div
                 className={
-                  "text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full " +
+                  'text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full ' +
                   icon.color
                 }
               >
@@ -40,9 +45,9 @@ export default function AppointmentCard({
           ) : null}
         </div>
         <p className="text-sm text-slate-400 whitespace-nowrap">
-          {responsible}
+          {user?.displayName}
         </p>
       </div>
     </div>
-  );
+  )
 }

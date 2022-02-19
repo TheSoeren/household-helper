@@ -35,7 +35,7 @@ export default function Sidebar() {
               </a>
             </Link>
             <a
-              className="flex items-center justify-center rounded-full p-1 w-8 h-8 hover:bg-slate-100 hover:cursor-pointer"
+              className="flex items-center justify-center rounded-full p-1 w-8 h-8 hover:bg-slate-100 cursor-pointer"
               onClick={handleSignOut}
             >
               <i className="fas fa-sign-out-alt"></i>

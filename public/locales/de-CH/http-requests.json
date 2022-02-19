@@ -1,0 +1,6 @@
+{
+  "create-success": "Entität erfolgreich erstellt!",
+  "create-error": "Fehler beim erstellen der Entität!",
+  "delete-success": "Fehler beim löschen der Entität!",
+  "delete-error": "Entität erfolgreich gelöscht!"
+}

@@ -6,6 +6,7 @@ import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs'
 import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import { postRequest } from '@/utils/httpRequests'
 
 export default function Login() {
   const { t } = useTranslation('authenticate-page')
@@ -26,11 +27,14 @@ export default function Login() {
     supabaseClient.auth
       .signIn({ email, password })
       .then(({ user, error }: any) => {
-        if (error || !user) return toast.error(t('signin-error'))
-
-        toast.success(t('login-success'))
         setLoading(false)
         resetForm()
+
+        if (error || !user) {
+          return toast.error(t('signin-error'))
+        }
+
+        toast.success(t('login-success'))
         router.push('/')
       })
   }
@@ -41,12 +45,22 @@ export default function Login() {
     supabaseClient.auth
       .signUp({ email, password })
       .then(({ user, error }: any) => {
-        if (error || !user) return toast.error(t('signup-error'))
+        if (error || !user) {
+          throw new Error()
+        }
 
-        toast.success(t('signup-success'))
-        setLoading(false)
+        const dbUser = { id: user.id, displayName: user.email }
+        return postRequest('/api/user', JSON.stringify(dbUser), false)
+      })
+      .then(() => {
         resetForm()
-        router.push('/auth/authenticate')
+        toast.success(t('signup-success'))
+      })
+      .catch(() => {
+        toast.error(t('signup-error'))
+      })
+      .finally(() => {
+        setLoading(false)
       })
   }
 
@@ -92,7 +106,7 @@ export default function Login() {
 
                   <div className="flex text-center mt-6">
                     <button
-                      className="bg-slate-200 border-slate-800 border-2 text-slate-800 active:bg-slate-100 text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                      className="bg-slate-200 border-slate-800 border-2 text-slate-800 active:bg-slate-100 text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150 cursor-pointer"
                       type="button"
                       onClick={handleSignUp}
                       disabled={loading}
@@ -100,7 +114,7 @@ export default function Login() {
                       {t('signup')}
                     </button>
                     <button
-                      className="bg-slate-800  text-white active:bg-slate-600 text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                      className="bg-slate-800  text-white active:bg-slate-600 text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150 cursor-pointer"
                       type="submit"
                       disabled={loading}
                     >

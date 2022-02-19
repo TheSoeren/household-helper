@@ -11,34 +11,45 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model Icon {
-  id Int @id @default(autoincrement())
+  id      Int    @id @default(autoincrement())
   faclass String
-  color String
+  color   String
 
-  chore Chore? @relation(fields: [choreId], references: [id], onDelete: Cascade)
-  choreId String?
-  event Event? @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  eventId String?
+  chore   Chore?  @relation(fields: [choreId], references: [id], onDelete: Cascade)
+  choreId String? @unique
+  event   Event?  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId String? @unique
 }
 
 model Chore {
-  id String @id @default(cuid())
-  title String
+  id          String @id @default(cuid())
+  title       String
   description String @default("")
-  responsible String
-  icon Icon?
-  vEvent String
+  icon        Icon?
+  vEvent      String
+
+  responsible User   @relation(fields: [userId], references: [id])
+  userId      String
 }
 
 model Event {
-  id String @id @default(cuid())
-  title String
+  id          String @id @default(cuid())
+  title       String
   description String @default("")
-  responsible String
-  icon Icon?
-  vEvent String
+  icon        Icon?
+  vEvent      String
+
+  responsible User   @relation(fields: [userId], references: [id])
+  userId      String
+}
+
+model User {
+  id          String  @id
+  displayName String
+  chores      Chore[]
+  events      Event[]
 }

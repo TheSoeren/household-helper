@@ -1,4 +1,4 @@
-import { Skeleton } from "@mui/material";
+import { Skeleton } from '@mui/material'
 
 export default function ChoresPageSkeleton() {
   return (
@@ -20,5 +20,5 @@ export default function ChoresPageSkeleton() {
         </div>
       </div>
     </>
-  );
+  )
 }

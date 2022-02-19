@@ -1,36 +1,47 @@
-import { toast } from "react-hot-toast";
+import i18next from 'i18next'
+import { toast } from 'react-hot-toast'
+
+function t(key: string) {
+  return i18next.t(`http-requests: ${key}`)
+}
 
 export function getRequest(url: string) {
   return fetch(url).then((res) => {
     if (!res.ok) {
-      throw new Error(`${res.status}: ${res.statusText}`);
+      throw new Error(`${res.status}: ${res.statusText}`)
     }
 
-    return res.json();
-  });
+    return res.json()
+  })
 }
 
-export function postRequest(url: string, body: string) {
+export function postRequest(
+  url: string,
+  body: string,
+  showSuccess: boolean = false
+) {
   return fetch(url, {
-    method: "POST",
+    method: 'POST',
     body,
   }).then((res) => {
-    if (res.ok) {
-      toast.success("Entität erfolgreich erstellt!");
-      return res.json();
+    if (!res.ok) {
+      toast.error(t('create-error'))
+      throw new Error(`${res.status}: ${res.statusText}`)
     }
 
-    toast.error("Fehler beim erstellen der Entität!");
-  });
+    if (showSuccess) toast.success(t('create-success'))
+    return res.json()
+  })
 }
 
-export function deleteRequest(url: string) {
-  return fetch(url, { method: "DELETE" }).then((res) => {
-    if (res.ok) {
-      toast.success("Entität erfolgreich gelöscht!");
-      return res.json();
+export function deleteRequest(url: string, showSuccess: boolean = false) {
+  return fetch(url, { method: 'DELETE' }).then((res) => {
+    if (!res.ok) {
+      toast.error(t('delete-error'))
+      throw new Error(`${res.status}: ${res.statusText}`)
     }
 
-    toast.error("Fehler beim löschen der Entität!");
-  });
+    if (showSuccess) toast.success(t('delete-success'))
+    return res.json()
+  })
 }
