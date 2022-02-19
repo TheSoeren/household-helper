@@ -1,0 +1,18 @@
+{
+  "signin-error": "Anmeldung fehlgeschlagen!",
+  "signin-success": "Erfolgreich angemeldet!",
+  "signup-error": "Registrierung fehlgeschlagen!",
+  "signup-success": "Erfolgreich registriert!",
+  "fields": {
+    "email": {
+      "label": "Email",
+      "placeholder": "Email"
+    },
+    "password": {
+      "label": "Passwort",
+      "placeholder": "Passwort"
+    }
+  },
+  "signin": "Anmelden",
+  "signup": "Registrieren"
+}

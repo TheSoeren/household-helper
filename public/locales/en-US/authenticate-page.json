@@ -1,0 +1,18 @@
+{
+  "signin-error": "Login failed!",
+  "signin-success": "Login successful!",
+  "signup-error": "Registration failed!",
+  "signup-success": "Registration successful!",
+  "fields": {
+    "email": {
+      "label": "Email",
+      "placeholder": "Email"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Password"
+    }
+  },
+  "signin": "Login",
+  "signup": "Sign up"
+}
