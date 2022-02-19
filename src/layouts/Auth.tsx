@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 // components
 export default function Auth({ children }: any) {
@@ -12,5 +12,5 @@ export default function Auth({ children }: any) {
       ></div>
       {children}
     </section>
-  );
+  )
 }

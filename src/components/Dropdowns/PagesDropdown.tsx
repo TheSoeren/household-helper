@@ -1,21 +1,21 @@
-import React from "react";
-import Link from "next/link";
-import { createPopper } from "@popperjs/core";
+import React from 'react'
+import Link from 'next/link'
+import { createPopper } from '@popperjs/core'
 
 const PagesDropdown = () => {
   // dropdown props
-  const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
-  const btnDropdownRef: any = React.createRef();
-  const popoverDropdownRef: any = React.createRef();
+  const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false)
+  const btnDropdownRef: any = React.createRef()
+  const popoverDropdownRef: any = React.createRef()
   const openDropdownPopover = () => {
     createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
-      placement: "bottom-start",
-    });
-    setDropdownPopoverShow(true);
-  };
+      placement: 'bottom-start',
+    })
+    setDropdownPopoverShow(true)
+  }
   const closeDropdownPopover = () => {
-    setDropdownPopoverShow(false);
-  };
+    setDropdownPopoverShow(false)
+  }
   return (
     <>
       <a
@@ -23,8 +23,8 @@ const PagesDropdown = () => {
         href="#pablo"
         ref={btnDropdownRef}
         onClick={(e) => {
-          e.preventDefault();
-          dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
+          e.preventDefault()
+          dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover()
         }}
       >
         Demo Pages
@@ -32,13 +32,13 @@ const PagesDropdown = () => {
       <div
         ref={popoverDropdownRef}
         className={
-          (dropdownPopoverShow ? "block " : "hidden ") +
-          "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
+          (dropdownPopoverShow ? 'block ' : 'hidden ') +
+          'bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48'
         }
       >
         <span
           className={
-            "text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-slate-400"
+            'text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-slate-400'
           }
         >
           Admin Layout
@@ -47,7 +47,7 @@ const PagesDropdown = () => {
           <a
             href="#pablo"
             className={
-              "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700"
+              'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700'
             }
           >
             Dashboard
@@ -57,7 +57,7 @@ const PagesDropdown = () => {
           <a
             href="#pablo"
             className={
-              "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700"
+              'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700'
             }
           >
             Settings
@@ -67,7 +67,7 @@ const PagesDropdown = () => {
           <a
             href="#pablo"
             className={
-              "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700"
+              'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700'
             }
           >
             Tables
@@ -76,16 +76,16 @@ const PagesDropdown = () => {
         <div className="h-0 mx-4 my-2 border border-solid border-slate-100" />
         <span
           className={
-            "text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-slate-400"
+            'text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-slate-400'
           }
         >
           Auth Layout
         </span>
-        <Link href="/auth/login">
+        <Link href="/auth/authenticate">
           <a
             href="#pablo"
             className={
-              "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700"
+              'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700'
             }
           >
             Login
@@ -95,7 +95,7 @@ const PagesDropdown = () => {
           <a
             href="#pablo"
             className={
-              "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700"
+              'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700'
             }
           >
             Register
@@ -104,7 +104,7 @@ const PagesDropdown = () => {
         <div className="h-0 mx-4 my-2 border border-solid border-slate-100" />
         <span
           className={
-            "text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-slate-400"
+            'text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-slate-400'
           }
         >
           No Layout
@@ -113,7 +113,7 @@ const PagesDropdown = () => {
           <a
             href="#pablo"
             className={
-              "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700"
+              'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700'
             }
           >
             Landing
@@ -123,7 +123,7 @@ const PagesDropdown = () => {
           <a
             href="#pablo"
             className={
-              "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700"
+              'text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700'
             }
           >
             Profile
@@ -131,7 +131,7 @@ const PagesDropdown = () => {
         </Link>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default PagesDropdown;
+export default PagesDropdown

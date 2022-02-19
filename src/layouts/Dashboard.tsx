@@ -1,9 +1,9 @@
-import React, { ReactNode } from "react";
-import Sidebar from "@/components/Sidebar/Sidebar";
+import React, { ReactNode } from 'react'
+import Sidebar from '@/components/Sidebar/Sidebar'
 
 export type DashboardProps = {
-  children: ReactNode;
-};
+  children: ReactNode
+}
 
 export default function Dashboard({ children }: DashboardProps) {
   return (
@@ -13,5 +13,5 @@ export default function Dashboard({ children }: DashboardProps) {
         <div className="px-4 md:px-10 mx-auto w-full">{children}</div>
       </div>
     </>
-  );
+  )
 }
