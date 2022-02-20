@@ -6,5 +6,9 @@
   "elements": {
     "chores": "Aufgaben",
     "calendar": "Kalender"
+  },
+  "user-dropdown": {
+    "settings": "Einstellungen",
+    "signout": "Ausloggen"
   }
 }

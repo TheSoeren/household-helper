@@ -2,7 +2,6 @@ import useEvents from '@/hooks/useEvents'
 import useChores from '@/hooks/useChores'
 import AppointmentList from '@/components/Lists/AppointmentList'
 import { useTranslation } from 'next-i18next'
-import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import dayjs from 'dayjs'
 import AppointmentBuilder from '@/builders/AppointmentBuilder'
@@ -37,16 +36,14 @@ export default function Home({ user }: any) {
   )
 }
 
-Home.layout = Dashboard
-
 export const getServerSideProps = withAuthRequired({
-  redirectTo: '/auth/authenticate',
+  redirectTo: '/authenticate',
   getServerSideProps: async ({ locale }) => {
     let translations = {}
 
     if (locale) {
       translations = await serverSideTranslations(locale, [
-        'sidebar',
+        'dashboard-layout',
         'home-page',
       ])
     }

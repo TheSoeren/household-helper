@@ -73,10 +73,7 @@ export default function Login() {
               <div className="flex-auto px-4 lg:px-10 pt-0">
                 <form onSubmit={handleLogIn}>
                   <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-slate-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
+                    <label className="block uppercase text-slate-600 text-xs font-bold mb-2">
                       {t('fields.email.label')}
                     </label>
                     <input
@@ -89,10 +86,7 @@ export default function Login() {
                   </div>
 
                   <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-slate-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
+                    <label className="block uppercase text-slate-600 text-xs font-bold mb-2">
                       {t('fields.password.label')}
                     </label>
                     <input

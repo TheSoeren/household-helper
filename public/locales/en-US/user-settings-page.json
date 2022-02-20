@@ -1,0 +1,10 @@
+{
+  "title": "Account Settings",
+  "fields": {
+    "display-name": {
+      "label": "Display name",
+      "placeholder": "Display name"
+    }
+  },
+  "save": "Save"
+}

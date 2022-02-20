@@ -9,7 +9,6 @@ import Icon from '@/models/Icon'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import AppointmentBuilder from '@/builders/AppointmentBuilder'
-import Dashboard from '@/layouts/Dashboard'
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 import { useUser } from '@supabase/supabase-auth-helpers/react'
 
@@ -65,16 +64,14 @@ export default function Chores() {
   )
 }
 
-Chores.layout = Dashboard
-
 export const getServerSideProps = withAuthRequired({
-  redirectTo: '/auth/authenticate',
+  redirectTo: '/authenticate',
   getServerSideProps: async ({ locale }) => {
     let translations = {}
 
     if (locale) {
       translations = await serverSideTranslations(locale, [
-        'sidebar',
+        'dashboard-layout',
         'chores-page',
       ])
     }

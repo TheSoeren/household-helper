@@ -1,88 +1,77 @@
-import React from "react";
-import { createPopper } from "@popperjs/core";
+import { useState, createRef, RefObject, MouseEventHandler } from 'react'
+import { createPopper } from '@popperjs/core'
+import Link from 'next/link'
+import useUserAccount from '@/hooks/useUserAccount'
+import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs'
+import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
-const UserDropdown = () => {
-  // dropdown props
-  const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
-  const btnDropdownRef: any = React.createRef();
-  const popoverDropdownRef: any = React.createRef();
-  const openDropdownPopover = () => {
-    createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
-      placement: "bottom-start",
-    });
-    setDropdownPopoverShow(true);
-  };
-  const closeDropdownPopover = () => {
-    setDropdownPopoverShow(false);
-  };
+export default function UserDropdown() {
+  const { t } = useTranslation('dashboard-layout')
+  const { user } = useUserAccount()
+  const router = useRouter()
+  const [isOpen, setIsOpen] = useState(false)
+  const buttonRef = createRef<HTMLAnchorElement>()
+  const popoverRef = createRef<HTMLDivElement>()
+
+  const open = () => {
+    if (!buttonRef.current || !popoverRef.current) return
+
+    createPopper(buttonRef.current, popoverRef.current, {
+      placement: 'top-start',
+    })
+    setIsOpen(true)
+  }
+
+  const close = () => {
+    setIsOpen(false)
+  }
+
+  const handleSignOut: MouseEventHandler<HTMLAnchorElement> = (e) => {
+    e.preventDefault()
+    supabaseClient.auth.signOut()
+    router.push('/authenticate')
+  }
+
   return (
-    <>
+    <div onMouseLeave={close}>
       <a
-        className="text-slate-500 block"
-        href="#pablo"
-        ref={btnDropdownRef}
+        className={
+          'text-slate-500 block hover:bg-slate-100 rounded-full cursor-pointer' +
+          (isOpen ? 'bg-slate-100' : '')
+        }
+        ref={buttonRef}
         onClick={(e) => {
-          e.preventDefault();
-          dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
+          e.preventDefault()
+          isOpen ? close() : open()
         }}
       >
-        <div className="items-center flex">
-          <span className="w-12 h-12 text-sm text-white bg-slate-200 inline-flex items-center justify-center rounded-full">
-            <img
-              alt="..."
-              className="w-full rounded-full align-middle border-none shadow-lg"
-              src="/img/team-1-800x800.jpg"
-            />
-          </span>
+        <div className="w-8 h-8 text-sm text-white bg-slate-500 inline-flex items-center justify-center rounded-full">
+          <i className="far fa-user" />
         </div>
+        <span className="text-sm ml-2">{user?.displayName}</span>
       </a>
       <div
-        ref={popoverDropdownRef}
+        ref={popoverRef}
         className={
-          (dropdownPopoverShow ? "block " : "hidden ") +
-          "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
+          (isOpen ? 'block ' : 'hidden ') +
+          'bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48'
         }
       >
+        <Link href="/user-settings">
+          <a className="text-sm bold py-2 px-4 font-semibold block w-full whitespace-nowrap bg-transparent text-slate-700 hover:text-slate-500">
+            <i className="fas fa-user mr-2"></i>
+            {t('user-dropdown.settings')}
+          </a>
+        </Link>
         <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700"
-          }
-          onClick={(e) => e.preventDefault()}
+          className="text-sm py-2 px-4 font-semibold block w-full whitespace-nowrap bg-transparent text-red-700 hover:text-red-400 cursor-pointer"
+          onClick={handleSignOut}
         >
-          Action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Another action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Something else here
-        </a>
-        <div className="h-0 my-2 border border-solid border-slate-100" />
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-slate-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Seprated link
+          <i className="fas fa-sign-out-alt mr-2"></i>
+          {t('user-dropdown.signout')}
         </a>
       </div>
-    </>
-  );
-};
-
-export default UserDropdown;
+    </div>
+  )
+}
