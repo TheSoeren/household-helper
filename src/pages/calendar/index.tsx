@@ -18,7 +18,6 @@ import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { DayjsDateAdapter, RRule } from '@/setups/rschedule'
 import { useState } from 'react'
-import Dashboard from '@/layouts/Dashboard'
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 
 const RRulePattern = new RegExp('(?<=RRULE:).*', 'gm')
@@ -80,16 +79,14 @@ export default function CalendarPage() {
   )
 }
 
-CalendarPage.layout = Dashboard
-
 export const getServerSideProps = withAuthRequired({
-  redirectTo: '/auth/authenticate',
+  redirectTo: '/authenticate',
   getServerSideProps: async ({ locale }) => {
     let translations = {}
 
     if (locale) {
       translations = await serverSideTranslations(locale, [
-        'sidebar',
+        'dashboard-layout',
         'calendar-page',
       ])
     }

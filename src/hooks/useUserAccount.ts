@@ -5,9 +5,10 @@ import useSWR from 'swr'
 
 export default function useUserAccount() {
   const { user } = useUser()
-  const { data } = useSWR<User>(`/api/user?id=${user?.id}`, getRequest)
+  const { data, mutate } = useSWR<User>(`/api/user?id=${user?.id}`, getRequest)
 
   return {
     user: data,
+    mutateUser: mutate,
   }
 }

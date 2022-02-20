@@ -36,16 +36,14 @@ export default function Home({ user }: any) {
   )
 }
 
-Home.layout = Dashboard
-
 export const getServerSideProps = withAuthRequired({
-  redirectTo: '/auth/authenticate',
+  redirectTo: '/authenticate',
   getServerSideProps: async ({ locale }) => {
     let translations = {}
 
     if (locale) {
       translations = await serverSideTranslations(locale, [
-        'sidebar',
+        'dashboard-layout',
         'home-page',
       ])
     }

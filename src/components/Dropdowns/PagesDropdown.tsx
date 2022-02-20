@@ -81,7 +81,7 @@ const PagesDropdown = () => {
         >
           Auth Layout
         </span>
-        <Link href="/auth/authenticate">
+        <Link href="/authenticate">
           <a
             href="#pablo"
             className={
@@ -91,7 +91,7 @@ const PagesDropdown = () => {
             Login
           </a>
         </Link>
-        <Link href="/auth/register">
+        <Link href="/authenticate">
           <a
             href="#pablo"
             className={

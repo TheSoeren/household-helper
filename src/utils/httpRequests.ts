@@ -34,6 +34,25 @@ export function postRequest(
   })
 }
 
+export function putRequest(
+  url: string,
+  body: string,
+  showSuccess: boolean = false
+) {
+  return fetch(url, {
+    method: 'PUT',
+    body,
+  }).then((res) => {
+    if (!res.ok) {
+      toast.error(t('update-error'))
+      throw new Error(`${res.status}: ${res.statusText}`)
+    }
+
+    if (showSuccess) toast.success(t('update-success'))
+    return res.json()
+  })
+}
+
 export function deleteRequest(url: string, showSuccess: boolean = false) {
   return fetch(url, { method: 'DELETE' }).then((res) => {
     if (!res.ok) {

@@ -1,0 +1,10 @@
+{
+  "title": "Account Einstellungen",
+  "fields": {
+    "display-name": {
+      "label": "Anzeigename",
+      "placeholder": "Anzeigename"
+    }
+  },
+  "save": "Speichern"
+}

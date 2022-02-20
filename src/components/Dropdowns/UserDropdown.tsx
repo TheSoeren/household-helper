@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 export default function UserDropdown() {
-  const { t } = useTranslation('sidebar')
+  const { t } = useTranslation('dashboard-layout')
   const { user } = useUserAccount()
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
@@ -18,7 +18,7 @@ export default function UserDropdown() {
     if (!buttonRef.current || !popoverRef.current) return
 
     createPopper(buttonRef.current, popoverRef.current, {
-      placement: 'bottom-start',
+      placement: 'top-start',
     })
     setIsOpen(true)
   }
@@ -30,7 +30,7 @@ export default function UserDropdown() {
   const handleSignOut: MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault()
     supabaseClient.auth.signOut()
-    router.push('/auth/authenticate')
+    router.push('/authenticate')
   }
 
   return (
@@ -58,10 +58,10 @@ export default function UserDropdown() {
           'bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48'
         }
       >
-        <Link href="/profile">
+        <Link href="/user-settings">
           <a className="text-sm bold py-2 px-4 font-semibold block w-full whitespace-nowrap bg-transparent text-slate-700 hover:text-slate-500">
             <i className="fas fa-user mr-2"></i>
-            {t('user-dropdown.profile')}
+            {t('user-dropdown.settings')}
           </a>
         </Link>
         <a

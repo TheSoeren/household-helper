@@ -30,10 +30,6 @@ export default function Sidebar() {
               </a>
             </Link>
           </div>
-          {/* User */}
-          <div className="mt-3">
-            <UserDropdown />
-          </div>
           {/* Collapse */}
           <div
             className={
@@ -81,6 +77,10 @@ export default function Sidebar() {
                 </ul>
               </Fragment>
             ))}
+          </div>
+          {/* User */}
+          <div className="mt-3">
+            <UserDropdown />
           </div>
         </div>
       </nav>
