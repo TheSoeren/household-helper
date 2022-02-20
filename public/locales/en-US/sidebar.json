@@ -6,5 +6,9 @@
   "elements": {
     "chores": "Chores",
     "calendar": "Calendar"
+  },
+  "user-dropdown": {
+    "profile": "Profile",
+    "signout": "Log out"
   }
 }

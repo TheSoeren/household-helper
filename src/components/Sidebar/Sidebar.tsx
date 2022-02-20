@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import sidebarData from './sidebar-data'
 import { useTranslation } from 'next-i18next'
-import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs'
+import UserDropdown from '../Dropdowns/UserDropdown'
 
 const activeLink = 'text-sky-500 hover:text-sky-600'
 const inactiveLink = 'text-slate-700 hover:text-slate-500'
@@ -14,11 +14,6 @@ export default function Sidebar() {
   const [collapseShow] = useState('hidden')
   const router = useRouter()
   const { t } = useTranslation()
-
-  const handleSignOut = () => {
-    supabaseClient.auth.signOut()
-    router.push('/auth/authenticate')
-  }
 
   return (
     <>
@@ -34,17 +29,15 @@ export default function Sidebar() {
                 {t('brand')}
               </a>
             </Link>
-            <a
-              className="flex items-center justify-center rounded-full p-1 w-8 h-8 hover:bg-slate-100 cursor-pointer"
-              onClick={handleSignOut}
-            >
-              <i className="fas fa-sign-out-alt"></i>
-            </a>
+          </div>
+          {/* User */}
+          <div className="mt-3">
+            <UserDropdown />
           </div>
           {/* Collapse */}
           <div
             className={
-              'md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded ' +
+              'md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded ' +
               collapseShow
             }
           >
