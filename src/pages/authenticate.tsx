@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import AuthLayout from '@/layouts/Auth'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
@@ -7,13 +7,22 @@ import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { postRequest } from '@/utils/httpRequests'
+import { useUser } from '@supabase/supabase-auth-helpers/react'
 
-export default function Login() {
+export default function Authenticate() {
   const { t } = useTranslation('authenticate-page')
   const router = useRouter()
+  const { user } = useUser()
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  // Redirect if already signed in
+  useEffect(() => {
+    if (user) {
+      router.push('/')
+    }
+  }, [user])
 
   const resetForm = () => {
     setEmail('')
@@ -125,7 +134,7 @@ export default function Login() {
   )
 }
 
-Login.layout = AuthLayout
+Authenticate.layout = AuthLayout
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   let translations = {}

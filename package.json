@@ -30,7 +30,8 @@
     "@rschedule/ical-tools": "1.2.5",
     "ical.js": "1.5.0",
     "@supabase/supabase-js": "1.30.3",
-    "@supabase/supabase-auth-helpers": "1.1.0"
+    "@supabase/supabase-auth-helpers": "1.1.0",
+    "react-hook-form": "7.27.1"
   },
   "devDependencies": {
     "eslint": "8.6.0",
