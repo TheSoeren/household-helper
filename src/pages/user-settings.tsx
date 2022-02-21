@@ -1,4 +1,5 @@
 import useUserAccount from '@/hooks/useUserAccount'
+import User from '@/models/User'
 import { putRequest } from '@/utils/httpRequests'
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 import { useTranslation } from 'next-i18next'
@@ -14,12 +15,7 @@ export default function UserSettings() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<{
-    id: string
-    displayName: string
-  }>({
-    defaultValues: user,
-  })
+  } = useForm<User>()
 
   useEffect(() => {
     if (user) {
