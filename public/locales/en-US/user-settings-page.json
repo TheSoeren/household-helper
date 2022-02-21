@@ -3,7 +3,10 @@
   "fields": {
     "display-name": {
       "label": "Display name",
-      "placeholder": "Display name"
+      "placeholder": "Display name",
+      "error": {
+        "required": "This field is required!"
+      }
     }
   },
   "save": "Save"

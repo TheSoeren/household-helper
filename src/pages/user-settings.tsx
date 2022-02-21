@@ -23,7 +23,7 @@ export default function UserSettings() {
     }
   }, [user])
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: User) => {
     if (!user) return
 
     // https://swr.vercel.app/docs/mutation#mutation-and-post-request
@@ -50,8 +50,10 @@ export default function UserSettings() {
               placeholder={t('fields.display-name.placeholder')}
               {...register('displayName', { required: true })}
             />
+            <span className="text-red-500">
+              {errors.displayName && t('fields.display-name.error.required')}
+            </span>
           </div>
-          {errors.displayName && <span>This field is required</span>}
         </div>
         <button
           className="bg-slate-800 w-1/3 text-white active:bg-slate-600 text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 cursor-pointer"

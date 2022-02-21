@@ -6,11 +6,17 @@
   "fields": {
     "email": {
       "label": "Email",
-      "placeholder": "Email"
+      "placeholder": "Email",
+      "error": {
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
     },
     "password": {
       "label": "Passwort",
-      "placeholder": "Passwort"
+      "placeholder": "Passwort",
+      "error": {
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
     }
   },
   "signin": "Anmelden",
