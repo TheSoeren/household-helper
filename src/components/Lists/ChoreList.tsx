@@ -24,7 +24,7 @@ export default function ChoreList({ chores, title, empty }: ChoreListProps) {
           </div>
         ) : null}
         {chores.map((chore) => (
-          <div className="w-full xl:w-3/12 mb-2 px-3" key={chore.id}>
+          <div className="w-full xl:w-3/12 mb-3 md:mb-2 px-3" key={chore.id}>
             <ChoreCard {...chore} />
           </div>
         ))}

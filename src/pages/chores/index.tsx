@@ -8,7 +8,6 @@ import useChores from '@/hooks/useChores'
 import Icon from '@/models/Icon'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import AppointmentBuilder from '@/builders/AppointmentBuilder'
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 import { useUser } from '@supabase/supabase-auth-helpers/react'
 
@@ -20,8 +19,6 @@ export default function Chores() {
   if (!chores) {
     return <ChoresPageSkeleton />
   }
-
-  const ownChores = new AppointmentBuilder(chores).ownAppointments().build()
 
   const createChoreHandler = async () => {
     if (!user) return
@@ -51,7 +48,6 @@ export default function Chores() {
 
   return (
     <>
-      <ChoreList title={t('my-chores')} chores={ownChores} />
       <ChoreList title={t('all-chores')} chores={chores} />
       <button
         className="bg-slate-50 hover:text-stone-500 shadow-lg h-10 w-10 items-center justify-center align-center rounded-full focus:outline-none mx-3"

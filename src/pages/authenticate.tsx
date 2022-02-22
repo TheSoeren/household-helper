@@ -42,7 +42,7 @@ export default function Authenticate() {
         return toast.error(t('signin-error'))
       }
 
-      toast.success(t('login-success'))
+      toast.success(t('signin-success'))
       router.push('/')
     })
   }

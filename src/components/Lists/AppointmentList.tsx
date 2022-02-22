@@ -23,12 +23,15 @@ export default function AppointmentList({
       </div>
       <div className="flex flex-wrap py-6">
         {!appointments.length ? (
-          <div className="mx-2 text-2xl md:text-4xl text-slate-300">
+          <div className="mx-2 text-2xl text-slate-300">
             {empty ?? t('no-appointments')}
           </div>
         ) : null}
         {appointments.map((appointment) => (
-          <div className="w-full xl:w-3/12 mb-2 px-3" key={appointment.id}>
+          <div
+            className="w-full xl:w-3/12 mb-3 md:mb-2 px-3"
+            key={appointment.id}
+          >
             <AppointmentCard appointment={appointment} />
           </div>
         ))}

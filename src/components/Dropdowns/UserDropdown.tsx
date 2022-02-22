@@ -37,7 +37,7 @@ export default function UserDropdown() {
     <div onMouseLeave={close}>
       <a
         className={
-          'text-slate-500 block hover:bg-slate-100 rounded-full cursor-pointer' +
+          'flex items-center text-slate-500 hover:bg-slate-100 rounded-full cursor-pointer' +
           (isOpen ? 'bg-slate-100' : '')
         }
         ref={buttonRef}
@@ -49,7 +49,9 @@ export default function UserDropdown() {
         <div className="w-8 h-8 text-sm text-white bg-slate-500 inline-flex items-center justify-center rounded-full">
           <i className="far fa-user" />
         </div>
-        <span className="text-sm ml-2">{user?.displayName}</span>
+        <span className="hidden md:block uppercase text-sm ml-2">
+          {user?.displayName}
+        </span>
       </a>
       <div
         ref={popoverRef}

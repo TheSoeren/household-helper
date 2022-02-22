@@ -18,7 +18,7 @@ export default function AppointmentCard({
   const { data: user } = useSWR<User>(`/api/user?id=${userId}`, getRequest)
 
   return (
-    <div className="group relative flex flex-col min-w-0 h-28 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
+    <div className="group relative flex flex-col min-w-0 h-28 break-words bg-white rounded shadow-lg">
       {onDelete ? <CardDeleteButton onClick={onDelete} /> : null}
       <div className="flex flex-col justify-between flex-auto p-4">
         <div className="flex flex-wrap">

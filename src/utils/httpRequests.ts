@@ -2,7 +2,7 @@ import i18next from 'i18next'
 import { toast } from 'react-hot-toast'
 
 function t(key: string) {
-  return i18next.t(`http-requests: ${key}`)
+  return i18next.t(`common: ${key}`)
 }
 
 export function getRequest(url: string) {

@@ -34,7 +34,7 @@ export default function UserSettings() {
   }
 
   return (
-    <div className="px-3 w-1/3">
+    <div className="px-3 xl:w-1/3">
       <div className="text-center flex pt-6">
         <h6 className="text-slate-700 text-xl font-bold">{t('title')}</h6>
       </div>
