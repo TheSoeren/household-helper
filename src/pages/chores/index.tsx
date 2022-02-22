@@ -67,14 +67,13 @@ export default function Chores() {
 export const getServerSideProps = withAuthRequired({
   redirectTo: '/authenticate',
   getServerSideProps: async ({ locale }) => {
-    let translations = {}
-
-    if (locale) {
-      translations = await serverSideTranslations(locale, [
-        'dashboard-layout',
-        'chores-page',
-      ])
-    }
+    const translations = locale
+      ? await serverSideTranslations(locale, [
+          'common',
+          'dashboard-layout',
+          'chores-page',
+        ])
+      : {}
 
     return {
       props: {

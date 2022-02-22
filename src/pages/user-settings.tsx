@@ -69,14 +69,12 @@ export default function UserSettings() {
 export const getServerSideProps = withAuthRequired({
   redirectTo: '/authenticate',
   getServerSideProps: async ({ locale }) => {
-    let translations = {}
-
-    if (locale) {
-      translations = await serverSideTranslations(locale, [
-        'dashboard-layout',
-        'user-settings-page',
-      ])
-    }
+    const translations = locale
+      ? await serverSideTranslations(locale, [
+          'dashboard-layout',
+          'user-settings-page',
+        ])
+      : {}
 
     return {
       props: {

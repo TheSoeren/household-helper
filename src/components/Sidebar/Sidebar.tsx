@@ -13,7 +13,7 @@ const inactiveLinkIcon = 'text-slate-300'
 export default function Sidebar() {
   const [collapseShow] = useState('hidden')
   const router = useRouter()
-  const { t } = useTranslation()
+  const { t } = useTranslation('dashboard-layout')
 
   return (
     <>
@@ -24,7 +24,7 @@ export default function Sidebar() {
             <Link href="/">
               <a
                 href="#pablo"
-                className="text-left text-slate-600 whitespace-nowrap text-sm uppercase font-bold"
+                className="text-left my-2 text-slate-600 whitespace-nowrap text-md uppercase font-bold"
               >
                 {t('brand')}
               </a>

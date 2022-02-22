@@ -133,11 +133,9 @@ export default function Authenticate() {
 Authenticate.layout = AuthLayout
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  let translations = {}
-
-  if (locale) {
-    translations = await serverSideTranslations(locale, ['authenticate-page'])
-  }
+  const translations = locale
+    ? await serverSideTranslations(locale, ['authenticate-page'])
+    : {}
 
   return {
     props: {

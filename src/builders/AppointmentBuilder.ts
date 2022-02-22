@@ -35,6 +35,10 @@ class AppointmentBuilder {
     return new AppointmentBuilder(this.appointmentsBetween(date, 'M'))
   }
 
+  concat(builder: AppointmentBuilder) {
+    return new AppointmentBuilder([...this.build(), ...builder.build()])
+  }
+
   build() {
     return this.data
   }
