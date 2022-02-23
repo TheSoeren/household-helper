@@ -1,4 +1,4 @@
-import { useState, createRef, RefObject, MouseEventHandler } from 'react'
+import { useState, createRef, MouseEventHandler } from 'react'
 import { createPopper } from '@popperjs/core'
 import Link from 'next/link'
 import useUserAccount from '@/hooks/useUserAccount'

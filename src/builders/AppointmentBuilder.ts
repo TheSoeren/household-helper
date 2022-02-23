@@ -14,11 +14,12 @@ class AppointmentBuilder {
     const { user } = useUser()
 
     if (!user) {
-      return new AppointmentBuilder([])
+      this.data = []
+      return this
     }
 
-    const result = this.data.filter((a) => a.userId === user.id)
-    return new AppointmentBuilder(result)
+    this.data = this.data.filter((a) => a.userId === user.id)
+    return this
   }
 
   private appointmentsBetween(date: Dayjs, timeUnit: OpUnitType) {
@@ -28,15 +29,18 @@ class AppointmentBuilder {
   }
 
   appointmentsInDay(date: Dayjs) {
-    return new AppointmentBuilder(this.appointmentsBetween(date, 'd'))
+    this.data = this.appointmentsBetween(date, 'd')
+    return this
   }
 
   appointmentsInMonth(date: Dayjs) {
-    return new AppointmentBuilder(this.appointmentsBetween(date, 'M'))
+    this.data = this.appointmentsBetween(date, 'M')
+    return this
   }
 
   concat(builder: AppointmentBuilder) {
-    return new AppointmentBuilder([...this.build(), ...builder.build()])
+    this.data = this.data.concat(builder.build())
+    return this
   }
 
   build() {

@@ -16,7 +16,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import { DayjsDateAdapter, RRule } from '@/setups/rschedule'
+import { DayjsDateAdapter } from '@/setups/rschedule'
 import { useState } from 'react'
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 

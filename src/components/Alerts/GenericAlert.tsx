@@ -1,4 +1,4 @@
-interface GenericAlert {
+interface GenericAlertProps {
   badgeText?: string
   text: string
   onClick?: () => void
@@ -8,13 +8,11 @@ export default function GenericAlert({
   badgeText,
   text,
   onClick,
-}: GenericAlert) {
+}: GenericAlertProps) {
   return (
     <div
       className={
-        onClick
-          ? 'cursor-pointer'
-          : '' + ' text-center py-4 lg:px-4 relative z-10'
+        onClick ? 'cursor-pointer' : ' text-center py-4 lg:px-4 relative z-10'
       }
       onClick={onClick}
     >

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
