@@ -1,87 +1,34 @@
-import { Fragment, useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { Navigation } from './Navigation'
+import { useState } from 'react'
 import sidebarData from './sidebar-data'
-import { useTranslation } from 'next-i18next'
 import UserDropdown from '../Dropdowns/UserDropdown'
-
-const activeLink = 'text-sky-500 hover:text-sky-600'
-const inactiveLink = 'text-slate-700 hover:text-slate-500'
-const activeLinkIcon = 'opacity-75'
-const inactiveLinkIcon = 'text-slate-300'
+import Brand from './Brand'
+import CollapseHeader from './CollapseHeader'
+import Toggler from './Toggler'
 
 export default function Sidebar() {
-  const [collapseShow] = useState('hidden')
-  const router = useRouter()
-  const { t } = useTranslation('dashboard-layout')
+  const [collapseShow, setCollapseShow] = useState('hidden')
 
   return (
     <>
-      <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
-        <div className="px-0 flex flex-wrap justify-between items-center w-full mx-auto md:justify-start md:flex-col md:items-stretch md:min-h-full md:flex-nowrap">
-          {/* Brand */}
-          <div className="flex justify-between items-center">
-            <Link href="/">
-              <a
-                href="#pablo"
-                className="text-left my-2 text-slate-600 whitespace-nowrap text-md uppercase font-bold"
-              >
-                {t('brand')}
-              </a>
-            </Link>
-          </div>
-          {/* Collapse */}
+      <nav className="relative z-10 flex flex-wrap items-center justify-between px-6 py-4 bg-white shadow-xl md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden md:w-64">
+        <div className="flex flex-row-reverse flex-wrap items-center justify-between w-full mx-auto md:justify-start md:flex-col md:items-stretch md:min-h-full md:flex-nowrap">
+          <Toggler onClick={setCollapseShow} />
+          <Brand />
+
           <div
             className={
-              'md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded ' +
+              'shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded ' +
+              'md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:shadow-none ' +
               collapseShow
             }
           >
+            <CollapseHeader onClick={setCollapseShow} />
             {sidebarData.map((data) => (
-              <Fragment key={data.category}>
-                {/* Divider */}
-                <hr className="my-4 md:min-w-full" />
-
-                {/* Heading */}
-                <h6 className="md:min-w-full text-slate-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-                  {t(data.category)}
-                </h6>
-
-                {/* Navigation */}
-                <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-                  {data.elements.map((element) => {
-                    const isCurrentRoute =
-                      router.pathname.indexOf(element.route) !== -1
-
-                    return (
-                      <li className="items-center" key={element.label}>
-                        <Link href={element.route}>
-                          <a
-                            className={`text-xs uppercase py-3 font-bold block ${
-                              isCurrentRoute ? activeLink : inactiveLink
-                            }`}
-                          >
-                            <i
-                              className={`${element.icon} mr-2 text-sm ${
-                                isCurrentRoute
-                                  ? activeLinkIcon
-                                  : inactiveLinkIcon
-                              }`}
-                            ></i>
-                            {t(element.label)}
-                          </a>
-                        </Link>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </Fragment>
+              <Navigation {...data} key={data.category} />
             ))}
           </div>
-          {/* User */}
-          <div className="">
-            <UserDropdown />
-          </div>
+          <UserDropdown />
         </div>
       </nav>
     </>

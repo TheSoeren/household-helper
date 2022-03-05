@@ -1,3 +1,14 @@
+export interface SidebarElement {
+  label: string
+  route: string
+  icon: string
+}
+
+export interface SidebarData {
+  category: string
+  elements: SidebarElement[]
+}
+
 const sidebarData = [
   {
     category: 'categories.household',

@@ -25,13 +25,13 @@ export default function Home() {
 
   const myAppointmentsTodayEmpty = (
     <Trans i18nKey="no-appointments-today" t={t}>
-      <i className="far fa-laugh mx-3" />
+      <i className="mx-3 far fa-laugh" />
     </Trans>
   )
 
   const myAppointmentsEmpty = (
     <Trans i18nKey="no-own-chores" t={t}>
-      <i className="far fa-surprise mx-3" />
+      <i className="mx-3 far fa-surprise" />
     </Trans>
   )
 
