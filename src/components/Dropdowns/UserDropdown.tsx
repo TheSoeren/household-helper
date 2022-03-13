@@ -61,12 +61,16 @@ export default function UserDropdown() {
         }
       >
         <Link href="/user-settings">
-          <a className="text-sm bold py-2 px-4 font-semibold block w-full whitespace-nowrap bg-transparent text-slate-700 hover:text-slate-500">
+          <a
+            href="#pablo"
+            className="text-sm bold py-2 px-4 font-semibold block w-full whitespace-nowrap bg-transparent text-slate-700 hover:text-slate-500"
+          >
             <i className="fas fa-user mr-2"></i>
             {t('user-dropdown.settings')}
           </a>
         </Link>
         <a
+          href="#pablo"
           className="text-sm py-2 px-4 font-semibold block w-full whitespace-nowrap bg-transparent text-red-700 hover:text-red-400 cursor-pointer"
           onClick={handleSignOut}
         >

@@ -2,7 +2,7 @@ interface TogglerProps {
   onClick: (value: string) => void
 }
 
-export default function Toggler({ onClick }) {
+export default function Toggler({ onClick }: TogglerProps) {
   return (
     <button
       className="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"

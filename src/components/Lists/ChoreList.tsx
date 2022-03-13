@@ -8,6 +8,7 @@ import { DateAdapter, RRule, VEvent } from '@/setups/rschedule'
 import Icon from '@/models/Icon'
 import useChores from '@/hooks/useChores'
 import { postRequest } from '@/utils/httpRequests'
+import Link from 'next/link'
 
 type ChoreListProps = {
   chores: Chore[]
@@ -56,14 +57,16 @@ export default function ChoreList({
     <>
       <div className="flex items-center content-center px-3 pt-6 text-center">
         <h6 className="text-xl font-bold text-slate-700">{title}</h6>
-        <button
-          className="inline-flex items-center justify-center px-3 mx-6 mr-2 transition-colors duration-150 rounded shadow-lg h-7 bg-slate-50 focus:shadow-outline hover:text-stone-500"
-          type="button"
-          onClick={createChoreHandler}
-        >
-          <i className="fas fa-plus fa-sm" />
-          <span className="ml-2">{t('create')}</span>
-        </button>
+        <Link href="/chores/create">
+          <a
+            href="#pablo"
+            className="inline-flex items-center justify-center px-3 mx-6 mr-2 transition-colors duration-150 rounded shadow-lg h-7 bg-slate-50 focus:shadow-outline hover:text-stone-500"
+            type="button"
+          >
+            <i className="fas fa-plus fa-sm" />
+            <span className="ml-2">{t('create')}</span>
+          </a>
+        </Link>
       </div>
       <div className="flex flex-wrap py-6">
         {!chores.length ? (

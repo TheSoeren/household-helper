@@ -13,11 +13,7 @@ export default function Chores() {
     return <ChoresPageSkeleton />
   }
 
-  return (
-    <>
-      <ChoreList title={t('all-chores')} chores={chores} create />
-    </>
-  )
+  return <ChoreList title={t('all-chores')} chores={chores} create />
 }
 
 export const getServerSideProps = withAuthRequired({
