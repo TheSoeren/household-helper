@@ -21,7 +21,7 @@ export default function UserSettings() {
     if (user) {
       reset(user)
     }
-  }, [user])
+  }, [user, reset])
 
   const onSubmit = async (data: User) => {
     if (!user) return

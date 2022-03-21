@@ -1,0 +1,28 @@
+{
+  "title": "Create a chore",
+  "fields": {
+    "title": {
+      "label": "Label",
+      "placeholder": "Label",
+      "error": {
+        "required": "This field is required!"
+      }
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "Description",
+      "error": {}
+    },
+    "icon-faclass": {
+      "label": "Icon",
+      "placeholder": "Icon",
+      "error": {}
+    },
+    "icon-color": {
+      "label": "Icon color",
+      "placeholder": "Icon color",
+      "error": {}
+    }
+  },
+  "create": "Create"
+}

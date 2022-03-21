@@ -1,0 +1,28 @@
+{
+  "title": "Aufgabe erstellen",
+  "fields": {
+    "title": {
+      "label": "Titel",
+      "placeholder": "Titel",
+      "error": {
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
+    },
+    "description": {
+      "label": "Beschreibung",
+      "placeholder": "Beschreibung",
+      "error": {}
+    },
+    "icon-faclass": {
+      "label": "Icon",
+      "placeholder": "Icon",
+      "error": {}
+    },
+    "icon-color": {
+      "label": "Icon Farbe",
+      "placeholder": "Icon Farbe",
+      "error": {}
+    }
+  },
+  "create": "Erstellen"
+}
