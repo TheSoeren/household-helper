@@ -1,15 +1,16 @@
 import { Control, Controller } from 'react-hook-form'
 import Select from '@/components/Forms/Select'
+import Option from '@/models/Option'
 
-interface IconSelectProps {
+interface IconSelectProps<T> {
   name: string
   control: Control
   placeholder: string
-  options: { value: string; label: string }[]
+  options: T[]
 }
 
 // the root tag must not be a react fragment, because of the styling of ValueContainer
-const IconLabelDisplay = (props: any) => (
+const IconLabelDisplay = <T extends Option>(props: T) => (
   <div>
     <i
       className={
@@ -20,12 +21,12 @@ const IconLabelDisplay = (props: any) => (
   </div>
 )
 
-export default function IconSelect({
+export default function IconSelect<T extends Option = Option>({
   name,
   control,
   placeholder,
   options,
-}: IconSelectProps) {
+}: IconSelectProps<T>) {
   return (
     <Controller
       name={name}
@@ -36,7 +37,9 @@ export default function IconSelect({
           instanceId={field.name}
           placeholder={placeholder}
           options={options}
-          formatOptionLabel={(data) => <IconLabelDisplay {...data} />}
+          formatOptionLabel={(data: unknown) => (
+            <IconLabelDisplay<T> {...(data as T)} />
+          )}
           blurInputOnSelect
           isClearable
         />

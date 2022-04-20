@@ -1,5 +1,3 @@
-import { SelectProps } from '@mui/material'
-import { type } from 'os'
 import { default as ReactSelect, Props, StylesConfig } from 'react-select'
 
 const colourStyles: StylesConfig = {

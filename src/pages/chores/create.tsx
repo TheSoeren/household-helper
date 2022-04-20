@@ -14,8 +14,12 @@ import {
   colors,
   repetitionPatterns,
   customRepetitionPatterns,
+  weekdays,
+  months,
+  weekOfMonth,
 } from '@/data'
-import Select from '@/components/Forms/Select'
+import { Select, Checkboxes, DatePickerInput } from '@/components/Forms'
+import DatePicker from 'react-datepicker'
 
 export default function Create() {
   const { t } = useTranslation('chores-creation')
@@ -37,6 +41,12 @@ export default function Create() {
       rrule: {
         frequency: '',
         customFrequency: '',
+        customFrequencyPattern: '',
+        dayOfWeek: '',
+        weekOfMonth: '',
+        dayOfMonth: '',
+        monthOfYear: '',
+        endDate: null,
       },
     },
   })
@@ -66,7 +76,7 @@ export default function Create() {
   }
 
   return (
-    <div className="px-3 xl:w-1/3">
+    <div className="px-3 xl:w-1/2">
       <div className="flex pt-6 text-center">
         <h6 className="text-xl font-bold text-slate-700">{t('title')}</h6>
       </div>
@@ -141,16 +151,16 @@ export default function Create() {
           />
         </div>
         <div className="relative flex w-full mb-3">
-          <span className="my-auto text-l text-slate-700">{t('every')}</span>
+          <span className="my-auto text-l text-slate-600">{t('every')}</span>
           <input
             type="number"
             min={1}
             className="py-3 mx-2 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
             placeholder={t('fields.custom-frequency.placeholder')}
-            {...register('title', { required: true })}
+            {...register('rrule.customFrequency')}
           />
           <Controller
-            name="rrule.customFrequency"
+            name="rrule.customFrequencyPattern"
             control={control}
             render={({ field }) => (
               <Select
@@ -165,70 +175,57 @@ export default function Create() {
           />
         </div>
         <div className="relative flex justify-between w-full mb-3">
-          <div className="form-check">
-            <label className="inline-block text-gray-800 form-check-label">
-              Mo
-            </label>
-            <input
-              type="checkbox"
-              className="float-left w-4 h-4 mt-1 mr-2 text-transparent align-top transition duration-200 rounded-md cursor-pointer checked:text-slate-800"
-            />
-          </div>
-          <div className="form-check">
-            <label className="inline-block text-gray-800 form-check-label">
-              Tu
-            </label>
-            <input
-              type="checkbox"
-              className="float-left w-4 h-4 mt-1 mr-2 text-transparent align-top transition duration-200 rounded-md cursor-pointer checked:text-slate-800"
-            />
-          </div>
-          <div className="form-check">
-            <label className="inline-block text-gray-800 form-check-label">
-              We
-            </label>
-            <input
-              type="checkbox"
-              className="float-left w-4 h-4 mt-1 mr-2 text-transparent align-top transition duration-200 rounded-md cursor-pointer checked:text-slate-800"
-            />
-          </div>
-          <div className="form-check">
-            <label className="inline-block text-gray-800 form-check-label">
-              Th
-            </label>
-            <input
-              type="checkbox"
-              className="float-left w-4 h-4 mt-1 mr-2 text-transparent align-top transition duration-200 rounded-md cursor-pointer checked:text-slate-800"
-            />
-          </div>
-          <div className="form-check">
-            <label className="inline-block text-gray-800 form-check-label">
-              Fr
-            </label>
-            <input
-              type="checkbox"
-              className="float-left w-4 h-4 mt-1 mr-2 text-transparent align-top transition duration-200 rounded-md cursor-pointer checked:text-slate-800"
-            />
-          </div>
-          <div className="form-check">
-            <label className="inline-block text-gray-800 form-check-label">
-              Sa
-            </label>
-            <input
-              type="checkbox"
-              className="float-left w-4 h-4 mt-1 mr-2 text-transparent align-top transition duration-200 rounded-md cursor-pointer checked:text-slate-800"
-            />
-          </div>
-          <div className="form-check">
-            <label className="inline-block text-gray-800 form-check-label">
-              So
-            </label>
-            <input
-              type="checkbox"
-              className="float-left w-4 h-4 mt-1 mr-2 text-transparent align-top transition duration-200 rounded-md cursor-pointer checked:text-slate-800"
-            />
-          </div>
+          <Checkboxes
+            options={weekdays}
+            control={control}
+            name="rrule.dayOfWeek"
+          />
         </div>
+        <div className="relative flex w-full mb-3">
+          <span className="my-auto text-l text-slate-600">{t('each')}</span>
+          <input
+            type="number"
+            min={1}
+            max={31}
+            className="py-3 mx-2 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
+            placeholder={t('fields.custom-frequency.placeholder')}
+            {...register('rrule.dayOfMonth')}
+          />
+        </div>
+        <div className="relative flex justify-between w-full mb-3">
+          <Checkboxes
+            options={weekOfMonth}
+            control={control}
+            name="rrule.weekOfMonth"
+          />
+        </div>
+        <div className="relative flex flex-wrap justify-between w-full mb-3">
+          <Checkboxes
+            options={months}
+            control={control}
+            name="rrule.monthOfYear"
+            className="w-1/6"
+          />
+        </div>
+        <div className="relative justify-between w-full mb-3">
+          <label className="block mb-2 text-xs font-bold uppercase text-slate-600">
+            {t('fields.end-date.label')}
+          </label>
+          <Controller
+            control={control}
+            name="rrule.endDate"
+            render={({ field }) => (
+              <DatePicker
+                className="shadow border-0"
+                placeholderText={t('fields.end-date.placeholder')}
+                onChange={(date) => field.onChange(date)}
+                selected={field.value}
+                dateFormat="dd. MMM yyyy"
+              />
+            )}
+          />
+        </div>
+
         <button
           className="w-1/3 px-6 py-3 mb-1 mr-1 text-sm font-bold text-white transition-all duration-150 ease-linear rounded shadow cursor-pointer bg-slate-800 active:bg-slate-600 hover:shadow-lg"
           type="submit"

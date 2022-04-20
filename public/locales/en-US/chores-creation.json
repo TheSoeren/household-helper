@@ -35,8 +35,14 @@
     "custom-frequency-pattern": {
       "placeholder": "Frequency",
       "error": {}
+    },
+    "end-date": {
+      "label": "End date",
+      "placeholder": "End date",
+      "error": {}
     }
   },
   "every": "Every",
+  "each": "Each",
   "create": "Create"
 }

@@ -1,11 +1,13 @@
+import RepetitionPattern from '@/enums/RepetitionPattern'
+
 const repetitionPatterns = [
-  { value: 'NONE', label: 'None' },
-  { value: 'HOURLY', label: 'Hourly' },
-  { value: 'DAILY', label: 'Daily' },
-  { value: 'WEEKLY', label: 'Weekly' },
-  { value: 'MONTHLY', label: 'Monthly' },
-  { value: 'YEARLY', label: 'Yearly' },
-  { value: 'CUSTOM', label: 'Custom' },
+  { value: RepetitionPattern.NONE, label: 'None' },
+  { value: RepetitionPattern.HOURLY, label: 'Hourly' },
+  { value: RepetitionPattern.DAILY, label: 'Daily' },
+  { value: RepetitionPattern.WEEKLY, label: 'Weekly' },
+  { value: RepetitionPattern.MONTHLY, label: 'Monthly' },
+  { value: RepetitionPattern.YEARLY, label: 'Yearly' },
+  { value: RepetitionPattern.CUSTOM, label: 'Custom' },
 ]
 
 export default repetitionPatterns
