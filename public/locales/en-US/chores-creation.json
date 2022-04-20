@@ -22,7 +22,21 @@
       "label": "Icon color",
       "placeholder": "Icon color",
       "error": {}
+    },
+    "frequency": {
+      "label": "Repeat",
+      "placeholder": "Repeat",
+      "error": {}
+    },
+    "custom-frequency": {
+      "placeholder": "1",
+      "error": {}
+    },
+    "custom-frequency-pattern": {
+      "placeholder": "Frequency",
+      "error": {}
     }
   },
+  "every": "Every",
   "create": "Create"
 }

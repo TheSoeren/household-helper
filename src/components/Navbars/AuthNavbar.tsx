@@ -24,7 +24,7 @@ export default function Navbar(props: any) {
               type="button"
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
-              <i className="text-white fas fa-bars"></i>
+              <i className="text-white fa-solid fa-bars"></i>
             </button>
           </div>
           <div
@@ -40,7 +40,7 @@ export default function Navbar(props: any) {
                   className="lg:text-white lg:hover:text-slate-200 text-slate-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                   href="https://www.creative-tim.com/learning-lab/tailwind/nextjs/overview/notus?ref=nnjs-auth-navbar"
                 >
-                  <i className="lg:text-slate-200 text-slate-400 far fa-file-alt text-lg leading-lg mr-2" />{' '}
+                  <i className="lg:text-slate-200 text-slate-400 fa-regular fa-file-alt text-lg leading-lg mr-2" />{' '}
                   Docs
                 </a>
               </li>
@@ -56,7 +56,7 @@ export default function Navbar(props: any) {
                   rel="noreferrer"
                   target="_blank"
                 >
-                  <i className="lg:text-slate-200 text-slate-400 fab fa-facebook text-lg leading-lg " />
+                  <i className="lg:text-slate-200 text-slate-400 fa-brands fa-facebook text-lg leading-lg " />
                   <span className="lg:hidden inline-block ml-2">Share</span>
                 </a>
               </li>
@@ -68,7 +68,7 @@ export default function Navbar(props: any) {
                   rel="noreferrer"
                   target="_blank"
                 >
-                  <i className="lg:text-slate-200 text-slate-400 fab fa-twitter text-lg leading-lg " />
+                  <i className="lg:text-slate-200 text-slate-400 fa-brands fa-twitter text-lg leading-lg " />
                   <span className="lg:hidden inline-block ml-2">Tweet</span>
                 </a>
               </li>
@@ -80,7 +80,7 @@ export default function Navbar(props: any) {
                   rel="noreferrer"
                   target="_blank"
                 >
-                  <i className="lg:text-slate-200 text-slate-400 fab fa-github text-lg leading-lg " />
+                  <i className="lg:text-slate-200 text-slate-400 fa-brands fa-github text-lg leading-lg " />
                   <span className="lg:hidden inline-block ml-2">Star</span>
                 </a>
               </li>
@@ -90,7 +90,7 @@ export default function Navbar(props: any) {
                   className="bg-white text-slate-700 active:bg-slate-50 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
                   type="button"
                 >
-                  <i className="fas fa-arrow-alt-circle-down"></i> Download
+                  <i className="fa-solid fa-arrow-alt-circle-down"></i> Download
                 </button>
               </li>
             </ul>

@@ -9,7 +9,7 @@ export default function Toggler({ onClick }: TogglerProps) {
       type="button"
       onClick={() => onClick('bg-white m-2 py-3 px-6')}
     >
-      <i className="fas fa-bars"></i>
+      <i className="fa-solid fa-bars"></i>
     </button>
   )
 }

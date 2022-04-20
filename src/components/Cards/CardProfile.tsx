@@ -46,15 +46,15 @@ export default function CardProfile() {
               Jenna Stones
             </h3>
             <div className="text-sm leading-normal mt-0 mb-2 text-slate-400 font-bold uppercase">
-              <i className="fas fa-map-marker-alt mr-2 text-lg text-slate-400"></i>{' '}
+              <i className="fa-solid fa-map-marker-alt mr-2 text-lg text-slate-400"></i>{' '}
               Los Angeles, California
             </div>
             <div className="mb-2 text-slate-600 mt-10">
-              <i className="fas fa-briefcase mr-2 text-lg text-slate-400"></i>
+              <i className="fa-solid fa-briefcase mr-2 text-lg text-slate-400"></i>
               Solution Manager - Creative Tim Officer
             </div>
             <div className="mb-2 text-slate-600">
-              <i className="fas fa-university mr-2 text-lg text-slate-400"></i>
+              <i className="fa-solid fa-university mr-2 text-lg text-slate-400"></i>
               University of Computer Science
             </div>
           </div>

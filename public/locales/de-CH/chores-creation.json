@@ -22,7 +22,21 @@
       "label": "Icon Farbe",
       "placeholder": "Icon Farbe",
       "error": {}
+    },
+    "frequency": {
+      "label": "Häufigkeit",
+      "placeholder": "Häufigkeit",
+      "error": {}
+    },
+    "custom-frequency": {
+      "placeholder": "1",
+      "error": {}
+    },
+    "custom-frequency-pattern": {
+      "placeholder": "Häufigkeit",
+      "error": {}
     }
   },
+  "every": "Alle",
   "create": "Erstellen"
 }

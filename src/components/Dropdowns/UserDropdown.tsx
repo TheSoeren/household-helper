@@ -47,7 +47,7 @@ export default function UserDropdown() {
         }}
       >
         <div className="w-8 h-8 text-sm text-white bg-slate-500 inline-flex items-center justify-center rounded-full">
-          <i className="far fa-user" />
+          <i className="fa-regular fa-user" />
         </div>
         <span className="hidden md:block uppercase text-sm ml-2">
           {user?.displayName}
@@ -65,7 +65,7 @@ export default function UserDropdown() {
             href="#pablo"
             className="text-sm bold py-2 px-4 font-semibold block w-full whitespace-nowrap bg-transparent text-slate-700 hover:text-slate-500"
           >
-            <i className="fas fa-user mr-2"></i>
+            <i className="fa-solid fa-user mr-2"></i>
             {t('user-dropdown.settings')}
           </a>
         </Link>
@@ -74,7 +74,7 @@ export default function UserDropdown() {
           className="text-sm py-2 px-4 font-semibold block w-full whitespace-nowrap bg-transparent text-red-700 hover:text-red-400 cursor-pointer"
           onClick={handleSignOut}
         >
-          <i className="fas fa-sign-out-alt mr-2"></i>
+          <i className="fa-solid fa-sign-out-alt mr-2"></i>
           {t('user-dropdown.signout')}
         </a>
       </div>

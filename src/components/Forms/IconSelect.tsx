@@ -1,5 +1,5 @@
 import { Control, Controller } from 'react-hook-form'
-import Select from 'react-select'
+import Select from '@/components/Forms/Select'
 
 interface IconSelectProps {
   name: string

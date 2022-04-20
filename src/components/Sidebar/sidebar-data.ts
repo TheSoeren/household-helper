@@ -13,11 +13,11 @@ const sidebarData = [
   {
     category: 'categories.household',
     elements: [
-      { label: 'elements.chores', route: '/chores', icon: 'fas fa-tasks' },
+      { label: 'elements.chores', route: '/chores', icon: 'fa-solid fa-tasks' },
       {
         label: 'elements.calendar',
         route: '/calendar',
-        icon: 'fas fa-calendar',
+        icon: 'fa-solid fa-calendar',
       },
     ],
   },

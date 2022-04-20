@@ -13,7 +13,7 @@ export default function CollapseHeader({ onClick }: CollapseHeaderProps) {
         className="px-3 py-1 text-xl leading-none text-black bg-transparent rounded opacity-50 cursor-pointer"
         onClick={() => onClick('hidden')}
       >
-        <i className="fas fa-times"></i>
+        <i className="fa-solid fa-times"></i>
       </button>
     </div>
   )

@@ -12,7 +12,7 @@
     "migrate": "dotenv -e .env.local -- npx prisma migrate dev"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "5.15.3",
+    "@fortawesome/fontawesome-free": "6.1.1",
     "@popperjs/core": "2.9.1",
     "@prisma/client": "3.8.1",
     "@rschedule/core": "1.2.3",

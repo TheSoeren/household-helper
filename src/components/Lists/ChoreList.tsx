@@ -30,7 +30,7 @@ export default function ChoreList({
               className="inline-flex items-center justify-center px-3 mx-6 mr-2 transition-colors duration-150 rounded shadow-lg h-7 bg-slate-50 focus:shadow-outline hover:text-stone-500"
               type="button"
             >
-              <i className="fas fa-plus fa-sm" />
+              <i className="fa-solid fa-plus fa-sm" />
               <span className="ml-2">{t('create')}</span>
             </a>
           </Link>
