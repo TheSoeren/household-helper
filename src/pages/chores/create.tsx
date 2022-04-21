@@ -1,6 +1,6 @@
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useForm, SubmitHandler, Controller } from 'react-hook-form'
+import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import { useTranslation } from 'next-i18next'
 import Chore from '@/models/Chore'
 import { useUser } from '@supabase/supabase-auth-helpers/react'
@@ -8,48 +8,47 @@ import dayjs from 'dayjs'
 import { DateAdapter, RRule, VEvent } from '@/setups/rschedule'
 import Icon from '@/models/Icon'
 import { postRequest } from '@/utils/httpRequests'
-import IconSelect from '@/components/Forms/IconSelect'
+import RepetitionPattern from '@/enums/RepetitionPattern'
 import {
-  icons,
+  ChoreDataForm,
+  DailyRecurringEventForm,
+  WeeklyRecurringEventForm,
+  DateRangeForm,
+  MonthlyRecurringEventForm,
+  YearlyRecurringEventForm,
+} from '@/components/Forms/ChoreCreation'
+import {
   colors,
+  icons,
   repetitionPatterns,
   customRepetitionPatterns,
-  weekdays,
-  months,
-  weekOfMonth,
+  monthlyRepetitionType,
 } from '@/data'
-import { Select, Checkboxes, DatePickerInput } from '@/components/Forms'
-import DatePicker from 'react-datepicker'
 
 export default function Create() {
   const { t } = useTranslation('chores-creation')
   const { user } = useUser()
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<any>({
+  const formContext = useForm({
     defaultValues: {
-      title: '',
-      description: '',
       icon: {
-        faclass: null,
-        color: null,
+        faclass: icons[0],
+        color: colors[0],
       },
       rrule: {
-        frequency: '',
-        customFrequency: '',
-        customFrequencyPattern: '',
-        dayOfWeek: '',
-        weekOfMonth: '',
-        dayOfMonth: '',
-        monthOfYear: '',
+        frequency: repetitionPatterns[0],
+        customFrequency: 1,
+        customFrequencyPattern: customRepetitionPatterns[1],
+        dayOfWeek: [dayjs().format('dd').toUpperCase()],
+        dayOfMonth: dayjs().date(),
+        monthOfYear: [dayjs().format('MMM').toUpperCase()],
+        startDate: new Date(),
         endDate: null,
       },
+      monthlyRepetitionType: monthlyRepetitionType[0],
     },
   })
+  const { handleSubmit, watch } = formContext
 
   const onSubmit: SubmitHandler<any> = async (data) => {
     console.log(data)
@@ -75,164 +74,41 @@ export default function Create() {
     // await postRequest('/api/chore', chore.toString())
   }
 
+  const renderFrequencyForms = () => {
+    const frequency = watch('rrule.frequency').value
+    switch (frequency) {
+      case RepetitionPattern.DAILY:
+        return <DailyRecurringEventForm />
+      case RepetitionPattern.WEEKLY:
+        return <WeeklyRecurringEventForm />
+      case RepetitionPattern.MONTHLY:
+        return <MonthlyRecurringEventForm />
+      case RepetitionPattern.YEARLY:
+        return <YearlyRecurringEventForm />
+      default:
+        return
+    }
+  }
+
   return (
-    <div className="px-3 xl:w-1/2">
-      <div className="flex pt-6 text-center">
+    <div className="px-3">
+      <div className="flex py-6 text-center">
         <h6 className="text-xl font-bold text-slate-700">{t('title')}</h6>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col pt-6">
-          <div className="relative w-full mb-3">
-            <label className="block mb-2 text-xs font-bold uppercase text-slate-600">
-              {t('fields.title.label')}
-            </label>
-            <input
-              type="text"
-              className="w-full py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
-              placeholder={t('fields.title.placeholder')}
-              {...register('title', { required: true })}
-            />
-            <span className="text-red-500">
-              {errors.title && t('fields.title.error.required')}
-            </span>
-          </div>
-          <div className="relative w-full mb-3">
-            <label className="block mb-2 text-xs font-bold uppercase text-slate-600">
-              {t('fields.description.label')}
-            </label>
-            <textarea
-              className="w-full py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow resize-none placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
-              placeholder={t('fields.description.placeholder')}
-              {...register('description')}
-            />
-          </div>
-        </div>
-        <div className="flex flex-col">
-          <div className="relative w-full mb-3">
-            <label className="block mb-2 text-xs font-bold uppercase text-slate-600">
-              {t('fields.icon-faclass.label')}
-            </label>
-            <IconSelect
-              name="icon.faclass"
-              control={control}
-              placeholder={t('fields.icon-faclass.placeholder')}
-              options={icons}
-            />
-          </div>
-          <div className="relative w-full mb-3">
-            <label className="block mb-2 text-xs font-bold uppercase text-slate-600">
-              {t('fields.icon-color.label')}
-            </label>
-            <IconSelect
-              name="icon.color"
-              control={control}
-              placeholder={t('fields.icon-color.placeholder')}
-              options={colors}
-            />
-          </div>
-        </div>
-        <div className="relative w-full mb-3">
-          <label className="block mb-2 text-xs font-bold uppercase text-slate-600">
-            {t('fields.frequency.label')}
-          </label>
-          <Controller
-            name="rrule.frequency"
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                instanceId={field.name}
-                placeholder={t('fields.frequency.placeholder')}
-                options={repetitionPatterns}
-                blurInputOnSelect
-                isClearable
-              />
-            )}
-          />
-        </div>
-        <div className="relative flex w-full mb-3">
-          <span className="my-auto text-l text-slate-600">{t('every')}</span>
-          <input
-            type="number"
-            min={1}
-            className="py-3 mx-2 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
-            placeholder={t('fields.custom-frequency.placeholder')}
-            {...register('rrule.customFrequency')}
-          />
-          <Controller
-            name="rrule.customFrequencyPattern"
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                instanceId={field.name}
-                placeholder={t('fields.custom-frequency-pattern.placeholder')}
-                options={customRepetitionPatterns}
-                blurInputOnSelect
-                isClearable
-              />
-            )}
-          />
-        </div>
-        <div className="relative flex justify-between w-full mb-3">
-          <Checkboxes
-            options={weekdays}
-            control={control}
-            name="rrule.dayOfWeek"
-          />
-        </div>
-        <div className="relative flex w-full mb-3">
-          <span className="my-auto text-l text-slate-600">{t('each')}</span>
-          <input
-            type="number"
-            min={1}
-            max={31}
-            className="py-3 mx-2 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
-            placeholder={t('fields.custom-frequency.placeholder')}
-            {...register('rrule.dayOfMonth')}
-          />
-        </div>
-        <div className="relative flex justify-between w-full mb-3">
-          <Checkboxes
-            options={weekOfMonth}
-            control={control}
-            name="rrule.weekOfMonth"
-          />
-        </div>
-        <div className="relative flex flex-wrap justify-between w-full mb-3">
-          <Checkboxes
-            options={months}
-            control={control}
-            name="rrule.monthOfYear"
-            className="w-1/6"
-          />
-        </div>
-        <div className="relative justify-between w-full mb-3">
-          <label className="block mb-2 text-xs font-bold uppercase text-slate-600">
-            {t('fields.end-date.label')}
-          </label>
-          <Controller
-            control={control}
-            name="rrule.endDate"
-            render={({ field }) => (
-              <DatePicker
-                className="shadow border-0"
-                placeholderText={t('fields.end-date.placeholder')}
-                onChange={(date) => field.onChange(date)}
-                selected={field.value}
-                dateFormat="dd. MMM yyyy"
-              />
-            )}
-          />
-        </div>
+      <FormProvider {...formContext}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <ChoreDataForm />
+          {renderFrequencyForms()}
+          <DateRangeForm />
 
-        <button
-          className="w-1/3 px-6 py-3 mb-1 mr-1 text-sm font-bold text-white transition-all duration-150 ease-linear rounded shadow cursor-pointer bg-slate-800 active:bg-slate-600 hover:shadow-lg"
-          type="submit"
-        >
-          {t('create')}
-        </button>
-      </form>
+          <button
+            className="my-4 w-1/3 md:w-1/4 px-6 py-3 text-sm font-bold text-white transition-all duration-150 ease-linear rounded shadow cursor-pointer bg-slate-800 active:bg-slate-600 hover:shadow-lg"
+            type="submit"
+          >
+            {t('create')}
+          </button>
+        </form>
+      </FormProvider>
     </div>
   )
 }

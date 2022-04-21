@@ -19,13 +19,13 @@
       "error": {}
     },
     "icon-color": {
-      "label": "Icon color",
-      "placeholder": "Icon color",
+      "label": "Color",
+      "placeholder": "Color",
       "error": {}
     },
     "frequency": {
-      "label": "Repeat",
-      "placeholder": "Repeat",
+      "label": "Recurrance",
+      "placeholder": "Recurrance",
       "error": {}
     },
     "custom-frequency": {
@@ -36,13 +36,29 @@
       "placeholder": "Frequency",
       "error": {}
     },
+    "monthly-repetition-type": {
+      "label": "Monthly repetition type",
+      "placeholder": "Monthly repetition type",
+      "error": {}
+    },
     "end-date": {
       "label": "End date",
-      "placeholder": "End date",
+      "placeholder": "Leave empty for no end date...",
+      "error": {}
+    },
+    "start-date": {
+      "label": "Start date",
+      "placeholder": "Start date",
       "error": {}
     }
   },
   "every": "Every",
   "each": "Each",
+  "on": "On",
+  "on-the": "On the",
+  "day": "Day(s)",
+  "week": "Week(s)",
+  "month": "Month(s)",
+  "year": "Year(s)",
   "create": "Create"
 }

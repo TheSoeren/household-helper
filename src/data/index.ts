@@ -5,3 +5,4 @@ export { default as customRepetitionPatterns } from './custom-repetition-pattern
 export { default as weekdays } from './weekdays'
 export { default as months } from './months'
 export { default as weekOfMonth } from './week-of-month'
+export { default as monthlyRepetitionType } from './monthly-repetition-type'

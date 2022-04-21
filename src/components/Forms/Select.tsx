@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import { default as ReactSelect, Props, StylesConfig } from 'react-select'
 
 const colourStyles: StylesConfig = {
@@ -9,6 +10,9 @@ const colourStyles: StylesConfig = {
   }),
 }
 
-export default function Select(props: Props) {
-  return <ReactSelect className="shadow" styles={colourStyles} {...props} />
-}
+const Select = forwardRef((props: Props, ref: any) => (
+  <ReactSelect ref={ref} className="shadow" styles={colourStyles} {...props} />
+))
+Select.displayName = 'Select'
+
+export default Select

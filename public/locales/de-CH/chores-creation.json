@@ -19,13 +19,13 @@
       "error": {}
     },
     "icon-color": {
-      "label": "Icon Farbe",
-      "placeholder": "Icon Farbe",
+      "label": "Farbe",
+      "placeholder": "Farbe",
       "error": {}
     },
     "frequency": {
-      "label": "Häufigkeit",
-      "placeholder": "Häufigkeit",
+      "label": "Wiederholung",
+      "placeholder": "Wiederholung",
       "error": {}
     },
     "custom-frequency": {
@@ -36,13 +36,29 @@
       "placeholder": "Häufigkeit",
       "error": {}
     },
+    "monthly-repetition-type": {
+      "label": "Art der monatlichen Wiederhoung",
+      "placeholder": "Art der monatlichen Wiederhoung",
+      "error": {}
+    },
     "end-date": {
       "label": "End Datum",
-      "placeholder": "End Datum",
+      "placeholder": "Leer lassen für endlosen Eintrag...",
+      "error": {}
+    },
+    "start-date": {
+      "label": "Start Datum",
+      "placeholder": "Start Datum",
       "error": {}
     }
   },
   "every": "Alle",
   "each": "Jeden",
+  "on": "Am",
+  "on-the": "Jeden",
+  "day": "Tag(e)",
+  "week": "Woche(n)",
+  "month": "Monat(e)",
+  "year": "Jahr(e)",
   "create": "Erstellen"
 }

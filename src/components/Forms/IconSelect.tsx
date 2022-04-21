@@ -1,8 +1,9 @@
 import { Control, Controller } from 'react-hook-form'
 import Select from '@/components/Forms/Select'
+import { Props as SelectProps } from 'react-select'
 import Option from '@/models/Option'
 
-interface IconSelectProps<T> {
+interface IconSelectProps<T> extends SelectProps {
   name: string
   control: Control
   placeholder: string
@@ -14,7 +15,8 @@ const IconLabelDisplay = <T extends Option>(props: T) => (
   <div>
     <i
       className={
-        props.value + ' inline-flex rounded-full min-w-[20px] min-h-[20px]'
+        props.value +
+        ' inline-flex rounded-full min-w-[20px] min-h-[20px] align-middle'
       }
     />
     <span className="ml-2">{props.label}</span>
@@ -24,8 +26,7 @@ const IconLabelDisplay = <T extends Option>(props: T) => (
 export default function IconSelect<T extends Option = Option>({
   name,
   control,
-  placeholder,
-  options,
+  ...props
 }: IconSelectProps<T>) {
   return (
     <Controller
@@ -35,13 +36,10 @@ export default function IconSelect<T extends Option = Option>({
         <Select
           {...field}
           instanceId={field.name}
-          placeholder={placeholder}
-          options={options}
           formatOptionLabel={(data: unknown) => (
             <IconLabelDisplay<T> {...(data as T)} />
           )}
-          blurInputOnSelect
-          isClearable
+          {...props}
         />
       )}
     />

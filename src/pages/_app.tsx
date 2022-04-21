@@ -14,8 +14,8 @@ import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import '@/styles/globals.css'
 import '@/styles/tailwind.css'
+import '@/styles/globals.css'
 import Dashboard, { DashboardProps } from '@/layouts/Dashboard'
 
 type CustomAppProps = AppProps & {
