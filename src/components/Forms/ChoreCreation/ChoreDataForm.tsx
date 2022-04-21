@@ -1,17 +1,19 @@
 import { colors, icons, repetitionPatterns } from '@/data'
+import useValidation from '@/hooks/useValidation'
 import { useTranslation } from 'next-i18next'
 import { Controller, useFormContext } from 'react-hook-form'
 import IconSelect from '../IconSelect'
 import Select from '../Select'
 
 export default function ChoreDataForm() {
-  const { control, register, getFieldState } = useFormContext()
+  const { control, register } = useFormContext()
   const { t } = useTranslation('chores-creation')
+  const { error } = useValidation(['title'])
 
   return (
     <div className="flex flex-col gap-4 xl:w-2/3">
-      <div className="w-full">
-        <label className="block mb-2 text-xs font-bold uppercase text-slate-600">
+      <div>
+        <label className="block text-xs font-bold uppercase text-slate-600">
           {t('fields.title.label')}
         </label>
         <input
@@ -20,12 +22,14 @@ export default function ChoreDataForm() {
           placeholder={t('fields.title.placeholder')}
           {...register('title', { required: true })}
         />
-        <span className="text-red-500">
-          {getFieldState('title').error && t('fields.title.error.required')}
-        </span>
+        {error['title'] && (
+          <span className="text-red-500">
+            {t('fields.title.error.' + error['title'])}
+          </span>
+        )}
       </div>
-      <div className="w-full">
-        <label className="block mb-2 text-xs font-bold uppercase text-slate-600">
+      <div>
+        <label className="block text-xs font-bold uppercase text-slate-600">
           {t('fields.description.label')}
         </label>
         <textarea
@@ -34,8 +38,8 @@ export default function ChoreDataForm() {
           {...register('description')}
         />
       </div>
-      <div className="w-full">
-        <label className="block mb-2 text-xs font-bold uppercase text-slate-600">
+      <div>
+        <label className="block text-xs font-bold uppercase text-slate-600">
           {t('fields.icon-faclass.label')}
         </label>
         <div className="flex gap-4">
@@ -60,8 +64,8 @@ export default function ChoreDataForm() {
         </div>
       </div>
 
-      <div className="w-full">
-        <label className="block mb-2 text-xs font-bold uppercase text-slate-600">
+      <div>
+        <label className="block text-xs font-bold uppercase text-slate-600">
           {t('fields.frequency.label')}
         </label>
         <Controller

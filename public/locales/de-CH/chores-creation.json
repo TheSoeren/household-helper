@@ -30,11 +30,9 @@
     },
     "custom-frequency": {
       "placeholder": "1",
-      "error": {}
-    },
-    "custom-frequency-pattern": {
-      "placeholder": "Häufigkeit",
-      "error": {}
+      "error": {
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
     },
     "monthly-repetition-type": {
       "label": "Art der monatlichen Wiederhoung",
@@ -49,12 +47,45 @@
     "start-date": {
       "label": "Start Datum",
       "placeholder": "Start Datum",
-      "error": {}
+      "error": {
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
+    },
+    "duration": {
+      "label": "Dauer",
+      "placeholder": "Dauer (in Minuten)",
+      "error": {
+        "min": "Die mindestdauer ist 15 Minuten!",
+        "pattern": "Der kleinste Schritt ist 5 Minuten!",
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
+    },
+    "day-of-week": {
+      "error": {
+        "required": "Wähle mindestens einen Tag aus!"
+      }
+    },
+    "day-of-month": {
+      "placeholder": "1",
+      "error": {
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
+    },
+    "week-of-month": {
+      "error": {
+        "required": "Wähle mindestens eine Woche aus!"
+      }
+    },
+    "month-of-year": {
+      "error": {
+        "required": "Wähle mindestens einen Monat aus!"
+      }
     }
   },
+  "all-day": "Ganztägig",
   "every": "Alle",
   "each": "Jeden",
-  "on": "Am",
+  "on": "Am:",
   "on-the": "Jeden",
   "day": "Tag(e)",
   "week": "Woche(n)",

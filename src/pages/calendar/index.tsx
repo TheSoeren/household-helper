@@ -90,9 +90,7 @@ export const getServerSideProps = withAuthRequired({
       : {}
 
     return {
-      props: {
-        ...translations,
-      },
+      props: translations,
     }
   },
 })

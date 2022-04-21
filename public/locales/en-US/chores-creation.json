@@ -30,11 +30,9 @@
     },
     "custom-frequency": {
       "placeholder": "1",
-      "error": {}
-    },
-    "custom-frequency-pattern": {
-      "placeholder": "Frequency",
-      "error": {}
+      "error": {
+        "required": "This field is required!"
+      }
     },
     "monthly-repetition-type": {
       "label": "Monthly repetition type",
@@ -49,12 +47,45 @@
     "start-date": {
       "label": "Start date",
       "placeholder": "Start date",
-      "error": {}
+      "error": {
+        "required": "This field is required!"
+      }
+    },
+    "duration": {
+      "label": "Duration",
+      "placeholder": "Duration (in Minutes)",
+      "error": {
+        "min": "Enter at least 15 minutes!",
+        "pattern": "The minimum step size is 5 minutes!",
+        "required": "This field is required!"
+      }
+    },
+    "day-of-week": {
+      "error": {
+        "required": "Select at least one Day!"
+      }
+    },
+    "day-of-month": {
+      "placeholder": "1",
+      "error": {
+        "required": "This field is required!"
+      }
+    },
+    "week-of-month": {
+      "error": {
+        "required": "Select at least one Week!"
+      }
+    },
+    "month-of-year": {
+      "error": {
+        "required": "Select at least one Month!"
+      }
     }
   },
+  "all-day": "All day",
   "every": "Every",
   "each": "Each",
-  "on": "On",
+  "on": "On:",
   "on-the": "On the",
   "day": "Day(s)",
   "week": "Week(s)",

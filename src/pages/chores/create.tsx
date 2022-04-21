@@ -9,19 +9,11 @@ import { DateAdapter, RRule, VEvent } from '@/setups/rschedule'
 import Icon from '@/models/Icon'
 import { postRequest } from '@/utils/httpRequests'
 import RepetitionPattern from '@/enums/RepetitionPattern'
-import {
-  ChoreDataForm,
-  DailyRecurringEventForm,
-  WeeklyRecurringEventForm,
-  DateRangeForm,
-  MonthlyRecurringEventForm,
-  YearlyRecurringEventForm,
-} from '@/components/Forms/ChoreCreation'
+import dynamic from 'next/dynamic'
 import {
   colors,
   icons,
   repetitionPatterns,
-  customRepetitionPatterns,
   monthlyRepetitionType,
 } from '@/data'
 
@@ -35,15 +27,18 @@ export default function Create() {
         faclass: icons[0],
         color: colors[0],
       },
+      timeframe: {
+        startDate: new Date(),
+        endDate: null,
+        duration: null,
+        allDay: false,
+      },
       rrule: {
         frequency: repetitionPatterns[0],
         customFrequency: 1,
-        customFrequencyPattern: customRepetitionPatterns[1],
         dayOfWeek: [dayjs().format('dd').toUpperCase()],
         dayOfMonth: dayjs().date(),
         monthOfYear: [dayjs().format('MMM').toUpperCase()],
-        startDate: new Date(),
-        endDate: null,
       },
       monthlyRepetitionType: monthlyRepetitionType[0],
     },
@@ -102,7 +97,7 @@ export default function Create() {
           <DateRangeForm />
 
           <button
-            className="my-4 w-1/3 md:w-1/4 px-6 py-3 text-sm font-bold text-white transition-all duration-150 ease-linear rounded shadow cursor-pointer bg-slate-800 active:bg-slate-600 hover:shadow-lg"
+            className="w-1/3 px-6 py-3 my-4 text-sm font-bold text-white transition-all duration-150 ease-linear rounded shadow cursor-pointer md:w-1/4 bg-slate-800 active:bg-slate-600 hover:shadow-lg"
             type="submit"
           >
             {t('create')}
@@ -125,9 +120,37 @@ export const getServerSideProps = withAuthRequired({
       : {}
 
     return {
-      props: {
-        ...translations,
-      },
+      props: translations,
     }
   },
 })
+
+const ChoreDataForm = dynamic(
+  () => import('@/components/Forms/ChoreCreation/ChoreDataForm'),
+  { ssr: false }
+)
+
+const DailyRecurringEventForm = dynamic(
+  () => import('@/components/Forms/ChoreCreation/DailyRecurringEventForm'),
+  { ssr: false }
+)
+
+const WeeklyRecurringEventForm = dynamic(
+  () => import('@/components/Forms/ChoreCreation/WeeklyRecurringEventForm'),
+  { ssr: false }
+)
+
+const MonthlyRecurringEventForm = dynamic(
+  () => import('@/components/Forms/ChoreCreation/MonthlyRecurringEventForm'),
+  { ssr: false }
+)
+
+const DateRangeForm = dynamic(
+  () => import('@/components/Forms/ChoreCreation/DateRangeForm'),
+  { ssr: false }
+)
+
+const YearlyRecurringEventForm = dynamic(
+  () => import('@/components/Forms/ChoreCreation/YearlyRecurringEventForm'),
+  { ssr: false }
+)
