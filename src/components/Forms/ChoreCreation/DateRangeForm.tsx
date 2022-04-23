@@ -2,7 +2,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 import DatePicker from 'react-datepicker'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
-import RepetitionPattern from '@/enums/RepetitionPattern'
+import Frequency from '@/enums/Frequency'
 import useValidation from '@/hooks/useValidation'
 
 const validation = {
@@ -20,27 +20,24 @@ const validation = {
 export default function DateRangeForm() {
   const { t } = useTranslation('chores-creation')
   const { watch, control, register, unregister } = useFormContext()
-  const { error } = useValidation(['timeframe.startDate', 'timeframe.duration'])
+  const { error } = useValidation(['ruleOptions.start', 'ruleOptions.duration'])
 
-  const oneTimeEvent =
-    watch('rrule.frequency')?.value === RepetitionPattern.NONE
-  const allDayEvent = watch('timeframe.allDay')
+  const oneTimeEvent = watch('ruleOptions.frequency')?.value === Frequency.NONE
+  const allDayEvent = watch('ruleConfig.allDay')
 
   useEffect(() => {
-    register('timeframe.startDate', { required: true, valueAsDate: true })
-    if (oneTimeEvent) register('timeframe.endDate')
+    register('ruleOptions.start', { required: true, valueAsDate: true })
+    if (!oneTimeEvent) register('ruleOptions.end')
 
     return () => {
-      unregister('timeframe.startDate', { keepDefaultValue: true })
-      if (oneTimeEvent) unregister('timeframe.endDate')
+      unregister('ruleOptions.start', { keepDefaultValue: true })
+      unregister('ruleOptions.end')
     }
   }, [oneTimeEvent, register, unregister])
 
   useEffect(() => {
     if (allDayEvent) {
-      return () => {
-        unregister('timeframe.duration')
-      }
+      unregister('ruleOptions.duration')
     }
   }, [allDayEvent, register, unregister])
 
@@ -55,7 +52,7 @@ export default function DateRangeForm() {
             <input
               type="checkbox"
               className="w-4 h-4 mt-1 mr-2 text-transparent align-top transition duration-200 rounded-md cursor-pointer checked:text-slate-600"
-              {...register('timeframe.allDay')}
+              {...register('ruleConfig.allDay')}
             />
             <label className="inline-block text-gray-600 form-check-label">
               {t('all-day')}
@@ -67,11 +64,11 @@ export default function DateRangeForm() {
                 type="number"
                 className="w-full py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
                 placeholder={t('fields.duration.placeholder')}
-                {...register('timeframe.duration', validation.duration)}
+                {...register('ruleOptions.duration', validation.duration)}
               />
-              {error['timeframe.duration'] && (
+              {error['ruleOptions.duration'] && (
                 <span className="text-red-500">
-                  {t('fields.duration.error.' + error['timeframe.duration'])}
+                  {t('fields.duration.error.' + error['ruleOptions.duration'])}
                 </span>
               )}
             </div>
@@ -85,7 +82,7 @@ export default function DateRangeForm() {
           </label>
           <Controller
             control={control}
-            name="timeframe.startDate"
+            name="ruleOptions.start"
             render={({ field }) => (
               <DatePicker
                 className="w-full border-0 shadow"
@@ -97,9 +94,9 @@ export default function DateRangeForm() {
               />
             )}
           />
-          {error['timeframe.startDate'] && (
+          {error['ruleOptions.start'] && (
             <span className="text-red-500">
-              {t('fields.start-date.error.' + error['timeframe.startDate'])}
+              {t('fields.start-date.error.' + error['ruleOptions.start'])}
             </span>
           )}
         </div>
@@ -111,7 +108,7 @@ export default function DateRangeForm() {
             </label>
             <Controller
               control={control}
-              name="timeframe.endDate"
+              name="ruleOptions.end"
               render={({ field }) => (
                 <DatePicker
                   className="w-full border-0 shadow"

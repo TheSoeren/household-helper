@@ -1,4 +1,4 @@
-import { monthlyRepetitionType, weekdays, weekOfMonth } from '@/data'
+import { monthlyRepetitionType, weekdays, weeksOfMonth } from '@/data'
 import { Controller, useFormContext } from 'react-hook-form'
 import Checkboxes from '../Checkboxes'
 import EMonthlyRepetitionType from '@/enums/MonthlyRepetitionType'
@@ -6,15 +6,16 @@ import { useTranslation } from 'next-i18next'
 import Select from '../Select'
 import { useEffect } from 'react'
 import useValidation from '@/hooks/useValidation'
+import Radiobuttons from '../Radiobuttons'
 
 const validation = {
-  dayOfMonth: {
+  byDayOfMonth: {
     required: true,
   },
-  weekOfMonth: {
+  byWeekOfMonth: {
     required: true,
   },
-  dayOfWeek: {
+  byDayOfWeek: {
     required: true,
   },
 }
@@ -23,28 +24,37 @@ export default function MonthlyRepetitionTypeForm() {
   const { t } = useTranslation('chores-creation')
   const { watch, register, unregister, control } = useFormContext()
   const { error } = useValidation([
-    'rrule.dayOfMonth',
-    'rrule.weekOfMonth',
-    'rrule.dayOfWeek',
+    'ruleOptions.byDayOfMonth',
+    'ruleConfig.byWeekOfMonth',
+    'ruleOptions.byDayOfWeek',
   ])
 
-  const repTypeValue = watch('monthlyRepetitionType')?.value
+  const repTypeValue = watch('ruleConfig.monthlyRepetitionType')?.value
   const isDayRep = repTypeValue === EMonthlyRepetitionType.DAY
   const isRegRep = repTypeValue === EMonthlyRepetitionType.REGULARITY
 
   useEffect(() => {
     if (!isDayRep) {
-      unregister('rrule.dayOfMonth', { keepDefaultValue: true })
+      unregister('ruleOptions.byDayOfMonth', { keepDefaultValue: true })
+    }
+
+    return () => {
+      unregister('ruleOptions.byDayOfMonth', { keepDefaultValue: true })
     }
   }, [isDayRep, unregister])
 
   useEffect(() => {
     if (isRegRep) {
-      register('rrule.weekOfMonth', validation.weekOfMonth)
-      register('rrule.dayOfWeek', validation.dayOfWeek)
+      register('ruleConfig.byWeekOfMonth', validation.byWeekOfMonth)
+      register('ruleOptions.byDayOfWeek', validation.byDayOfWeek)
     } else {
-      unregister('rrule.weekOfMonth', { keepDefaultValue: true })
-      unregister('rrule.dayOfWeek', { keepDefaultValue: true })
+      unregister('ruleConfig.byWeekOfMonth', { keepDefaultValue: true })
+      unregister('ruleOptions.byDayOfWeek', { keepDefaultValue: true })
+    }
+
+    return () => {
+      unregister('ruleConfig.byWeekOfMonth', { keepDefaultValue: true })
+      unregister('ruleOptions.byDayOfWeek', { keepDefaultValue: true })
     }
   }, [isRegRep, register, unregister])
 
@@ -55,7 +65,7 @@ export default function MonthlyRepetitionTypeForm() {
           {t('fields.monthly-repetition-type.label')}
         </label>
         <Controller
-          name="monthlyRepetitionType"
+          name="ruleConfig.monthlyRepetitionType"
           control={control}
           render={({ field }) => (
             <Select
@@ -79,12 +89,14 @@ export default function MonthlyRepetitionTypeForm() {
               max={31}
               className="py-3 mx-2 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
               placeholder={t('fields.day-of-month.placeholder')}
-              {...register('rrule.dayOfMonth', validation.dayOfMonth)}
+              {...register('ruleOptions.byDayOfMonth', validation.byDayOfMonth)}
             />
           </div>
-          {error['rrule.dayOfMonth'] && (
+          {error['ruleOptions.byDayOfMonth'] && (
             <span className="text-red-500">
-              {t('fields.day-of-month.error.' + error['rrule.dayOfMonth'])}
+              {t(
+                'fields.day-of-month.error.' + error['ruleOptions.byDayOfMonth']
+              )}
             </span>
           )}
         </div>
@@ -94,27 +106,34 @@ export default function MonthlyRepetitionTypeForm() {
           <span className="text-l text-slate-600">{t('on-the')}</span>
           <div className="flex flex-col flex-grow">
             <div className="flex justify-between">
-              <Checkboxes
-                options={weekOfMonth}
-                control={control}
-                name="rrule.weekOfMonth"
+              <Radiobuttons
+                options={weeksOfMonth}
+                name="ruleConfig.byWeekOfMonth"
+                validation={{
+                  required: true,
+                }}
               />
             </div>
-            {error['rrule.weekOfMonth'] && (
+            {error['ruleConfig.byWeekOfMonth'] && (
               <span className="text-red-500">
-                {t('fields.week-of-month.error.' + error['rrule.weekOfMonth'])}
+                {t(
+                  'fields.week-of-month.error.' +
+                    error['ruleConfig.byWeekOfMonth']
+                )}
               </span>
             )}
             <div className="flex justify-between">
               <Checkboxes
                 options={weekdays}
                 control={control}
-                name="rrule.dayOfWeek"
+                name="ruleOptions.byDayOfWeek"
               />
             </div>
-            {error['rrule.dayOfWeek'] && (
+            {error['ruleOptions.byDayOfWeek'] && (
               <span className="text-red-500">
-                {t('fields.day-of-week.error.' + error['rrule.dayOfWeek'])}
+                {t(
+                  'fields.day-of-week.error.' + error['ruleOptions.byDayOfWeek']
+                )}
               </span>
             )}
           </div>

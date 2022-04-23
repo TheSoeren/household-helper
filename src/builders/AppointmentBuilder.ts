@@ -2,6 +2,13 @@ import { useUser } from '@supabase/supabase-auth-helpers/react'
 import Appointment from '@/models/Appointment'
 import { Dayjs, OpUnitType } from 'dayjs'
 
+interface AppointmentsBetweenConfig {
+  leeway?: {
+    value: number
+    unit: OpUnitType
+  }
+}
+
 class AppointmentBuilder {
   data: Appointment[]
   isAtMonth: any
@@ -22,19 +29,34 @@ class AppointmentBuilder {
     return this
   }
 
-  private appointmentsBetween(date: Dayjs, timeUnit: OpUnitType) {
-    return this.data.filter(({ vEvent }) =>
-      vEvent.occursBetween(date.startOf(timeUnit), date.endOf(timeUnit))
-    )
+  private appointmentsBetween(
+    date: Dayjs,
+    timeUnit: OpUnitType,
+    config?: AppointmentsBetweenConfig
+  ) {
+    return this.data.filter(({ vEvent }) => {
+      let start = date.startOf(timeUnit)
+      let end = date.endOf(timeUnit)
+
+      if (config?.leeway) {
+        const { value, unit } = config.leeway
+        start = start.subtract(value, unit)
+        end = end.add(value, unit)
+      }
+
+      return vEvent.rrules.find(
+        (rrule) => rrule.occurrences({ start, end }).toArray().length > 0
+      )
+    })
   }
 
-  appointmentsInDay(date: Dayjs) {
-    this.data = this.appointmentsBetween(date, 'd')
+  appointmentsInDay(date: Dayjs, config?: AppointmentsBetweenConfig) {
+    this.data = this.appointmentsBetween(date, 'd', config)
     return this
   }
 
-  appointmentsInMonth(date: Dayjs) {
-    this.data = this.appointmentsBetween(date, 'M')
+  appointmentsInMonth(date: Dayjs, config?: AppointmentsBetweenConfig) {
+    this.data = this.appointmentsBetween(date, 'M', config)
     return this
   }
 

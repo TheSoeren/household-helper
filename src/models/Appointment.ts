@@ -7,6 +7,7 @@ class Appointment {
   description: string
   icon: Icon | null
   vEvent: VEvent
+  allDay: boolean
   userId: string
 
   constructor(
@@ -14,13 +15,15 @@ class Appointment {
     title: string,
     description: string,
     icon: Icon,
-    vEvent: VEvent
+    vEvent: VEvent,
+    allDay: boolean
   ) {
     this.userId = userId
     this.description = description
     this.title = title
     this.icon = icon
     this.vEvent = vEvent
+    this.allDay = allDay
   }
 
   toString() {

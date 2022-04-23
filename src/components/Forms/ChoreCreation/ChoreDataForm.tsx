@@ -1,32 +1,82 @@
 import { colors, icons, repetitionPatterns } from '@/data'
 import useValidation from '@/hooks/useValidation'
+import User from '@/models/User'
 import { useTranslation } from 'next-i18next'
 import { Controller, useFormContext } from 'react-hook-form'
 import IconSelect from '../IconSelect'
 import Select from '../Select'
+import { useEffect } from 'react'
+import { getRequest } from '@/utils/httpRequests'
+import useSWR from 'swr'
+import { useUser } from '@supabase/supabase-auth-helpers/react'
+import Option from '@/models/Option'
+
+const fetcher = (url: string) =>
+  getRequest(url).then((json) =>
+    json.map((u: User) => ({ value: u.id, label: u.displayName }))
+  )
 
 export default function ChoreDataForm() {
-  const { control, register } = useFormContext()
+  const { control, register, unregister, setValue } = useFormContext()
   const { t } = useTranslation('chores-creation')
   const { error } = useValidation(['title'])
+  const { data: users } = useSWR<Option[]>('/api/user', fetcher)
+  const { user: sbUser } = useUser()
+
+  useEffect(() => {
+    if (users?.length && sbUser) {
+      setValue(
+        'user',
+        users.find((u) => u.value === sbUser.id)
+      )
+    }
+  }, [sbUser, users])
+
+  useEffect(() => {
+    register('user', { required: true })
+
+    return () => {
+      unregister('user', { keepDefaultValue: true })
+    }
+  }, [register, unregister])
 
   return (
     <div className="flex flex-col gap-4 xl:w-2/3">
-      <div>
-        <label className="block text-xs font-bold uppercase text-slate-600">
-          {t('fields.title.label')}
-        </label>
-        <input
-          type="text"
-          className="w-full py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
-          placeholder={t('fields.title.placeholder')}
-          {...register('title', { required: true })}
-        />
-        {error['title'] && (
-          <span className="text-red-500">
-            {t('fields.title.error.' + error['title'])}
-          </span>
-        )}
+      <div className="flex gap-4">
+        <div className="w-full">
+          <label className="block text-xs font-bold uppercase text-slate-600">
+            {t('fields.title.label')}
+          </label>
+          <input
+            type="text"
+            className="w-full py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
+            placeholder={t('fields.title.placeholder')}
+            {...register('title', { required: true })}
+          />
+          {error['title'] && (
+            <span className="text-red-500">
+              {t('fields.title.error.' + error['title'])}
+            </span>
+          )}
+        </div>
+        <div className="w-full">
+          <label className="block text-xs font-bold uppercase text-slate-600">
+            {t('fields.user.label')}
+          </label>
+          <Controller
+            name="user"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                instanceId={field.name}
+                placeholder={t('fields.user.placeholder')}
+                options={users}
+                blurInputOnSelect
+              />
+            )}
+          />
+        </div>
       </div>
       <div>
         <label className="block text-xs font-bold uppercase text-slate-600">
@@ -69,7 +119,7 @@ export default function ChoreDataForm() {
           {t('fields.frequency.label')}
         </label>
         <Controller
-          name="rrule.frequency"
+          name="ruleOptions.frequency"
           control={control}
           render={({ field }) => (
             <Select

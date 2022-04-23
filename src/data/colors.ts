@@ -1,4 +1,6 @@
-const colors = [
+import Option from '@/models/Option'
+
+const colors: Option[] = [
   { value: 'bg-slate-300', label: '' },
   { value: 'bg-slate-500', label: '' },
   { value: 'bg-slate-700', label: '' },

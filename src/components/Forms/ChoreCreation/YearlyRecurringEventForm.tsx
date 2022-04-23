@@ -7,10 +7,10 @@ import Checkboxes from '../Checkboxes'
 import MonthlyRepetitionTypeForm from './MonthlyRepetitionTypeForm'
 
 const validation = {
-  customFrequency: {
+  interval: {
     required: true,
   },
-  monthOfYear: {
+  byMonthOfYear: {
     required: true,
   },
 }
@@ -19,15 +19,15 @@ export default function YearlyRecurringEventForm() {
   const { register, unregister, control } = useFormContext()
   const { t } = useTranslation('chores-creation')
   const { error } = useValidation([
-    'rrule.customFrequency',
-    'rrule.monthOfYear',
+    'ruleOptions.interval',
+    'ruleOptions.byMonthOfYear',
   ])
 
   useEffect(() => {
-    register('rrule.monthOfYear', validation.monthOfYear)
+    register('ruleOptions.byMonthOfYear', validation.byMonthOfYear)
     return () => {
-      unregister('rrule.customFrequency', { keepDefaultValue: true })
-      unregister('rrule.monthOfYear', { keepDefaultValue: true })
+      unregister('ruleOptions.interval', { keepDefaultValue: true })
+      unregister('ruleOptions.byMonthOfYear', { keepDefaultValue: true })
     }
   }, [register, unregister])
 
@@ -40,16 +40,14 @@ export default function YearlyRecurringEventForm() {
             type="number"
             min={1}
             className="py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
-            placeholder={t('fields.custom-frequency.placeholder')}
-            {...register('rrule.customFrequency', validation.customFrequency)}
+            placeholder={t('fields.interval.placeholder')}
+            {...register('ruleOptions.interval', validation.interval)}
           />
           <span className="my-auto text-slate-600">{t('year')}</span>
         </div>
-        {error['rrule.customFrequency'] && (
+        {error['ruleOptions.interval'] && (
           <span className="text-red-500">
-            {t(
-              'fields.custom-frequency.error.' + error['rrule.customFrequency']
-            )}
+            {t('fields.interval.error.' + error['ruleOptions.interval'])}
           </span>
         )}
       </div>
@@ -61,13 +59,15 @@ export default function YearlyRecurringEventForm() {
           <Checkboxes
             options={months}
             control={control}
-            name="rrule.monthOfYear"
+            name="ruleOptions.byMonthOfYear"
             className="w-1/6"
           />
         </div>
-        {error['rrule.monthOfYear'] && (
+        {error['ruleOptions.byMonthOfYear'] && (
           <span className="text-red-500">
-            {t('fields.month-of-year.error.' + error['rrule.monthOfYear'])}
+            {t(
+              'fields.month-of-year.error.' + error['ruleOptions.byMonthOfYear']
+            )}
           </span>
         )}
       </div>

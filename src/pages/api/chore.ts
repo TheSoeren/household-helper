@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Chore from '@/models/Chore'
-
-const prisma = new PrismaClient()
+import prisma from '@/utils/prisma'
 
 interface preparedChore extends Omit<Chore, 'vEvent'> {
   vEvent: string

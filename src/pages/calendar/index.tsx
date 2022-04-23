@@ -8,6 +8,7 @@ import {
   MonthView,
   DateNavigator,
   TodayButton,
+  AllDayPanel,
 } from '@devexpress/dx-react-scheduler-material-ui'
 import AppointmentBuilder from '@/builders/AppointmentBuilder'
 import useChores from '@/hooks/useChores'
@@ -31,19 +32,18 @@ export default function CalendarPage() {
 
   const choresByMonth = (date: Dayjs) =>
     new AppointmentBuilder([...chores, ...events])
-      .appointmentsInMonth(date)
+      .appointmentsInMonth(date, { leeway: { value: 2, unit: 'w' } })
       .build()
 
   const calendarEntries = choresByMonth(currentDate).map(
-    ({ title, vEvent }) => {
-      const startDate = vEvent.start.date
+    ({ title, vEvent, allDay }) => {
+      const startDate: Dayjs = vEvent.start.date
 
       // vEvent.duration is either of type number, or DayjsDateAdapter. This forces me to
       // assume the type, since there is no shared way of transforming the value to string.
       const adapterDate = (vEvent.duration as DayjsDateAdapter).date
-      const millis = vEvent.duration as number
 
-      let duration = vEvent.duration ? millis : 0
+      let duration = (vEvent.duration as number) ?? 0
       if (DayjsDateAdapter.isDate(adapterDate)) {
         duration = adapterDate.diff(vEvent.start.date)
       }
@@ -53,6 +53,7 @@ export default function CalendarPage() {
         startDate: startDate.toISOString(),
         endDate: startDate.add(duration, 'millis').toISOString(),
         rRule: vEvent.toICal().match(RRulePattern)?.[0] ?? '',
+        allDay,
       }
     }
   )
@@ -73,8 +74,13 @@ export default function CalendarPage() {
       <DateNavigator />
       <TodayButton messages={{ today: t('today') }} />
       <MonthView displayName={t('month-view.label')} />
-      <WeekView displayName={t('week-view.label')} />
+      <WeekView
+        displayName={t('week-view.label')}
+        cellDuration={60}
+        startDayHour={6}
+      />
       <Appointments />
+      <AllDayPanel />
     </Scheduler>
   )
 }

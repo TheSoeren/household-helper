@@ -1,4 +1,6 @@
-const weekdays = [
+import Option from '@/models/Option'
+
+const weekdays: Option[] = [
   { value: 'MO', label: 'Mo' },
   { value: 'TU', label: 'Tu' },
   { value: 'WE', label: 'We' },

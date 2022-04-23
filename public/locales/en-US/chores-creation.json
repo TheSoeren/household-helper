@@ -8,6 +8,13 @@
         "required": "This field is required!"
       }
     },
+    "user": {
+      "label": "User",
+      "placeholder": "User",
+      "error": {
+        "required": "This field is required!"
+      }
+    },
     "description": {
       "label": "Description",
       "placeholder": "Description",
@@ -28,7 +35,7 @@
       "placeholder": "Recurrance",
       "error": {}
     },
-    "custom-frequency": {
+    "interval": {
       "placeholder": "1",
       "error": {
         "required": "This field is required!"

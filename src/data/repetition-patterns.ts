@@ -1,11 +1,12 @@
-import RepetitionPattern from '@/enums/RepetitionPattern'
+import Frequency from '@/enums/Frequency'
+import Option from '@/models/Option'
 
-const repetitionPatterns = [
-  { value: RepetitionPattern.NONE, label: 'None' },
-  { value: RepetitionPattern.DAILY, label: 'Daily' },
-  { value: RepetitionPattern.WEEKLY, label: 'Weekly' },
-  { value: RepetitionPattern.MONTHLY, label: 'Monthly' },
-  { value: RepetitionPattern.YEARLY, label: 'Yearly' },
+const repetitionPatterns: Option[] = [
+  { value: Frequency.NONE, label: 'None' },
+  { value: Frequency.DAILY, label: 'Daily' },
+  { value: Frequency.WEEKLY, label: 'Weekly' },
+  { value: Frequency.MONTHLY, label: 'Monthly' },
+  { value: Frequency.YEARLY, label: 'Yearly' },
 ]
 
 export default repetitionPatterns

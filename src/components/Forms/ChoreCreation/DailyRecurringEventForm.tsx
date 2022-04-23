@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 const validation = {
-  customFrequency: {
+  interval: {
     required: true,
   },
 }
@@ -12,11 +12,11 @@ const validation = {
 export default function DailyRecurringEventForm() {
   const { register, unregister } = useFormContext()
   const { t } = useTranslation('chores-creation')
-  const { error } = useValidation(['rrule.customFrequency'])
+  const { error } = useValidation(['ruleOptions.interval'])
 
   useEffect(() => {
     return () => {
-      unregister('rrule.customFrequency', { keepDefaultValue: true })
+      unregister('ruleOptions.interval', { keepDefaultValue: true })
     }
   }, [register, unregister])
 
@@ -28,14 +28,14 @@ export default function DailyRecurringEventForm() {
           type="number"
           min={1}
           className="py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
-          placeholder={t('fields.custom-frequency.placeholder')}
-          {...register('rrule.customFrequency', validation.customFrequency)}
+          placeholder={t('fields.interval.placeholder')}
+          {...register('ruleOptions.interval', validation.interval)}
         />
         <span className="my-auto text-slate-600">{t('day')}</span>
       </div>
-      {error['rrule.customFrequency'] && (
+      {error['ruleOptions.interval'] && (
         <span className="text-red-500">
-          {t('fields.custom-frequency.error.' + error['rrule.customFrequency'])}
+          {t('fields.interval.error.' + error['ruleOptions.interval'])}
         </span>
       )}
     </>

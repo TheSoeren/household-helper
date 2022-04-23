@@ -8,6 +8,13 @@
         "required": "Dieses Feld ist ein Pflichtfeld!"
       }
     },
+    "user": {
+      "label": "Benutzer",
+      "placeholder": "Benutzer",
+      "error": {
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
+    },
     "description": {
       "label": "Beschreibung",
       "placeholder": "Beschreibung",
@@ -28,7 +35,7 @@
       "placeholder": "Wiederholung",
       "error": {}
     },
-    "custom-frequency": {
+    "interval": {
       "placeholder": "1",
       "error": {
         "required": "Dieses Feld ist ein Pflichtfeld!"

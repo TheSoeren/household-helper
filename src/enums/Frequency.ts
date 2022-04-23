@@ -1,4 +1,4 @@
-enum RepetitionPattern {
+enum Frequency {
   NONE = 'NONE',
   DAILY = 'DAILY',
   WEEKLY = 'WEEKLY',
@@ -6,4 +6,4 @@ enum RepetitionPattern {
   YEARLY = 'YEARLY',
 }
 
-export default RepetitionPattern
+export default Frequency

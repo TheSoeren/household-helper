@@ -8,20 +8,15 @@ import AppointmentBuilder from '@/builders/AppointmentBuilder'
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 
 export default function Home() {
-  const now = dayjs()
   const { t } = useTranslation('home-page')
   const { chores } = useChores([])
   const { events } = useEvents([])
 
-  const myChoresBuilder = new AppointmentBuilder(chores).ownAppointments()
-  const myEventsBuilder = new AppointmentBuilder(events).ownAppointments()
-
-  const todayBuilder = myChoresBuilder
-    .concat(myEventsBuilder)
-    .appointmentsInDay(now)
-
-  const ownAppointmentsToday = todayBuilder.build()
-  const ownChores = myChoresBuilder.build()
+  const ownAppointmentsToday = new AppointmentBuilder([...chores, ...events])
+    .ownAppointments()
+    .appointmentsInDay(dayjs())
+    .build()
+  const ownChores = new AppointmentBuilder(chores).ownAppointments().build()
 
   const myAppointmentsTodayEmpty = (
     <Trans i18nKey="no-appointments-today" t={t}>

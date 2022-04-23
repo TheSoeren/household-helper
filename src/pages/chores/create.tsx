@@ -2,13 +2,13 @@ import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import { useTranslation } from 'next-i18next'
-import Chore from '@/models/Chore'
+import { Chore, Icon } from '@/models'
+import Option from '@/models/Option'
 import { useUser } from '@supabase/supabase-auth-helpers/react'
 import dayjs from 'dayjs'
-import { DateAdapter, RRule, VEvent } from '@/setups/rschedule'
-import Icon from '@/models/Icon'
-import { postRequest } from '@/utils/httpRequests'
-import RepetitionPattern from '@/enums/RepetitionPattern'
+import { DateAdapter, IRuleOptions, RRule, VEvent } from '@/setups/rschedule'
+import { getRequest, postRequest } from '@/utils/httpRequests'
+import Frequency from '@/enums/Frequency'
 import dynamic from 'next/dynamic'
 import {
   colors,
@@ -16,69 +16,181 @@ import {
   repetitionPatterns,
   monthlyRepetitionType,
 } from '@/data'
+import { ICalRuleFrequency } from '@rschedule/core/rules/ICAL_RULES'
+import WeekOfMonth from '@/enums/WeekOfMonth'
+import MonthlyRepetitionType from '@/enums/MonthlyRepetitionType'
+import User from '@/models/User'
+import useSWR from 'swr'
+
+interface RuleOptions
+  extends Omit<
+    IRuleOptions,
+    | 'frequency'
+    | 'interval'
+    | 'start'
+    | 'end'
+    | 'byDayOfWeek'
+    | 'byDayOfMonth'
+    | 'byMonthOfYear'
+  > {
+  frequency: Option
+  interval: string
+  start: Date
+  end?: Date
+  byDayOfWeek: DateAdapter.Weekday[]
+  byDayOfMonth: string
+  byMonthOfYear: string[]
+}
+
+interface RuleConfig {
+  allDay: boolean
+  monthlyRepetitionType: Option
+  byWeekOfMonth: WeekOfMonth
+}
+
+interface FormObject {
+  title: string
+  description: string
+  user: Option
+  icon: {
+    faclass: Option
+    color: Option
+  }
+  ruleConfig: RuleConfig
+  ruleOptions: RuleOptions
+}
 
 export default function Create() {
   const { t } = useTranslation('chores-creation')
-  const { user } = useUser()
 
-  const formContext = useForm({
+  const currentDayOfWeek = dayjs()
+    .format('dd')
+    .toUpperCase() as DateAdapter.Weekday
+  const currentDayOfMonth = dayjs().date().toString()
+  const currentMonthOfYear = dayjs().format('M')
+
+  const formContext = useForm<FormObject>({
     defaultValues: {
       icon: {
         faclass: icons[0],
         color: colors[0],
       },
-      timeframe: {
-        startDate: new Date(),
-        endDate: null,
-        duration: null,
+      ruleConfig: {
         allDay: false,
+        monthlyRepetitionType: monthlyRepetitionType[0],
+        byWeekOfMonth: WeekOfMonth.FIRST,
       },
-      rrule: {
+      ruleOptions: {
+        start: new Date(),
+        end: undefined,
+        duration: undefined,
         frequency: repetitionPatterns[0],
-        customFrequency: 1,
-        dayOfWeek: [dayjs().format('dd').toUpperCase()],
-        dayOfMonth: dayjs().date(),
-        monthOfYear: [dayjs().format('MMM').toUpperCase()],
+        interval: '1',
+        byDayOfWeek: [currentDayOfWeek],
+        byDayOfMonth: currentDayOfMonth,
+        byMonthOfYear: [currentMonthOfYear],
       },
-      monthlyRepetitionType: monthlyRepetitionType[0],
     },
   })
   const { handleSubmit, watch } = formContext
 
-  const onSubmit: SubmitHandler<any> = async (data) => {
-    console.log(data)
-    if (!user) return
+  const createEvent = (
+    ruleOptions: RuleOptions,
+    ruleConfig: RuleConfig
+  ): VEvent => {
+    const frequency = ruleOptions.frequency.value
 
-    const start = dayjs().subtract(1, 'month')
-    const rule = new RRule({
-      frequency: 'WEEKLY',
-      byDayOfWeek: [DateAdapter.WEEKDAYS[dayjs().day()]],
-      byHourOfDay: [dayjs().hour() as DateAdapter.Hour],
-      start,
+    const rrule = new RRule({
+      frequency: Frequency.DAILY,
+      start: dayjs(ruleOptions.start),
     })
 
-    const icon = new Icon(data.icon.faclass.value, data.icon.color.value)
+    if (ruleOptions.end) {
+      Object.assign(rrule, rrule.set('end', dayjs(ruleOptions.end)))
+    }
+
+    if (frequency === Frequency.NONE) {
+      Object.assign(rrule, rrule.set('count', 1))
+    } else {
+      Object.assign(
+        rrule,
+        rrule.set('frequency', frequency as ICalRuleFrequency)
+      )
+      Object.assign(rrule, rrule.set('interval', Number(ruleOptions.interval)))
+
+      if (frequency === Frequency.WEEKLY) {
+        Object.assign(rrule, rrule.set('byDayOfWeek', ruleOptions.byDayOfWeek))
+      }
+
+      if (frequency === Frequency.MONTHLY || frequency === Frequency.YEARLY) {
+        const monthlyType = ruleConfig.monthlyRepetitionType.value
+        if (monthlyType === MonthlyRepetitionType.DAY) {
+          const byDayOfMonth = Number(
+            ruleOptions.byDayOfMonth
+          ) as DateAdapter.Day
+          Object.assign(rrule, rrule.set('byDayOfMonth', [byDayOfMonth]))
+        } else if (monthlyType === MonthlyRepetitionType.REGULARITY) {
+          const byDayOfWeek: [DateAdapter.Weekday, number][] =
+            ruleOptions.byDayOfWeek.map((v) => [
+              v,
+              Number(ruleConfig.byWeekOfMonth),
+            ])
+          Object.assign(rrule, rrule.set('byDayOfWeek', byDayOfWeek))
+        }
+      }
+
+      if (frequency === Frequency.YEARLY) {
+        Object.assign(
+          rrule,
+          rrule.set(
+            'byMonthOfYear',
+            ruleOptions.byMonthOfYear.map((v) => Number(v) as DateAdapter.Month)
+          )
+        )
+      }
+    }
+
     const vevent = new VEvent({
-      start,
-      rrules: [rule],
-      duration: 2 * 60 * 60 * 1000,
+      start: dayjs(ruleOptions.start),
+      rrules: [rrule],
+      duration: (ruleOptions.duration ?? 0) * 1000 * 60,
     })
-    const chore = new Chore(user.id, data.title, data.description, icon, vevent)
 
-    // https://regebro.wordpress.com/2009/01/28/ui-help-needed-recurring-events-form-usability/
-    // await postRequest('/api/chore', chore.toString())
+    return vevent
+  }
+
+  const onSubmit: SubmitHandler<FormObject> = async ({
+    title,
+    description,
+    user: selectedUser,
+    icon,
+    ruleConfig,
+    ruleOptions,
+  }) => {
+    const vevent = createEvent(ruleOptions, ruleConfig)
+    const iconObject = new Icon(icon.faclass.value, icon.color.value)
+    const chore = new Chore(
+      selectedUser.value,
+      title,
+      description,
+      iconObject,
+      vevent,
+      ruleConfig.allDay
+    )
+
+    await postRequest('/api/chore', chore.toString())
   }
 
   const renderFrequencyForms = () => {
-    const frequency = watch('rrule.frequency').value
+    const frequency = watch('ruleOptions.frequency').value
     switch (frequency) {
-      case RepetitionPattern.DAILY:
+      case Frequency.DAILY:
         return <DailyRecurringEventForm />
-      case RepetitionPattern.WEEKLY:
+      case Frequency.WEEKLY:
         return <WeeklyRecurringEventForm />
-      case RepetitionPattern.MONTHLY:
+      case Frequency.MONTHLY:
         return <MonthlyRecurringEventForm />
-      case RepetitionPattern.YEARLY:
+      case Frequency.YEARLY:
         return <YearlyRecurringEventForm />
       default:
         return

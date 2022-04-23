@@ -1,4 +1,6 @@
-const icons = [
+import Option from '@/models/Option'
+
+const icons: Option[] = [
   { value: 'fa-solid fa-apple-whole', label: 'Whole Apple' },
   { value: 'fa-solid fa-arrow-down-short-wide', label: 'Stairs down' },
   { value: 'fa-solid fa-arrow-rotate-left', label: 'Rotate Left' },
