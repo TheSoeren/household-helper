@@ -9,8 +9,8 @@ import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 
 export default function Home() {
   const { t } = useTranslation('home-page')
-  const { chores } = useChores([])
-  const { events } = useEvents([])
+  const { chores } = useChores()
+  const { events } = useEvents()
 
   const ownAppointmentsToday = new AppointmentBuilder([...chores, ...events])
     .ownAppointments()

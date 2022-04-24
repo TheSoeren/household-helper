@@ -6,7 +6,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 
 export default function Chores() {
-  const { chores } = useChores([])
+  const { chores } = useChores()
   const { t } = useTranslation('chores-page')
 
   if (!chores) {

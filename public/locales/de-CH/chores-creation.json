@@ -47,7 +47,7 @@
       "error": {}
     },
     "end-date": {
-      "label": "End Datum",
+      "label": "Ende der Wiederholung",
       "placeholder": "Leer lassen für endlosen Eintrag...",
       "error": {}
     },
@@ -86,6 +86,13 @@
     "month-of-year": {
       "error": {
         "required": "Wähle mindestens einen Monat aus!"
+      }
+    },
+    "all-day-end": {
+      "label": "End Datum",
+      "placeholder": "End Datum",
+      "error": {
+        "required": "Dieses Feld ist ein Pflichtfeld!"
       }
     }
   },

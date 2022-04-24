@@ -37,16 +37,62 @@ export default function DateRangeForm() {
 
   useEffect(() => {
     if (allDayEvent) {
+      register('ruleOptions.duration')
       unregister('ruleOptions.duration')
+    } else {
+      unregister('ruleOptions.allDayEnd', { keepDefaultValue: true })
     }
   }, [allDayEvent, register, unregister])
+
+  const renderDurationField = () => {
+    return allDayEvent ? (
+      <div className="w-full">
+        <label className="block text-xs font-bold uppercase text-slate-600">
+          {t('fields.all-day-end.label')}
+        </label>
+        <Controller
+          control={control}
+          name="ruleOptions.allDayEnd"
+          render={({ field }) => (
+            <DatePicker
+              className="w-full border-0 shadow"
+              placeholderText={t('fields.all-day-end.placeholder')}
+              onChange={(date) => field.onChange(date)}
+              selected={field.value}
+              dateFormat="dd. MMM yyyy"
+              minDate={new Date()}
+            />
+          )}
+        />
+        {error['ruleOptions.allDayEnd'] && (
+          <span className="text-red-500">
+            {t('fields.all-day-end.error.' + error['ruleOptions.allDayEnd'])}
+          </span>
+        )}
+      </div>
+    ) : (
+      <div className="w-full">
+        <label className="block text-xs font-bold uppercase text-slate-600">
+          {t('fields.duration.label')}
+        </label>
+        <input
+          type="number"
+          className="w-full py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
+          placeholder={t('fields.duration.placeholder')}
+          {...register('ruleOptions.duration', validation.duration)}
+        />
+        {error['ruleOptions.duration'] && (
+          <span className="text-red-500">
+            {t('fields.duration.error.' + error['ruleOptions.duration'])}
+          </span>
+        )}
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col gap-4 mt-4 xl:w-2/3">
       <div>
-        <label className="block text-xs font-bold uppercase text-slate-600">
-          {t('fields.duration.label')}
-        </label>
         <div className="flex gap-4 h-11">
           <div className="w-full my-auto form-check">
             <input
@@ -58,21 +104,7 @@ export default function DateRangeForm() {
               {t('all-day')}
             </label>
           </div>
-          {!allDayEvent ? (
-            <div className="w-full">
-              <input
-                type="number"
-                className="w-full py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
-                placeholder={t('fields.duration.placeholder')}
-                {...register('ruleOptions.duration', validation.duration)}
-              />
-              {error['ruleOptions.duration'] && (
-                <span className="text-red-500">
-                  {t('fields.duration.error.' + error['ruleOptions.duration'])}
-                </span>
-              )}
-            </div>
-          ) : null}
+          {renderDurationField()}
         </div>
       </div>
       <div className="flex gap-4">

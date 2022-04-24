@@ -55,6 +55,11 @@ class AppointmentBuilder {
     return this
   }
 
+  appointmentsInWeek(date: Dayjs, config?: AppointmentsBetweenConfig) {
+    this.data = this.appointmentsBetween(date, 'w', config)
+    return this
+  }
+
   appointmentsInMonth(date: Dayjs, config?: AppointmentsBetweenConfig) {
     this.data = this.appointmentsBetween(date, 'M', config)
     return this

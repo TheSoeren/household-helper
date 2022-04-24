@@ -40,6 +40,7 @@ interface RuleOptions
   byDayOfWeek: DateAdapter.Weekday[]
   byDayOfMonth: string
   byMonthOfYear: string[]
+  allDayEnd: Date
 }
 
 interface RuleConfig {
@@ -89,6 +90,7 @@ export default function Create() {
         byDayOfWeek: [currentDayOfWeek],
         byDayOfMonth: currentDayOfMonth,
         byMonthOfYear: [currentMonthOfYear],
+        allDayEnd: new Date(),
       },
     },
   })
@@ -99,10 +101,12 @@ export default function Create() {
     ruleConfig: RuleConfig
   ): VEvent => {
     const frequency = ruleOptions.frequency.value
+    const duration = ruleOptions.duration ?? 0
+    const start = dayjs(ruleOptions.start)
 
     const rrule = new RRule({
       frequency: Frequency.DAILY,
-      start: dayjs(ruleOptions.start),
+      start,
     })
 
     if (ruleOptions.end) {
@@ -150,13 +154,18 @@ export default function Create() {
       }
     }
 
-    const vevent = new VEvent({
+    const vevent = {
       start: dayjs(ruleOptions.start),
       rrules: [rrule],
-      duration: (ruleOptions.duration ?? 0) * 1000 * 60,
-    })
+      duration: duration * 1000 * 60,
+    }
 
-    return vevent
+    if (ruleConfig.allDay) {
+      vevent.duration =
+        start.diff(ruleOptions.allDayEnd, 'd') * 1000 * 60 * 60 * 24
+    }
+
+    return new VEvent(vevent)
   }
 
   const onSubmit: SubmitHandler<FormObject> = async ({

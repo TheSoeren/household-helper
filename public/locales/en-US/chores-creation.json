@@ -47,7 +47,7 @@
       "error": {}
     },
     "end-date": {
-      "label": "End date",
+      "label": "End of recurrance",
       "placeholder": "Leave empty for no end date...",
       "error": {}
     },
@@ -86,6 +86,13 @@
     "month-of-year": {
       "error": {
         "required": "Select at least one Month!"
+      }
+    },
+    "all-day-end": {
+      "label": "End date",
+      "placeholder": "End date",
+      "error": {
+        "required": "This field is required!"
       }
     }
   },
