@@ -31,45 +31,38 @@ export default function CalendarPage() {
   const { chores } = useChores()
   const { events } = useEvents()
   const [currentDate, setCurrentDate] = useState(dayjs())
-  const [calendarEntries, setCalendarEntries] = useState<AppointmentModel[]>([])
 
   const getAppointments = (date: Dayjs) =>
     new AppointmentBuilder([...chores, ...events])
       .appointmentsInMonth(date, { leeway: { value: 2, unit: 'w' } })
       .build()
 
-  useEffect(() => {
-    const relevantAppointments = getAppointments(currentDate).map(
-      ({ title, vEvent, allDay }) => {
-        const startDate: Dayjs = vEvent.start.date
+  const calendarEntries = getAppointments(currentDate).map(
+    ({ title, vEvent, allDay }) => {
+      const startDate: Dayjs = vEvent.start.date
 
-        // It is possible to chain multiple rules together, but it requires additional
-        // logic to work. After minimal testing i assume the chaining only works when
-        // writing the faster frequencies first:
-        // WORKING: FREQ=WEEKLY;INTERVAL=1;BYDAY=SA,MO;FREQ=MONTHLY;INTERVAL=2
-        // NOT WORKING: FREQ=MONTHLY;INTERVAL=2;FREQ=WEEKLY;INTERVAL=1;BYDAY=SA,MO
-        const rRule = vEvent.toICal().match(RRulePattern)?.join(';') ?? ''
+      // It is possible to chain multiple rules together, but it requires additional
+      // logic to work. After minimal testing i assume the chaining only works when
+      // writing the faster frequencies first:
+      // WORKING: FREQ=WEEKLY;INTERVAL=1;BYDAY=SA,MO;FREQ=MONTHLY;INTERVAL=2
+      // NOT WORKING: FREQ=MONTHLY;INTERVAL=2;FREQ=WEEKLY;INTERVAL=1;BYDAY=SA,MO
+      const rRule = vEvent.toICal().match(RRulePattern)?.join(';') ?? ''
 
-        const output: AppointmentModel = {
-          title,
-          startDate: startDate.toDate(),
-          endDate: startDate.add(1, 'm').toDate(),
-          rRule,
-          allDay,
-        }
-
-        if (vEvent.duration && typeof vEvent.duration === 'number') {
-          output.endDate = startDate
-            .add(vEvent.duration, 'millisecond')
-            .toDate()
-        }
-
-        return output
+      const output: AppointmentModel = {
+        title,
+        startDate: startDate.toDate(),
+        endDate: startDate.add(1, 'm').toDate(),
+        rRule,
+        allDay,
       }
-    )
 
-    setCalendarEntries(relevantAppointments)
-  }, [currentDate])
+      if (vEvent.duration && typeof vEvent.duration === 'number') {
+        output.endDate = startDate.add(vEvent.duration, 'millisecond').toDate()
+      }
+
+      return output
+    }
+  )
 
   const currentDateChange = (date: Date) => {
     setCurrentDate(dayjs(date))
