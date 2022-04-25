@@ -59,7 +59,7 @@
       }
     },
     "duration": {
-      "label": "Duration",
+      "label": "Duration (in Minutes)",
       "placeholder": "Duration (in Minutes)",
       "error": {
         "min": "Enter at least 15 minutes!",

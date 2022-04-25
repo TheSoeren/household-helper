@@ -11,7 +11,6 @@ import {
   AllDayPanel,
   AppointmentTooltip,
 } from '@devexpress/dx-react-scheduler-material-ui'
-import AppointmentBuilder from '@/builders/AppointmentBuilder'
 import useChores from '@/hooks/useChores'
 import useEvents from '@/hooks/useEvents'
 import dayjs, { Dayjs } from 'dayjs'
@@ -20,8 +19,8 @@ import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
-import { useEffect } from 'react'
 import AppointmentTooltipContent from '@/components/Calendar/AppointmentTooltipContent'
+import useAppointmentBuilder from '@/hooks/useAppointmentBuilder'
 
 const RRulePattern = new RegExp('(?<=RRULE:).*', 'gm')
 
@@ -31,38 +30,38 @@ export default function CalendarPage() {
   const { chores } = useChores()
   const { events } = useEvents()
   const [currentDate, setCurrentDate] = useState(dayjs())
+  const builder = useAppointmentBuilder([...chores, ...events])
 
   const getAppointments = (date: Dayjs) =>
-    new AppointmentBuilder([...chores, ...events])
+    builder
       .appointmentsInMonth(date, { leeway: { value: 2, unit: 'w' } })
       .build()
 
-  const calendarEntries = getAppointments(currentDate).map(
-    ({ title, vEvent, allDay }) => {
-      const startDate: Dayjs = vEvent.start.date
+  const calendarEntries = getAppointments(currentDate).map((appointment) => {
+    const startDate: Dayjs = appointment.vEvent.start.date
+    const duration = appointment.vEvent.duration
 
-      // It is possible to chain multiple rules together, but it requires additional
-      // logic to work. After minimal testing i assume the chaining only works when
-      // writing the faster frequencies first:
-      // WORKING: FREQ=WEEKLY;INTERVAL=1;BYDAY=SA,MO;FREQ=MONTHLY;INTERVAL=2
-      // NOT WORKING: FREQ=MONTHLY;INTERVAL=2;FREQ=WEEKLY;INTERVAL=1;BYDAY=SA,MO
-      const rRule = vEvent.toICal().match(RRulePattern)?.join(';') ?? ''
+    // It is possible to chain multiple rules together, but it requires additional
+    // logic to work. After minimal testing i assume the chaining only works when
+    // writing the faster frequencies first:
+    // WORKING: FREQ=WEEKLY;INTERVAL=1;BYDAY=SA,MO;FREQ=MONTHLY;INTERVAL=2
+    // NOT WORKING: FREQ=MONTHLY;INTERVAL=2;FREQ=WEEKLY;INTERVAL=1;BYDAY=SA,MO
+    const rRule =
+      appointment.vEvent.toICal().match(RRulePattern)?.join(';') ?? ''
 
-      const output: AppointmentModel = {
-        title,
-        startDate: startDate.toDate(),
-        endDate: startDate.add(1, 'm').toDate(),
-        rRule,
-        allDay,
-      }
-
-      if (vEvent.duration && typeof vEvent.duration === 'number') {
-        output.endDate = startDate.add(vEvent.duration, 'millisecond').toDate()
-      }
-
-      return output
+    const output: AppointmentModel = {
+      ...appointment,
+      startDate: startDate.toDate(),
+      endDate: startDate.add(1, 'm').toDate(),
+      rRule,
     }
-  )
+
+    if (duration && typeof duration === 'number') {
+      output.endDate = startDate.add(duration, 'millisecond').toDate()
+    }
+
+    return output
+  })
 
   const currentDateChange = (date: Date) => {
     setCurrentDate(dayjs(date))
@@ -84,12 +83,9 @@ export default function CalendarPage() {
         cellDuration={60}
         startDayHour={6}
       />
-      <Appointments />
+      <Appointments recurringIconComponent={() => null} />
       <AllDayPanel />
-      <AppointmentTooltip
-        recurringIconComponent={() => <></>}
-        contentComponent={(props) => <AppointmentTooltipContent {...props} />}
-      />
+      <AppointmentTooltip contentComponent={AppointmentTooltipContent} />
     </Scheduler>
   )
 }

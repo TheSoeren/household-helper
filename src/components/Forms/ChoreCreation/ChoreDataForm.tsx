@@ -30,7 +30,7 @@ export default function ChoreDataForm() {
         users.find((u) => u.value === sbUser.id)
       )
     }
-  }, [sbUser, users])
+  }, [sbUser, setValue, users])
 
   useEffect(() => {
     register('user', { required: true })
@@ -83,7 +83,8 @@ export default function ChoreDataForm() {
           {t('fields.description.label')}
         </label>
         <textarea
-          className="w-full py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow resize-none placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
+          rows={3}
+          className="w-full py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow resize-y placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
           placeholder={t('fields.description.placeholder')}
           {...register('description')}
         />

@@ -19,8 +19,6 @@ import {
 import { ICalRuleFrequency } from '@rschedule/core/rules/ICAL_RULES'
 import WeekOfMonth from '@/enums/WeekOfMonth'
 import MonthlyRepetitionType from '@/enums/MonthlyRepetitionType'
-import User from '@/models/User'
-import useSWR from 'swr'
 
 interface RuleOptions
   extends Omit<

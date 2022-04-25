@@ -95,6 +95,7 @@ export default function DateRangeForm() {
       <div>
         <div className="flex gap-4 h-11">
           <div className="w-full my-auto form-check">
+            <div className="h-4" />
             <input
               type="checkbox"
               className="w-4 h-4 mt-1 mr-2 text-transparent align-top transition duration-200 rounded-md cursor-pointer checked:text-slate-600"
@@ -117,11 +118,12 @@ export default function DateRangeForm() {
             name="ruleOptions.start"
             render={({ field }) => (
               <DatePicker
+                showTimeSelect
                 className="w-full border-0 shadow"
                 placeholderText={t('fields.start-date.placeholder')}
                 onChange={(date) => field.onChange(date)}
                 selected={field.value}
-                dateFormat="dd. MMM yyyy"
+                dateFormat="dd. MMM yyyy (HH:mm)"
                 minDate={new Date()}
               />
             )}

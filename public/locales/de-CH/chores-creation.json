@@ -59,7 +59,7 @@
       }
     },
     "duration": {
-      "label": "Dauer",
+      "label": "Dauer (in Minuten)",
       "placeholder": "Dauer (in Minuten)",
       "error": {
         "min": "Die mindestdauer ist 15 Minuten!",
