@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import User from '@/models/User'
-
-const prisma = new PrismaClient()
+import prisma from '@/utils/prisma'
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,8 +13,13 @@ export default async function handler(
 
   switch (method) {
     case 'GET':
-      const user = await getUser(id)
-      res.status(200).json(user)
+      if (id) {
+        const user = await getUser(id)
+        res.status(200).json(user)
+      } else {
+        const users = await getUsers()
+        res.status(200).json(users)
+      }
       break
     case 'POST':
       const createdUser = await createUser(req.body)
@@ -30,6 +33,10 @@ export default async function handler(
       res.setHeader('Allow', ['POST'])
       res.status(405).end(`Method ${method} Not Allowed`)
   }
+}
+
+function getUsers() {
+  return prisma.user.findMany()
 }
 
 function getUser(userId: string | string[]) {

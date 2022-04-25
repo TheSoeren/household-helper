@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
@@ -12,9 +12,10 @@ import '@/setups/dayjs'
 import { UserProvider } from '@supabase/supabase-auth-helpers/react'
 import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs'
 
+import 'react-datepicker/dist/react-datepicker.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import '@/styles/globals.css'
 import '@/styles/tailwind.css'
+import '@/styles/globals.css'
 import Dashboard, { DashboardProps } from '@/layouts/Dashboard'
 
 type CustomAppProps = AppProps & {

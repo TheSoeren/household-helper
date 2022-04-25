@@ -9,6 +9,10 @@ First you must install all dependencies with `yarn install` and additionally exe
 
 Setup your supabase project and add the variables `DATABASE_URL`, `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` to `.env.local`. A guide by supabase can be found [here].
 
+## Prisma Migration
+
+To change the db schema, edit the schema.prisma file and then run `yarn migrate`.
+
 [nextjs]: https://nextjs.org/
 [supabase]: https://supabase.com/
 [prisma]: https://www.prisma.io/

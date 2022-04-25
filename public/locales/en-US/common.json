@@ -4,5 +4,7 @@
   "delete-success": "Entity successfully deleted!",
   "delete-error": "There was an error while deleting the Entity!",
   "update-success": "Entity successfully updated!",
-  "update-error": "There was an error while updating the Entity!"
+  "update-error": "There was an error while updating the Entity!",
+  "no-appointments": "Not a single appointment.",
+  "create": "Create"
 }

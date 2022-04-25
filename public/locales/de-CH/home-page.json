@@ -1,4 +1,6 @@
 {
-  "appointments-today": "Alle heutigen Aufgaben",
-  "my-appointments-today": "Meine heutigen Aufgaben"
+  "my-appointments-today": "Mein Tag",
+  "my-chores": "Meine Aufgaben",
+  "no-appointments-today": "Entspann dich! <0 /> Heute hast du nichts zu erledigen.",
+  "no-own-chores": "Du hast keine Aufgaben <0 />"
 }

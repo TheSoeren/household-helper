@@ -3,7 +3,10 @@
   "fields": {
     "display-name": {
       "label": "Anzeigename",
-      "placeholder": "Anzeigename"
+      "placeholder": "Anzeigename",
+      "error": {
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
     }
   },
   "save": "Speichern"

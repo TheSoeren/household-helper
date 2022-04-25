@@ -1,0 +1,109 @@
+{
+  "title": "Create a chore",
+  "fields": {
+    "title": {
+      "label": "Label",
+      "placeholder": "Label",
+      "error": {
+        "required": "This field is required!"
+      }
+    },
+    "user": {
+      "label": "User",
+      "placeholder": "User",
+      "error": {
+        "required": "This field is required!"
+      }
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "Description",
+      "error": {}
+    },
+    "icon-faclass": {
+      "label": "Icon",
+      "placeholder": "Icon",
+      "error": {}
+    },
+    "icon-color": {
+      "label": "Color",
+      "placeholder": "Color",
+      "error": {}
+    },
+    "frequency": {
+      "label": "Recurrance",
+      "placeholder": "Recurrance",
+      "error": {}
+    },
+    "interval": {
+      "placeholder": "1",
+      "error": {
+        "required": "This field is required!"
+      }
+    },
+    "monthly-repetition-type": {
+      "label": "Monthly repetition type",
+      "placeholder": "Monthly repetition type",
+      "error": {}
+    },
+    "end-date": {
+      "label": "End of recurrance",
+      "placeholder": "Leave empty for no end date...",
+      "error": {}
+    },
+    "start-date": {
+      "label": "Start date",
+      "placeholder": "Start date",
+      "error": {
+        "required": "This field is required!"
+      }
+    },
+    "duration": {
+      "label": "Duration (in Minutes)",
+      "placeholder": "Duration (in Minutes)",
+      "error": {
+        "min": "Enter at least 15 minutes!",
+        "pattern": "The minimum step size is 5 minutes!",
+        "required": "This field is required!"
+      }
+    },
+    "day-of-week": {
+      "error": {
+        "required": "Select at least one Day!"
+      }
+    },
+    "day-of-month": {
+      "placeholder": "1",
+      "error": {
+        "required": "This field is required!"
+      }
+    },
+    "week-of-month": {
+      "error": {
+        "required": "Select at least one Week!"
+      }
+    },
+    "month-of-year": {
+      "error": {
+        "required": "Select at least one Month!"
+      }
+    },
+    "all-day-end": {
+      "label": "End date",
+      "placeholder": "End date",
+      "error": {
+        "required": "This field is required!"
+      }
+    }
+  },
+  "all-day": "All day",
+  "every": "Every",
+  "each": "Each",
+  "on": "On:",
+  "on-the": "On the",
+  "day": "Day(s)",
+  "week": "Week(s)",
+  "month": "Month(s)",
+  "year": "Year(s)",
+  "create": "Create"
+}

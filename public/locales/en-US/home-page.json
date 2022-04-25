@@ -1,4 +1,6 @@
 {
-  "appointments-today": "All chores today",
-  "my-appointments-today": "My chores today"
+  "my-appointments-today": "My Day",
+  "my-chores": "My Chores",
+  "no-appointments-today": "Relax! <0 /> You don't have any worries today.",
+  "no-own-chores": "You have no chores <0 />"
 }

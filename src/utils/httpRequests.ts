@@ -2,7 +2,7 @@ import i18next from 'i18next'
 import { toast } from 'react-hot-toast'
 
 function t(key: string) {
-  return i18next.t(`http-requests: ${key}`)
+  return i18next.t(`common: ${key}`)
 }
 
 export function getRequest(url: string) {
@@ -18,7 +18,7 @@ export function getRequest(url: string) {
 export function postRequest(
   url: string,
   body: string,
-  showSuccess: boolean = false
+  showSuccess: boolean = true
 ) {
   return fetch(url, {
     method: 'POST',
@@ -37,7 +37,7 @@ export function postRequest(
 export function putRequest(
   url: string,
   body: string,
-  showSuccess: boolean = false
+  showSuccess: boolean = true
 ) {
   return fetch(url, {
     method: 'PUT',
@@ -53,7 +53,7 @@ export function putRequest(
   })
 }
 
-export function deleteRequest(url: string, showSuccess: boolean = false) {
+export function deleteRequest(url: string, showSuccess: boolean = true) {
   return fetch(url, { method: 'DELETE' }).then((res) => {
     if (!res.ok) {
       toast.error(t('delete-error'))

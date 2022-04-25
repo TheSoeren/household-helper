@@ -2,6 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 //
 // npx prisma studio -> visual db
+// npx prisma generate -> generates prisma client (reestablish link between schema.prisma and .env file)
 // npx prisma migrate dev -> update db with prisma schema
 // npx prisma migrate reset -> update db with prisma schema, data will be lost
 
@@ -26,22 +27,24 @@ model Icon {
 }
 
 model Chore {
-  id          String @id @default(cuid())
+  id          String  @id @default(cuid())
   title       String
-  description String @default("")
+  description String  @default("")
   icon        Icon?
   vEvent      String
+  allDay      Boolean @default(false)
 
   responsible User   @relation(fields: [userId], references: [id])
   userId      String
 }
 
 model Event {
-  id          String @id @default(cuid())
+  id          String  @id @default(cuid())
   title       String
-  description String @default("")
+  description String  @default("")
   icon        Icon?
   vEvent      String
+  allDay      Boolean @default(false)
 
   responsible User   @relation(fields: [userId], references: [id])
   userId      String

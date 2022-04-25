@@ -23,6 +23,7 @@ const dbChoreToChore = ({
   description,
   vEvent,
   userId,
+  allDay,
 }: DBChore): Chore => ({
   id,
   title,
@@ -30,6 +31,7 @@ const dbChoreToChore = ({
   description,
   vEvent: VEvent.fromICal(vEvent)[0],
   userId,
+  allDay,
 })
 
 const dbChoresToChores = (dbChores: DBChore[]): Chore[] => {
@@ -43,6 +45,7 @@ const dbEventToEvent = ({
   description,
   vEvent,
   userId,
+  allDay,
 }: DBEvent): Event => ({
   id,
   title,
@@ -50,6 +53,7 @@ const dbEventToEvent = ({
   description,
   vEvent: VEvent.fromICal(vEvent)[0],
   userId,
+  allDay,
 })
 
 const dbEventsToEvents = (dbEvents: DBEvent[]): Event[] => {
