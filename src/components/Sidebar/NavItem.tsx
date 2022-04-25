@@ -19,6 +19,7 @@ export function NavItem(data: SidebarElement) {
     <li className="items-center" key={data.label}>
       <Link href={data.route}>
         <a
+          href="#"
           className={`text-xs uppercase py-3 font-bold block ${
             isCurrentRoute ? activeLink : inactiveLink
           }`}
