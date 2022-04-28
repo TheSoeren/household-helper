@@ -16,19 +16,16 @@ export default function Chores() {
   return <ChoreList title={t('all-chores')} chores={chores} create />
 }
 
-export const getServerSideProps = withAuthRequired({
-  redirectTo: '/authenticate',
-  getServerSideProps: async ({ locale }) => {
-    const translations = locale
-      ? await serverSideTranslations(locale, [
-          'common',
-          'dashboard-layout',
-          'chores-page',
-        ])
-      : {}
+export const getServerSideProps = async ({ locale }: any) => {
+  const translations = locale
+    ? await serverSideTranslations(locale, [
+        'common',
+        'dashboard-layout',
+        'chores-page',
+      ])
+    : {}
 
-    return {
-      props: translations,
-    }
-  },
-})
+  return {
+    props: translations,
+  }
+}

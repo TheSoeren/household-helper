@@ -226,22 +226,19 @@ export default function Create() {
   )
 }
 
-export const getServerSideProps = withAuthRequired({
-  redirectTo: '/authenticate',
-  getServerSideProps: async ({ locale }) => {
-    const translations = locale
-      ? await serverSideTranslations(locale, [
-          'common',
-          'dashboard-layout',
-          'chores-creation',
-        ])
-      : {}
+export const getServerSideProps = async ({ locale }: any) => {
+  const translations = locale
+    ? await serverSideTranslations(locale, [
+        'common',
+        'dashboard-layout',
+        'chores-creation',
+      ])
+    : {}
 
-    return {
-      props: translations,
-    }
-  },
-})
+  return {
+    props: translations,
+  }
+}
 
 const ChoreDataForm = dynamic(
   () => import('@/components/Forms/ChoreCreation/ChoreDataForm'),

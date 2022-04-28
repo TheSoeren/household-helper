@@ -90,9 +90,7 @@ export default function CalendarPage() {
   )
 }
 
-export const getServerSideProps = withAuthRequired({
-  redirectTo: '/authenticate',
-  getServerSideProps: async ({ locale }) => {
+export const getServerSideProps = async ({ locale }:any) => {
     const translations = locale
       ? await serverSideTranslations(locale, [
           'dashboard-layout',

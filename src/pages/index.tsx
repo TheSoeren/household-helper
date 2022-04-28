@@ -48,19 +48,16 @@ export default function Home() {
   )
 }
 
-export const getServerSideProps = withAuthRequired({
-  redirectTo: '/authenticate',
-  getServerSideProps: async ({ locale }) => {
-    const translations = locale
-      ? await serverSideTranslations(locale, [
-          'common',
-          'dashboard-layout',
-          'home-page',
-        ])
-      : {}
+export const getServerSideProps = async ({ locale }: any) => {
+  const translations = locale
+    ? await serverSideTranslations(locale, [
+        'common',
+        'dashboard-layout',
+        'home-page',
+      ])
+    : {}
 
-    return {
-      props: translations,
-    }
-  },
-})
+  return {
+    props: translations,
+  }
+}
