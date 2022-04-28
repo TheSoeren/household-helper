@@ -6,6 +6,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import dayjs from 'dayjs'
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 import useAppointmentBuilder from '@/hooks/useAppointmentBuilder'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export default function Home() {
   const { t } = useTranslation('home-page')
@@ -58,6 +59,6 @@ export const getServerSideProps = async ({ locale }: any) => {
     : {}
 
   return {
-    props: translations,
+    props: { ...translations },
   }
 }

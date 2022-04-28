@@ -4,5 +4,8 @@ module.exports = {
     locales: ['en-US', 'de-CH'],
     reloadOnPrerender: true, // This enables hot-reload on translation .json changes
     defaultNS: 'common',
+    react: {
+      useSuspense: false,
+    },
   },
 }
