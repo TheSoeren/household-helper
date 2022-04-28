@@ -90,16 +90,15 @@ export default function CalendarPage() {
   )
 }
 
-export const getServerSideProps = async ({ locale }:any) => {
-    const translations = locale
-      ? await serverSideTranslations(locale, [
-          'dashboard-layout',
-          'calendar-page',
-        ])
-      : {}
+export const getServerSideProps = async ({ locale }: any) => {
+  const translations = locale
+    ? await serverSideTranslations(locale, [
+        'dashboard-layout',
+        'calendar-page',
+      ])
+    : {}
 
-    return {
-      props: translations,
-    }
-  },
-})
+  return {
+    props: translations,
+  }
+}
