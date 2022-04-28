@@ -18,6 +18,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { GetStaticPropsContext } from 'next'
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
 import AppointmentTooltipContent from '@/components/Calendar/AppointmentTooltipContent'
 import useAppointmentBuilder from '@/hooks/useAppointmentBuilder'
@@ -90,15 +91,15 @@ export default function CalendarPage() {
   )
 }
 
-export const getServerSideProps = async ({ locale }: any) => {
-  const translations = locale
-    ? await serverSideTranslations(locale, [
-        'dashboard-layout',
-        'calendar-page',
-      ])
-    : {}
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
+  if (!locale) return { props: {} }
 
   return {
-    props: translations,
+    props: {
+      ...(await serverSideTranslations(locale, [
+        'dashboard-layout',
+        'calendar-page',
+      ])),
+    },
   }
 }

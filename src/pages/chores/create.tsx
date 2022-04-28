@@ -18,6 +18,7 @@ import {
 import { ICalRuleFrequency } from '@rschedule/core/rules/ICAL_RULES'
 import WeekOfMonth from '@/enums/WeekOfMonth'
 import MonthlyRepetitionType from '@/enums/MonthlyRepetitionType'
+import { GetStaticPropsContext } from 'next'
 
 interface RuleOptions
   extends Omit<
@@ -226,17 +227,17 @@ export default function Create() {
   )
 }
 
-export const getServerSideProps = async ({ locale }: any) => {
-  const translations = locale
-    ? await serverSideTranslations(locale, [
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
+  if (!locale) return { props: {} }
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
         'common',
         'dashboard-layout',
         'chores-creation',
-      ])
-    : {}
-
-  return {
-    props: translations,
+      ])),
+    },
   }
 }
 

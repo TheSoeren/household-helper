@@ -4,6 +4,7 @@ import useChores from '@/hooks/useChores'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
+import { GetStaticPropsContext } from 'next'
 
 export default function Chores() {
   const { chores } = useChores()
@@ -16,16 +17,16 @@ export default function Chores() {
   return <ChoreList title={t('all-chores')} chores={chores} create />
 }
 
-export const getServerSideProps = async ({ locale }: any) => {
-  const translations = locale
-    ? await serverSideTranslations(locale, [
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
+  if (!locale) return { props: {} }
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
         'common',
         'dashboard-layout',
         'chores-page',
-      ])
-    : {}
-
-  return {
-    props: translations,
+      ])),
+    },
   }
 }
