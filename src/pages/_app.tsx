@@ -1,10 +1,6 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { AppProps } from 'next/app'
+import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import Router from 'next/router'
-
-import PageChange from '@/components/PageChange/PageChange'
 import { appWithTranslation } from 'next-i18next'
 import { Toaster } from 'react-hot-toast'
 
@@ -23,27 +19,6 @@ type CustomAppProps = AppProps & {
     layout?: (props: any) => JSX.Element
   }
 }
-
-Router.events.on('routeChangeStart', (url) => {
-  console.log(`Loading: ${url}`)
-  document.body.classList.add('body-page-transition')
-  ReactDOM.render(
-    <PageChange path={url} />,
-    document.getElementById('page-transition')
-  )
-})
-Router.events.on('routeChangeComplete', () => {
-  ReactDOM.unmountComponentAtNode(
-    document.getElementById('page-transition') as HTMLElement
-  )
-  document.body.classList.remove('body-page-transition')
-})
-Router.events.on('routeChangeError', () => {
-  ReactDOM.unmountComponentAtNode(
-    document.getElementById('page-transition') as HTMLElement
-  )
-  document.body.classList.remove('body-page-transition')
-})
 
 function MyApp({ Component, pageProps }: CustomAppProps) {
   const Layout =
@@ -69,6 +44,8 @@ function MyApp({ Component, pageProps }: CustomAppProps) {
   )
 }
 
+export default appWithTranslation(MyApp)
+
 export async function getInitialProps({ Component, router, ctx }: any) {
   let pageProps = {}
 
@@ -78,5 +55,3 @@ export async function getInitialProps({ Component, router, ctx }: any) {
 
   return { pageProps }
 }
-
-export default appWithTranslation(MyApp)
