@@ -10,6 +10,7 @@ import { postRequest } from '@/utils/httpRequests'
 import { useUser } from '@supabase/supabase-auth-helpers/react'
 import { useForm } from 'react-hook-form'
 import AuthUserObject from '@/models/AuthUserObject'
+import API_KEY from '@/utils/apiKey'
 
 export default function Authenticate() {
   const { t } = useTranslation('authenticate-page')
@@ -56,7 +57,7 @@ export default function Authenticate() {
         }
 
         const dbUser = { id: user.id, displayName: user.email }
-        return postRequest('/api/user', JSON.stringify(dbUser), false)
+        return postRequest(API_KEY.user, JSON.stringify(dbUser), false)
       })
       .then(() => {
         reset()

@@ -10,6 +10,7 @@ import { getRequest } from '@/utils/httpRequests'
 import useSWR from 'swr'
 import { useUser } from '@supabase/supabase-auth-helpers/react'
 import Option from '@/models/Option'
+import API_KEY from '@/utils/apiKey'
 
 const fetcher = (url: string) =>
   getRequest(url).then((json) =>
@@ -20,7 +21,7 @@ export default function ChoreDataForm() {
   const { control, register, unregister, setValue } = useFormContext()
   const { t } = useTranslation('chores-creation')
   const { error } = useValidation(['title'])
-  const { data: users } = useSWR<Option[]>('/api/user', fetcher)
+  const { data: users } = useSWR<Option[]>(API_KEY.user, fetcher)
   const { user: sbUser } = useUser()
 
   useEffect(() => {

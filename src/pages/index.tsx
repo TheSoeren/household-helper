@@ -4,9 +4,8 @@ import AppointmentList from '@/components/Lists/AppointmentList'
 import { Trans, useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import dayjs from 'dayjs'
-import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
+import { withPageAuth } from '@supabase/supabase-auth-helpers/nextjs'
 import useAppointmentBuilder from '@/hooks/useAppointmentBuilder'
-import { GetStaticPropsContext } from 'next'
 
 export default function Home() {
   const { t } = useTranslation('home-page')
@@ -49,16 +48,19 @@ export default function Home() {
   )
 }
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
-  if (!locale) return { props: {} }
+export const getServerSideProps = withPageAuth({
+  redirectTo: '/authenticate',
+  getServerSideProps: async ({ locale }) => {
+    if (!locale) return { props: {} }
 
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, [
-        'common',
-        'dashboard-layout',
-        'home-page',
-      ])),
-    },
-  }
-}
+    return {
+      props: {
+        ...(await serverSideTranslations(locale, [
+          'common',
+          'dashboard-layout',
+          'home-page',
+        ])),
+      },
+    }
+  },
+})

@@ -1,11 +1,11 @@
 import User from '@/models/User'
-import { getRequest } from '@/utils/httpRequests'
+import API_KEY from '@/utils/apiKey'
 import { useUser } from '@supabase/supabase-auth-helpers/react'
 import useSWR from 'swr'
 
 export default function useUserAccount() {
   const { user } = useUser()
-  const { data, mutate } = useSWR<User>(`/api/user?id=${user?.id}`, getRequest)
+  const { data, mutate } = useSWR<User>(`${API_KEY.user}?id=${user?.id}`)
 
   return {
     user: data,

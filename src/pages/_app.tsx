@@ -13,6 +13,12 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import '@/styles/tailwind.css'
 import '@/styles/globals.css'
 import Dashboard, { DashboardProps } from '@/layouts/Dashboard'
+import { SWRConfig } from 'swr'
+import { getRequest } from '@/utils/httpRequests'
+
+// to prevent "atob is undefined" error
+// https://github.com/jeremyBanks/b64-to-blob/issues/4#issuecomment-537616542
+global.atob = require('atob')
 
 type CustomAppProps = AppProps & {
   Component: {
@@ -35,11 +41,13 @@ function MyApp({ Component, pageProps }: CustomAppProps) {
         />
       </Head>
       <Toaster position="bottom-left" />
-      <UserProvider supabaseClient={supabaseClient}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </UserProvider>
+      <SWRConfig value={{ fetcher: getRequest }}>
+        <UserProvider supabaseClient={supabaseClient}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </UserProvider>
+      </SWRConfig>
     </>
   )
 }
