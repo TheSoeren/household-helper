@@ -1,5 +1,6 @@
 import i18next from 'i18next'
 import { toast } from 'react-hot-toast'
+import { dbChoresToChores } from '@/utils/dataConverter'
 
 function t(key: string) {
   return i18next.t(`common: ${key}`)
@@ -63,4 +64,8 @@ export function deleteRequest(url: string, showSuccess: boolean = true) {
     if (showSuccess) toast.success(t('delete-success'))
     return res.json()
   })
+}
+
+export function choreFetcher(url: string) {
+  return getRequest(url).then((json) => dbChoresToChores(json))
 }

@@ -2,7 +2,7 @@ import Appointment from '@/models/Appointment'
 import User from '@/models/User'
 import useSWR from 'swr'
 import CardDeleteButton from './CardDeleteButton'
-import { getRequest } from '@/utils/httpRequests'
+import API_KEY from '@/utils/apiKey'
 
 interface AppointmentCardProps {
   appointment: Appointment
@@ -15,7 +15,7 @@ export default function AppointmentCard({
 }: AppointmentCardProps) {
   const { title, icon, userId } = appointment
 
-  const { data: user } = useSWR<User>(`/api/user?id=${userId}`, getRequest)
+  const { data: user } = useSWR<User>(`${API_KEY.user}?id=${userId}`)
 
   return (
     <div className="group relative flex flex-col min-w-0 h-28 break-words bg-white rounded shadow-lg">

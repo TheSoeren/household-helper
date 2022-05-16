@@ -1,4 +1,4 @@
-# Household improver
+# Household helper
 
 This is a [Nextjs] app with [prisma] and [Notus JS], setup to work with a [Supabase] backend.
 [Material-UI] is also included, but is mainly used by the calendar library [dx-react-scheduler] and for some skeleton components.

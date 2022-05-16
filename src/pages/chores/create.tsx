@@ -1,4 +1,4 @@
-import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
+import { withPageAuth } from '@supabase/supabase-auth-helpers/nextjs'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import { useTranslation } from 'next-i18next'
@@ -18,6 +18,7 @@ import {
 import { ICalRuleFrequency } from '@rschedule/core/rules/ICAL_RULES'
 import WeekOfMonth from '@/enums/WeekOfMonth'
 import MonthlyRepetitionType from '@/enums/MonthlyRepetitionType'
+import API_KEY from '@/utils/apiKey'
 
 interface RuleOptions
   extends Omit<
@@ -184,7 +185,7 @@ export default function Create() {
       ruleConfig.allDay
     )
 
-    await postRequest('/api/chore', chore.toString())
+    await postRequest(API_KEY.chore, chore.toString())
   }
 
   const renderFrequencyForms = () => {
@@ -226,19 +227,19 @@ export default function Create() {
   )
 }
 
-export const getServerSideProps = withAuthRequired({
+export const getServerSideProps = withPageAuth({
   redirectTo: '/authenticate',
   getServerSideProps: async ({ locale }) => {
-    const translations = locale
-      ? await serverSideTranslations(locale, [
+    if (!locale) return { props: {} }
+
+    return {
+      props: {
+        ...(await serverSideTranslations(locale, [
           'common',
           'dashboard-layout',
           'chores-creation',
-        ])
-      : {}
-
-    return {
-      props: translations,
+        ])),
+      },
     }
   },
 })

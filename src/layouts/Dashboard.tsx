@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import Sidebar from '@/components/Sidebar/Sidebar'
 
 export type DashboardProps = {

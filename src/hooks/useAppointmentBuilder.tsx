@@ -1,11 +1,11 @@
 import { useUser } from '@supabase/supabase-auth-helpers/react'
 import Appointment from '@/models/Appointment'
-import { Dayjs, OpUnitType } from 'dayjs'
+import { Dayjs, ManipulateType } from 'dayjs'
 
 interface AppointmentsBetweenConfig {
   leeway?: {
     value: number
-    unit: OpUnitType
+    unit: ManipulateType
   }
 }
 
@@ -30,7 +30,7 @@ export default function useAppointmentBuilder(
 
   const appointmentsBetween = (
     date: Dayjs,
-    timeUnit: OpUnitType,
+    timeUnit: ManipulateType,
     config?: AppointmentsBetweenConfig
   ) => {
     return data.filter(({ vEvent }) => {

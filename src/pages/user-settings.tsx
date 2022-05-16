@@ -1,7 +1,8 @@
 import useUserAccount from '@/hooks/useUserAccount'
 import User from '@/models/User'
+import API_KEY from '@/utils/apiKey'
 import { putRequest } from '@/utils/httpRequests'
-import { withAuthRequired } from '@supabase/supabase-auth-helpers/nextjs'
+import { withPageAuth } from '@supabase/supabase-auth-helpers/nextjs'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useEffect } from 'react'
@@ -29,7 +30,7 @@ export default function UserSettings() {
     // https://swr.vercel.app/docs/mutation#mutation-and-post-request
     mutateUser(user, false)
 
-    await putRequest('/api/user', JSON.stringify(data))
+    await putRequest(API_KEY.user, JSON.stringify(data))
     mutateUser()
   }
 
@@ -66,18 +67,18 @@ export default function UserSettings() {
   )
 }
 
-export const getServerSideProps = withAuthRequired({
+export const getServerSideProps = withPageAuth({
   redirectTo: '/authenticate',
   getServerSideProps: async ({ locale }) => {
-    const translations = locale
-      ? await serverSideTranslations(locale, [
-          'dashboard-layout',
-          'user-settings-page',
-        ])
-      : {}
+    if (!locale) return { props: {} }
 
     return {
-      props: translations,
+      props: {
+        ...(await serverSideTranslations(locale, [
+          'dashboard-layout',
+          'user-settings-page',
+        ])),
+      },
     }
   },
 })
