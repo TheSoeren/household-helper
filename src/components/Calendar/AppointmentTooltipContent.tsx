@@ -50,7 +50,7 @@ export default function AppointmentTooltipContent({
             </div>
           </div>
         )}
-        <div className="tooltip-header w-full flex justify-between">
+        <div className="flex justify-between w-full tooltip-header">
           <div className="tooltip-header-text">
             <h1 className="text-xl font-bold">{appointmentData.title}</h1>
             <span>{start.format('DD. MMMM YYYY')}</span>
@@ -67,14 +67,18 @@ export default function AppointmentTooltipContent({
           </button>
         </div>
       </div>
-      <hr className="my-1" />
-      <div className="overflow-y-auto max-h-28">
-        <p>{appointmentData.description}</p>
-      </div>
+      {appointmentData.description ? (
+        <>
+          <hr className="my-1" />
+          <div className="overflow-y-auto max-h-28">
+            <p>{appointmentData.description}</p>
+          </div>
+        </>
+      ) : null}
       {!appointmentData.allDay ? (
         <>
           <hr className="my-1" />
-          <i className="fa-regular fa-clock mr-2" />
+          <i className="mr-2 fa-regular fa-clock" />
           <span>
             {start.format('HH:mm')} - {end.format('HH:mm')}
           </span>

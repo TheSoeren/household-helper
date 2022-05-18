@@ -33,6 +33,7 @@ export default function CalendarPage() {
   const { events } = useEvents()
 
   const [currentDate, setCurrentDate] = useState(dayjs())
+  const [appointmentFormVisible, setAppointmentFormVisible] = useState(false)
   const builder = useAppointmentBuilder([...chores, ...events])
 
   const getAppointments = (date: Dayjs) =>
@@ -84,6 +85,14 @@ export default function CalendarPage() {
         displayName={t('week-view.label')}
         cellDuration={60}
         startDayHour={6}
+        timeTableCellComponent={(props) => (
+          <WeekView.TimeTableCell
+            {...props}
+            onDoubleClick={() => setAppointmentFormVisible(true)}
+          >
+            {props.children}
+          </WeekView.TimeTableCell>
+        )}
       />
       <MonthView displayName={t('month-view.label')} />
       <Appointments
@@ -99,7 +108,15 @@ export default function CalendarPage() {
       />
       <AllDayPanel />
       <AppointmentTooltip contentComponent={AppointmentTooltipContent} />
-      <AppointmentForm layoutComponent={AppointmentFormLayout} />
+      <AppointmentForm
+        layoutComponent={(props) =>
+          AppointmentFormLayout({
+            ...props,
+            onClose: () => setAppointmentFormVisible(false),
+          })
+        }
+        visible={appointmentFormVisible}
+      />
     </Scheduler>
   )
 }
