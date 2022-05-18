@@ -46,7 +46,7 @@ export default function DateRangeForm() {
 
   const renderDurationField = () => {
     return allDayEvent ? (
-      <div className="w-full">
+      <>
         <label className="block text-xs font-bold uppercase text-slate-600">
           {t('fields.all-day-end.label')}
         </label>
@@ -69,9 +69,9 @@ export default function DateRangeForm() {
             {t('fields.all-day-end.error.' + error['ruleOptions.allDayEnd'])}
           </span>
         )}
-      </div>
+      </>
     ) : (
-      <div className="w-full">
+      <>
         <label className="block text-xs font-bold uppercase text-slate-600">
           {t('fields.duration.label')}
         </label>
@@ -86,27 +86,24 @@ export default function DateRangeForm() {
             {t('fields.duration.error.' + error['ruleOptions.duration'])}
           </span>
         )}
-      </div>
+      </>
     )
   }
 
   return (
     <div className="flex flex-col gap-4 mt-4 xl:w-2/3">
-      <div>
-        <div className="flex gap-4 h-11">
-          <div className="w-full my-auto form-check">
-            <div className="h-4" />
-            <input
-              type="checkbox"
-              className="w-4 h-4 mt-1 mr-2 text-transparent align-top transition duration-200 rounded-md cursor-pointer checked:text-slate-600"
-              {...register('ruleConfig.allDay')}
-            />
-            <label className="inline-block text-gray-600 form-check-label">
-              {t('all-day')}
-            </label>
-          </div>
-          {renderDurationField()}
+      <div className="flex gap-4">
+        <div className="w-full my-auto form-check">
+          <input
+            type="checkbox"
+            className="w-4 h-4 mt-1 mr-2 text-transparent align-top transition duration-200 rounded-md cursor-pointer checked:text-slate-600"
+            {...register('ruleConfig.allDay')}
+          />
+          <label className="inline-block text-gray-600 form-check-label">
+            {t('all-day')}
+          </label>
         </div>
+        <div className="w-full">{renderDurationField()}</div>
       </div>
       <div className="flex gap-4">
         <div className="w-full">

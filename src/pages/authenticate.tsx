@@ -53,7 +53,7 @@ export default function Authenticate() {
       .signUp(data)
       .then(({ user, error }: any) => {
         if (error || !user) {
-          throw new Error()
+          throw new Error(error.message)
         }
 
         const dbUser = { id: user.id, displayName: user.email }
@@ -63,8 +63,8 @@ export default function Authenticate() {
         reset()
         toast.success(t('signup-success'))
       })
-      .catch(() => {
-        toast.error(t('signup-error'))
+      .catch((e: Error) => {
+        toast.error(e.message)
       })
   }
 
@@ -98,11 +98,13 @@ export default function Authenticate() {
                     type="password"
                     className="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
                     placeholder={t('fields.password.placeholder')}
-                    {...register('password', { required: true })}
+                    {...register('password', { required: true, minLength: 6 })}
                   />
-                  <span className="text-red-500">
-                    {errors.password && t('fields.password.error.required')}
-                  </span>
+                  {errors.password && (
+                    <span className="text-red-500">
+                      {t('fields.password.error.' + errors.password.type)}
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex mt-6 text-center">

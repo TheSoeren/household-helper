@@ -77,12 +77,12 @@ export default function CalendarPage() {
       <ViewSwitcher />
       <DateNavigator />
       <TodayButton messages={{ today: t('today') }} />
-      <MonthView displayName={t('month-view.label')} />
       <WeekView
         displayName={t('week-view.label')}
         cellDuration={60}
         startDayHour={6}
       />
+      <MonthView displayName={t('month-view.label')} />
       <Appointments recurringIconComponent={() => null} />
       <AllDayPanel />
       <AppointmentTooltip contentComponent={AppointmentTooltipContent} />

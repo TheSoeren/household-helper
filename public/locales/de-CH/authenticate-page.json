@@ -15,7 +15,8 @@
       "label": "Passwort",
       "placeholder": "Passwort",
       "error": {
-        "required": "Dieses Feld ist ein Pflichtfeld!"
+        "required": "Dieses Feld ist ein Pflichtfeld!",
+        "minLength": "Das Passwort muss mindestens 6 Zeichen lang sein!"
       }
     }
   },
