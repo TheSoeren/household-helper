@@ -12,7 +12,7 @@ const validation = {
 
 export default function MonthlyRecurringEventForm() {
   const { register, unregister } = useFormContext()
-  const { t } = useTranslation('chores-creation')
+  const { t } = useTranslation('appointment-creation')
   const { error } = useValidation(['ruleOptions.interval'])
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function MonthlyRecurringEventForm() {
   }, [register, unregister])
 
   return (
-    <div className="flex flex-col gap-4 mt-4 xl:w-2/3">
+    <div className="flex flex-col gap-4 mt-4">
       <div>
         <div className="flex w-full gap-4">
           <span className="my-auto text-slate-600">{t('every')}</span>

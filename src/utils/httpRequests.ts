@@ -1,6 +1,6 @@
 import i18next from 'i18next'
 import { toast } from 'react-hot-toast'
-import { dbChoresToChores } from '@/utils/dataConverter'
+import { dbChoresToChores, dbEventsToEvents } from '@/utils/dataConverter'
 
 function t(key: string) {
   return i18next.t(`common: ${key}`)
@@ -24,15 +24,18 @@ export function postRequest(
   return fetch(url, {
     method: 'POST',
     body,
-  }).then((res) => {
-    if (!res.ok) {
-      toast.error(t('create-error'))
-      throw new Error(`${res.status}: ${res.statusText}`)
-    }
-
-    if (showSuccess) toast.success(t('create-success'))
-    return res.json()
   })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`${res.status}: ${res.statusText}`)
+      }
+
+      if (showSuccess) toast.success(t('create-success'))
+      return res.json()
+    })
+    .catch((e: Error) => {
+      toast.error(e.message)
+    })
 }
 
 export function putRequest(
@@ -43,29 +46,43 @@ export function putRequest(
   return fetch(url, {
     method: 'PUT',
     body,
-  }).then((res) => {
-    if (!res.ok) {
-      toast.error(t('update-error'))
-      throw new Error(`${res.status}: ${res.statusText}`)
-    }
-
-    if (showSuccess) toast.success(t('update-success'))
-    return res.json()
   })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`${res.status}: ${res.statusText}`)
+      }
+
+      if (showSuccess) toast.success(t('update-success'))
+      return res.json()
+    })
+    .catch((e: Error) => {
+      toast.error(e.message)
+    })
 }
 
 export function deleteRequest(url: string, showSuccess: boolean = true) {
-  return fetch(url, { method: 'DELETE' }).then((res) => {
-    if (!res.ok) {
-      toast.error(t('delete-error'))
-      throw new Error(`${res.status}: ${res.statusText}`)
-    }
+  return fetch(url, { method: 'DELETE' })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`${res.status}: ${res.statusText}`)
+      }
 
-    if (showSuccess) toast.success(t('delete-success'))
-    return res.json()
-  })
+      if (showSuccess) toast.success(t('delete-success'))
+      return res.json()
+    })
+    .catch((e: Error) => {
+      toast.error(e.message)
+    })
 }
 
 export function choreFetcher(url: string) {
-  return getRequest(url).then((json) => dbChoresToChores(json))
+  return getRequest(url).then((response) =>
+    dbChoresToChores(JSON.parse(response))
+  )
+}
+
+export function eventFetcher(url: string) {
+  return getRequest(url).then((response) =>
+    dbEventsToEvents(JSON.parse(response))
+  )
 }

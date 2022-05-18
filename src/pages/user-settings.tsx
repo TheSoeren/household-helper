@@ -35,7 +35,7 @@ export default function UserSettings() {
   }
 
   return (
-    <div className="px-3 xl:w-1/3">
+    <div className="px-4 md:px-10 xl:w-1/3">
       <div className="text-center flex pt-6">
         <h6 className="text-slate-700 text-xl font-bold">{t('title')}</h6>
       </div>
@@ -57,7 +57,7 @@ export default function UserSettings() {
           </div>
         </div>
         <button
-          className="bg-slate-800 w-1/3 text-white active:bg-slate-600 text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 cursor-pointer"
+          className="bg-slate-800 text-white active:bg-slate-600 text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 cursor-pointer"
           type="submit"
         >
           {t('save')}

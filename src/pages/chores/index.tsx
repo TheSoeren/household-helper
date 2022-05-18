@@ -9,11 +9,15 @@ export default function Chores() {
   const { chores } = useChores()
   const { t } = useTranslation('chores-page')
 
-  if (!chores) {
-    return <ChoresPageSkeleton />
-  }
-
-  return <ChoreList title={t('all-chores')} chores={chores} create />
+  return (
+    <div className="px-4 md:px-10">
+      {!chores ? (
+        <ChoresPageSkeleton />
+      ) : (
+        <ChoreList title={t('all-chores')} chores={chores} create />
+      )}
+    </div>
+  )
 }
 
 export const getServerSideProps = withPageAuth({

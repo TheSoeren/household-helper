@@ -21,12 +21,11 @@ export default function ChoreList({
 
   return (
     <>
-      <div className="flex items-center content-center px-3 pt-6 text-center">
+      <div className="flex items-center content-center pt-6 text-center">
         <h6 className="text-xl font-bold text-slate-700">{title}</h6>
         {create ? (
           <Link href="/chores/create">
             <a
-              href="#pablo"
               className="inline-flex items-center justify-center px-3 mx-6 mr-2 transition-colors duration-150 rounded shadow-lg h-7 bg-slate-50 focus:shadow-outline hover:text-stone-500"
               type="button"
             >
@@ -36,7 +35,7 @@ export default function ChoreList({
           </Link>
         ) : null}
       </div>
-      <div className="flex flex-wrap py-6">
+      <div className="flex flex-wrap py-6 -mx-3">
         {!chores.length ? (
           <div className="mx-2 text-2xl md:text-4xl text-slate-300">
             {emptyListContent ?? t('no-appointments')}

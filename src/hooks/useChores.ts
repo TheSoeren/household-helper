@@ -1,23 +1,27 @@
 import Chore from '@/models/Chore'
-import { dbChoresToChores } from '@/utils/dataConverter'
 import useSWR from 'swr'
-import { getRequest } from '@/utils/httpRequests'
+import { choreFetcher, deleteRequest } from '@/utils/httpRequests'
 import API_KEY from '@/utils/apiKey'
-
-const fetcher = (url: string) =>
-  getRequest(url).then((response) => dbChoresToChores(JSON.parse(response)))
 
 export default function useChores(initialValues: Chore[] = []) {
   const { data = initialValues, mutate } = useSWR<Chore[]>(
     API_KEY.chore,
-    fetcher
+    choreFetcher
   )
 
-  console.log(data)
-  console.log(API_KEY.chore)
+  const deleteChore = async (id: string) => {
+    mutate(
+      data.filter((c) => c.id !== id),
+      false
+    )
+
+    await deleteRequest(`${API_KEY.chore}?id=${id}`)
+    mutate()
+  }
 
   return {
     chores: data,
     mutateChores: mutate,
+    deleteChore,
   }
 }

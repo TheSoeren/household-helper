@@ -17,9 +17,9 @@ const fetcher = (url: string) =>
     json.map((u: User) => ({ value: u.id, label: u.displayName }))
   )
 
-export default function ChoreDataForm() {
+export default function AppointmentDataForm() {
   const { control, register, unregister, setValue } = useFormContext()
-  const { t } = useTranslation('chores-creation')
+  const { t } = useTranslation('appointment-creation')
   const { error } = useValidation(['title'])
   const { data: users } = useSWR<Option[]>(API_KEY.user, fetcher)
   const { user: sbUser } = useUser()
@@ -42,7 +42,7 @@ export default function ChoreDataForm() {
   }, [register, unregister])
 
   return (
-    <div className="flex flex-col gap-4 xl:w-2/3">
+    <div className="flex flex-col gap-4">
       <div className="flex gap-4">
         <div className="w-full">
           <label className="block text-xs font-bold uppercase text-slate-600">

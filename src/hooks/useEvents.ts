@@ -1,20 +1,27 @@
 import Event from '@/models/Event'
-import { dbEventsToEvents } from '@/utils/dataConverter'
 import useSWR from 'swr'
-import { getRequest } from '@/utils/httpRequests'
+import { deleteRequest, eventFetcher } from '@/utils/httpRequests'
 import API_KEY from '@/utils/apiKey'
 
 export default function useEvents(initialValues: Event[] = []) {
-  const fetcher = (url: string) =>
-    getRequest(url).then((response) => dbEventsToEvents(JSON.parse(response)))
-
   const { data = initialValues, mutate } = useSWR<Event[]>(
     API_KEY.event,
-    fetcher
+    eventFetcher
   )
+
+  const deleteEvent = async (id: string) => {
+    mutate(
+      data.filter((c) => c.id !== id),
+      false
+    )
+
+    await deleteRequest(`${API_KEY.event}?id=${id}`)
+    mutate()
+  }
 
   return {
     events: data,
     mutateEvents: mutate,
+    deleteEvent,
   }
 }

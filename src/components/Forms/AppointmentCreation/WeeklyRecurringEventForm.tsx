@@ -1,40 +1,40 @@
-import { months } from '@/data'
+import { weekdays } from '@/data'
 import useValidation from '@/hooks/useValidation'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import Checkboxes from '../Checkboxes'
-import MonthlyRepetitionTypeForm from './MonthlyRepetitionTypeForm'
 
 const validation = {
   interval: {
     required: true,
   },
-  byMonthOfYear: {
+  byDayOfWeek: {
     required: true,
   },
 }
 
-export default function YearlyRecurringEventForm() {
+export default function WeeklyRecurringEventForm() {
   const { register, unregister, control } = useFormContext()
-  const { t } = useTranslation('chores-creation')
+  const { t } = useTranslation('appointment-creation')
   const { error } = useValidation([
     'ruleOptions.interval',
-    'ruleOptions.byMonthOfYear',
+    'ruleOptions.byDayOfWeek',
   ])
 
   useEffect(() => {
-    register('ruleOptions.byMonthOfYear', validation.byMonthOfYear)
+    register('ruleOptions.byDayOfWeek', validation.byDayOfWeek)
+
     return () => {
       unregister('ruleOptions.interval', { keepDefaultValue: true })
-      unregister('ruleOptions.byMonthOfYear', { keepDefaultValue: true })
+      unregister('ruleOptions.byDayOfWeek', { keepDefaultValue: true })
     }
   }, [register, unregister])
 
   return (
-    <div className="flex flex-col gap-4 mt-4 xl:w-2/3">
+    <div className="flex flex-col gap-4 mt-4">
       <div>
-        <div className="flex w-full gap-4">
+        <div className="flex gap-4">
           <span className="my-auto text-slate-600">{t('every')}</span>
           <input
             type="number"
@@ -43,7 +43,7 @@ export default function YearlyRecurringEventForm() {
             placeholder={t('fields.interval.placeholder')}
             {...register('ruleOptions.interval', validation.interval)}
           />
-          <span className="my-auto text-slate-600">{t('year')}</span>
+          <span className="my-auto text-slate-600">{t('week')}</span>
         </div>
         {error['ruleOptions.interval'] && (
           <span className="text-red-500">
@@ -52,26 +52,22 @@ export default function YearlyRecurringEventForm() {
         )}
       </div>
       <div>
-        <label className="block text-xs font-bold uppercase text-slate-600">
-          {t('on')}
-        </label>
-        <div className="flex flex-wrap justify-between">
-          <Checkboxes
-            options={months}
-            control={control}
-            name="ruleOptions.byMonthOfYear"
-            className="w-1/6"
-          />
+        <div className="flex gap-4">
+          <span className="my-auto text-slate-600">{t('on')}</span>
+          <div className="flex justify-between w-full">
+            <Checkboxes
+              options={weekdays}
+              control={control}
+              name="ruleOptions.byDayOfWeek"
+            />
+          </div>
         </div>
-        {error['ruleOptions.byMonthOfYear'] && (
+        {error['ruleOptions.byDayOfWeek'] && (
           <span className="text-red-500">
-            {t(
-              'fields.month-of-year.error.' + error['ruleOptions.byMonthOfYear']
-            )}
+            {t('fields.day-of-week.error.' + error['ruleOptions.byDayOfWeek'])}
           </span>
         )}
       </div>
-      <MonthlyRepetitionTypeForm />
     </div>
   )
 }

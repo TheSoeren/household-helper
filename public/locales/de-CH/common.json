@@ -6,5 +6,7 @@
   "update-success": "Entität erfolgreich aktualisiert!",
   "update-error": "Entität erfolgreich gelöscht!",
   "no-appointments": "Keine Einträge vorhanden.",
-  "create": "Erstellen"
+  "create": "Erstellen",
+  "no-id-prepared": "Keine ID hinterlegt!",
+  "unable-to-delete-type-appointment": "Der Termin ist vom Typ \"Appointment\"!"
 }
