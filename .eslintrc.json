@@ -1,3 +1,6 @@
 {
-  "extends": ["next/core-web-vitals", "react-app"]
+  "extends": ["next/core-web-vitals", "react-app"],
+  "rules": {
+    "jsx-a11y/anchor-is-valid": 0
+  }
 }

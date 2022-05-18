@@ -19,6 +19,7 @@ import { ICalRuleFrequency } from '@rschedule/core/rules/ICAL_RULES'
 import WeekOfMonth from '@/enums/WeekOfMonth'
 import MonthlyRepetitionType from '@/enums/MonthlyRepetitionType'
 import API_KEY from '@/utils/apiKey'
+import { useRouter } from 'next/router'
 
 interface RuleOptions
   extends Omit<
@@ -61,6 +62,7 @@ interface FormObject {
 
 export default function Create() {
   const { t } = useTranslation('chores-creation')
+  const router = useRouter()
 
   const currentDayOfWeek = dayjs()
     .format('dd')
@@ -186,6 +188,7 @@ export default function Create() {
     )
 
     await postRequest(API_KEY.chore, chore.toString())
+    router.push('/chores')
   }
 
   const renderFrequencyForms = () => {
