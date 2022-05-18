@@ -21,7 +21,7 @@ const validation = {
 }
 
 export default function MonthlyRepetitionTypeForm() {
-  const { t } = useTranslation('chores-creation')
+  const { t } = useTranslation('appointment-creation')
   const { watch, register, unregister, control } = useFormContext()
   const { error } = useValidation([
     'ruleOptions.byDayOfMonth',

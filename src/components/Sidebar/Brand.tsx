@@ -7,10 +7,7 @@ export default function Brand() {
   return (
     <div className="flex justify-between items-center">
       <Link href="/">
-        <a
-          href="#pablo"
-          className="text-left my-2 text-slate-600 whitespace-nowrap text-md uppercase font-bold"
-        >
+        <a className="text-left my-2 text-slate-600 whitespace-nowrap text-md uppercase font-bold">
           {t('brand')}
         </a>
       </Link>

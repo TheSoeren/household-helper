@@ -1,0 +1,108 @@
+{
+  "fields": {
+    "title": {
+      "label": "Titel",
+      "placeholder": "Titel",
+      "error": {
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
+    },
+    "user": {
+      "label": "Benutzer",
+      "placeholder": "Benutzer",
+      "error": {
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
+    },
+    "description": {
+      "label": "Beschreibung",
+      "placeholder": "Beschreibung",
+      "error": {}
+    },
+    "icon-faclass": {
+      "label": "Icon",
+      "placeholder": "Icon",
+      "error": {}
+    },
+    "icon-color": {
+      "label": "Farbe",
+      "placeholder": "Farbe",
+      "error": {}
+    },
+    "frequency": {
+      "label": "Wiederholung",
+      "placeholder": "Wiederholung",
+      "error": {}
+    },
+    "interval": {
+      "placeholder": "1",
+      "error": {
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
+    },
+    "monthly-repetition-type": {
+      "label": "Art der monatlichen Wiederhoung",
+      "placeholder": "Art der monatlichen Wiederhoung",
+      "error": {}
+    },
+    "end-date": {
+      "label": "Ende der Wiederholung",
+      "placeholder": "Leer lassen für endlosen Eintrag...",
+      "error": {}
+    },
+    "start-date": {
+      "label": "Start Datum",
+      "placeholder": "Start Datum",
+      "error": {
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
+    },
+    "duration": {
+      "label": "Dauer (in Minuten)",
+      "placeholder": "Dauer (in Minuten)",
+      "error": {
+        "min": "Die mindestdauer ist 15 Minuten!",
+        "pattern": "Der kleinste Schritt ist 5 Minuten!",
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
+    },
+    "day-of-week": {
+      "error": {
+        "required": "Wähle mindestens einen Tag aus!"
+      }
+    },
+    "day-of-month": {
+      "placeholder": "1",
+      "error": {
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
+    },
+    "week-of-month": {
+      "error": {
+        "required": "Wähle mindestens eine Woche aus!"
+      }
+    },
+    "month-of-year": {
+      "error": {
+        "required": "Wähle mindestens einen Monat aus!"
+      }
+    },
+    "all-day-end": {
+      "label": "End Datum",
+      "placeholder": "End Datum",
+      "error": {
+        "required": "Dieses Feld ist ein Pflichtfeld!"
+      }
+    }
+  },
+  "all-day": "Ganztägig",
+  "every": "Alle",
+  "each": "Jeden",
+  "on": "Am:",
+  "on-the": "Jeden",
+  "day": "Tag(e)",
+  "week": "Woche(n)",
+  "month": "Monat(e)",
+  "year": "Jahr(e)",
+  "create": "Erstellen"
+}

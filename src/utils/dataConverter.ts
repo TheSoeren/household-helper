@@ -7,6 +7,7 @@ import Chore from '@/models/Chore'
 import Event from '@/models/Event'
 import { VEvent } from '@/setups/rschedule'
 import Icon from '@/models/Icon'
+import AppointmentType from '@/enums/AppointmentType'
 
 export type DBChore = PrismaChore & {
   icon: PrismaIcon | null
@@ -26,6 +27,7 @@ const dbChoreToChore = ({
   allDay,
 }: DBChore): Chore => ({
   id,
+  type: AppointmentType.CHORE,
   title,
   icon: icon ? new Icon(icon.faclass, icon.color) : null,
   description,
@@ -48,8 +50,9 @@ const dbEventToEvent = ({
   allDay,
 }: DBEvent): Event => ({
   id,
+  type: AppointmentType.EVENT,
   title,
-  icon,
+  icon: icon ? new Icon(icon.faclass, icon.color) : null,
   description,
   vEvent: VEvent.fromICal(vEvent)[0],
   userId,

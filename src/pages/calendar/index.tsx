@@ -10,6 +10,7 @@ import {
   TodayButton,
   AllDayPanel,
   AppointmentTooltip,
+  AppointmentForm,
 } from '@devexpress/dx-react-scheduler-material-ui'
 import useChores from '@/hooks/useChores'
 import useEvents from '@/hooks/useEvents'
@@ -21,6 +22,7 @@ import { useState } from 'react'
 import { withPageAuth } from '@supabase/supabase-auth-helpers/nextjs'
 import AppointmentTooltipContent from '@/components/Calendar/AppointmentTooltipContent'
 import useAppointmentBuilder from '@/hooks/useAppointmentBuilder'
+import AppointmentFormLayout from '@/components/Calendar/AppointmentFormLayout'
 
 const RRulePattern = new RegExp('(?<=RRULE:).*', 'gm')
 
@@ -29,6 +31,7 @@ export default function CalendarPage() {
   const { t } = useTranslation('calendar-page')
   const { chores } = useChores()
   const { events } = useEvents()
+
   const [currentDate, setCurrentDate] = useState(dayjs())
   const builder = useAppointmentBuilder([...chores, ...events])
 
@@ -83,9 +86,20 @@ export default function CalendarPage() {
         startDayHour={6}
       />
       <MonthView displayName={t('month-view.label')} />
-      <Appointments recurringIconComponent={() => null} />
+      <Appointments
+        recurringIconComponent={() => null}
+        appointmentComponent={(props) => (
+          <Appointments.Appointment
+            {...props}
+            onDoubleClick={() => {
+              /* Nothing */
+            }}
+          />
+        )}
+      />
       <AllDayPanel />
       <AppointmentTooltip contentComponent={AppointmentTooltipContent} />
+      <AppointmentForm layoutComponent={AppointmentFormLayout} />
     </Scheduler>
   )
 }
@@ -100,6 +114,7 @@ export const getServerSideProps = withPageAuth({
         ...(await serverSideTranslations(locale, [
           'dashboard-layout',
           'calendar-page',
+          'appointment-creation',
         ])),
       },
     }

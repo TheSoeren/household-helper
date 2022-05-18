@@ -1,26 +1,20 @@
 import useChores from '@/hooks/useChores'
-import { deleteRequest } from '@/utils/httpRequests'
 import Chore from '@/models/Chore'
 import toast from 'react-hot-toast'
 import AppointmentCard from './AppointmentCard'
-import API_KEY from '@/utils/apiKey'
+import { useTranslation } from 'next-i18next'
 
 export default function ChoreCard(chore: Chore) {
-  const { chores, mutateChores } = useChores()
+  const { t } = useTranslation('common')
+  const { deleteChore } = useChores()
 
   const deleteChoreHandler = async () => {
     if (!chore.id) {
-      toast.error('Keine ID hinterlegt!')
+      toast.error(t('no-id-prepared'))
       return
     }
 
-    mutateChores(
-      chores.filter((c) => c.id !== chore.id),
-      false
-    )
-
-    await deleteRequest(`${API_KEY.chore}?id=${chore.id}`)
-    mutateChores()
+    deleteChore(chore.id)
   }
 
   return <AppointmentCard appointment={chore} onDelete={deleteChoreHandler} />

@@ -1,21 +1,36 @@
-import Appointment from '@/models/Appointment'
-import {
-  AppointmentModel,
-  AppointmentTooltip,
-} from '@devexpress/dx-react-scheduler'
+import AppointmentType from '@/enums/AppointmentType'
+import useChores from '@/hooks/useChores'
+import useEvents from '@/hooks/useEvents'
+import { AppointmentTooltip } from '@devexpress/dx-react-scheduler'
 import dayjs from 'dayjs'
+import { useTranslation } from 'next-i18next'
+import toast from 'react-hot-toast'
 
-interface AppointmentData
-  extends AppointmentModel,
-    Omit<Partial<Appointment>, 'id'> {}
+export default function AppointmentTooltipContent({
+  appointmentData,
+}: AppointmentTooltip.ContentProps) {
+  const { t } = useTranslation('common')
+  const { deleteChore } = useChores()
+  const { deleteEvent } = useEvents()
 
-interface Props extends AppointmentTooltip.ContentProps {
-  appointmentData?: AppointmentData
-}
-
-export default function AppointmentTooltipContent({ appointmentData }: Props) {
   if (!appointmentData)
     return <span className="px-3 pb-3 font-bold text-red-800"></span>
+
+  const deleteAppointment = async () => {
+    if (!appointmentData.id) {
+      toast.error(t('no-id-prepared'))
+      return
+    }
+
+    if (appointmentData.type === AppointmentType.CHORE) {
+      deleteChore(appointmentData.id.toString())
+    } else if (appointmentData.type === AppointmentType.EVENT) {
+      deleteEvent(appointmentData.id.toString())
+    } else {
+      toast.error('unable-to-delete-type-appointment')
+      return
+    }
+  }
 
   const start = dayjs(appointmentData.startDate)
   const end = dayjs(appointmentData.endDate)
@@ -35,12 +50,21 @@ export default function AppointmentTooltipContent({ appointmentData }: Props) {
             </div>
           </div>
         )}
-        <div className="tooltip-header">
-          <h1 className="text-xl font-bold">{appointmentData.title}</h1>
-          <span>{start.format('DD. MMMM YYYY')}</span>
-          {start.diff(end, 'd') ? (
-            <span> - {end.format('DD. MMMM YYYY')}</span>
-          ) : null}
+        <div className="tooltip-header w-full flex justify-between">
+          <div className="tooltip-header-text">
+            <h1 className="text-xl font-bold">{appointmentData.title}</h1>
+            <span>{start.format('DD. MMMM YYYY')}</span>
+            {start.diff(end, 'd') ? (
+              <span> - {end.format('DD. MMMM YYYY')}</span>
+            ) : null}
+          </div>
+          <button
+            className="hover:text-slate-500 h-fit"
+            type="button"
+            onClick={deleteAppointment}
+          >
+            <i className="fa-solid fa-trash" />
+          </button>
         </div>
       </div>
       <hr className="my-1" />

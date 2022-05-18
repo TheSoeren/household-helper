@@ -41,9 +41,7 @@ function getChores() {
         icon: true,
       },
     })
-    .then((data) => {
-      return JSON.stringify(data)
-    })
+    .then((data) => JSON.stringify(data))
 }
 
 function createChore(body: string) {

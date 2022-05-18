@@ -11,7 +11,7 @@ const validation = {
 
 export default function DailyRecurringEventForm() {
   const { register, unregister } = useFormContext()
-  const { t } = useTranslation('chores-creation')
+  const { t } = useTranslation('appointment-creation')
   const { error } = useValidation(['ruleOptions.interval'])
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function DailyRecurringEventForm() {
 
   return (
     <>
-      <div className="flex gap-4 mt-4 xl:w-2/3">
+      <div className="flex gap-4 mt-4">
         <span className="my-auto text-slate-600">{t('every')}</span>
         <input
           type="number"

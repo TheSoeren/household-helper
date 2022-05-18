@@ -18,7 +18,7 @@ const validation = {
 }
 
 export default function DateRangeForm() {
-  const { t } = useTranslation('chores-creation')
+  const { t } = useTranslation('appointment-creation')
   const { watch, control, register, unregister } = useFormContext()
   const { error } = useValidation(['ruleOptions.start', 'ruleOptions.duration'])
 
@@ -91,7 +91,7 @@ export default function DateRangeForm() {
   }
 
   return (
-    <div className="flex flex-col gap-4 mt-4 xl:w-2/3">
+    <div className="flex flex-col gap-4 mt-4">
       <div className="flex gap-4">
         <div className="w-full my-auto form-check">
           <input

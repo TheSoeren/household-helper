@@ -1,7 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Event from '@/models/Event'
-import { dbEventsToEvents } from '@/utils/dataConverter'
 import prisma from '@/utils/prisma'
+
+interface preparedEvent extends Omit<Event, 'vEvent'> {
+  vEvent: string
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -38,11 +41,11 @@ function getEvents() {
         icon: true,
       },
     })
-    .then((data) => dbEventsToEvents(data))
+    .then((data) => JSON.stringify(data))
 }
 
 function createEvent(body: string) {
-  const event: Event = JSON.parse(body)
+  const event: preparedEvent = JSON.parse(body)
 
   if (!event.icon) return
 
@@ -50,7 +53,6 @@ function createEvent(body: string) {
   const createEvent = {
     ...event,
     icon,
-    vEvent: event.vEvent.toICal(),
   }
 
   return prisma.event.create({

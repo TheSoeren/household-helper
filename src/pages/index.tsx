@@ -33,7 +33,7 @@ export default function Home() {
   )
 
   return (
-    <>
+    <div className="px-4 md:px-10">
       <AppointmentList
         title={t('my-appointments-today')}
         empty={myAppointmentsTodayEmpty}
@@ -44,7 +44,7 @@ export default function Home() {
         empty={myAppointmentsEmpty}
         appointments={ownChores}
       />
-    </>
+    </div>
   )
 }
 
