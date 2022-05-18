@@ -109,12 +109,13 @@ export default function CalendarPage() {
       <AllDayPanel />
       <AppointmentTooltip contentComponent={AppointmentTooltipContent} />
       <AppointmentForm
-        layoutComponent={(props) =>
-          AppointmentFormLayout({
-            ...props,
-            onClose: () => setAppointmentFormVisible(false),
-          })
-        }
+        // FIX THE ERROR WHEN OPENING A TOOLTIP WHILE THE FORMLAYOUT IS CUSTOM
+        // layoutComponent={(props) => (
+        //   <AppointmentFormLayout
+        //     {...props}
+        //     onClose={() => setAppointmentFormVisible(false)}
+        //   />
+        // )}
         visible={appointmentFormVisible}
       />
     </Scheduler>
