@@ -1,81 +1,75 @@
 import AppointmentType from '@/enums/AppointmentType'
 import useChores from '@/hooks/useChores'
 import useEvents from '@/hooks/useEvents'
-import { AppointmentTooltip } from '@devexpress/dx-react-scheduler'
+import { AppointmentModel } from '@devexpress/dx-react-scheduler'
 import dayjs from 'dayjs'
 import { useTranslation } from 'next-i18next'
 import toast from 'react-hot-toast'
+import CardDeleteButton from '../Cards/CardDeleteButton'
 
-export default function AppointmentTooltipContent({
-  appointmentData,
-}: AppointmentTooltip.ContentProps) {
+interface Props {
+  data?: AppointmentModel
+}
+
+export default function AppointmentTooltipContent({ data }: Props) {
   const { t } = useTranslation('common')
   const { deleteChore } = useChores()
   const { deleteEvent } = useEvents()
 
-  if (!appointmentData)
-    return <span className="px-3 pb-3 font-bold text-red-800"></span>
+  if (!data) return <span className="px-3 pb-3 font-bold text-red-800"></span>
 
   const deleteAppointment = async () => {
-    if (!appointmentData.id) {
+    if (!data.id) {
       toast.error(t('no-id-prepared'))
       return
     }
 
-    if (appointmentData.type === AppointmentType.CHORE) {
-      deleteChore(appointmentData.id.toString())
-    } else if (appointmentData.type === AppointmentType.EVENT) {
-      deleteEvent(appointmentData.id.toString())
+    if (data.type === AppointmentType.CHORE) {
+      deleteChore(data.id.toString())
+    } else if (data.type === AppointmentType.EVENT) {
+      deleteEvent(data.id.toString())
     } else {
       toast.error('unable-to-delete-type-appointment')
       return
     }
   }
 
-  const start = dayjs(appointmentData.startDate)
-  const end = dayjs(appointmentData.endDate)
+  const start = dayjs(data.startDate)
+  const end = dayjs(data.endDate)
 
   return (
-    <div className="px-3 pb-3 text-slate-700">
+    <div className="group px-3 pt-2 pb-3 text-slate-700">
+      <CardDeleteButton onClick={deleteAppointment} className="border-white" />
       <div className="flex">
-        {appointmentData.icon && (
+        {data.icon && (
           <div className="flex items-center mr-3">
             <div
               className={
                 'text-white inline-flex items-center justify-center w-10 h-10 rounded-full ' +
-                appointmentData.icon.color
+                data.icon.color
               }
             >
-              <i className={appointmentData.icon.faclass}></i>
+              <i className={data.icon.faclass}></i>
             </div>
           </div>
         )}
-        <div className="flex justify-between w-full tooltip-header">
-          <div className="tooltip-header-text">
-            <h1 className="text-xl font-bold">{appointmentData.title}</h1>
-            <span>{start.format('DD. MMMM YYYY')}</span>
-            {start.diff(end, 'd') ? (
-              <span> - {end.format('DD. MMMM YYYY')}</span>
-            ) : null}
-          </div>
-          <button
-            className="hover:text-slate-500 h-fit"
-            type="button"
-            onClick={deleteAppointment}
-          >
-            <i className="fa-solid fa-trash" />
-          </button>
+        <div className="tooltip-header-text">
+          <h1 className="text-xl font-bold">{data.title}</h1>
+          <span>{start.format('DD. MMMM YYYY')}</span>
+          {start.diff(end, 'd') ? (
+            <span> - {end.format('DD. MMMM YYYY')}</span>
+          ) : null}
         </div>
       </div>
-      {appointmentData.description ? (
+      {data.description ? (
         <>
           <hr className="my-1" />
           <div className="overflow-y-auto max-h-28">
-            <p>{appointmentData.description}</p>
+            <p>{data.description}</p>
           </div>
         </>
       ) : null}
-      {!appointmentData.allDay ? (
+      {!data.allDay ? (
         <>
           <hr className="my-1" />
           <i className="mr-2 fa-regular fa-clock" />

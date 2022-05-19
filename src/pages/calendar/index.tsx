@@ -9,7 +9,6 @@ import {
   DateNavigator,
   TodayButton,
   AllDayPanel,
-  AppointmentTooltip,
   AppointmentForm,
 } from '@devexpress/dx-react-scheduler-material-ui'
 import useChores from '@/hooks/useChores'
@@ -23,6 +22,7 @@ import { withPageAuth } from '@supabase/supabase-auth-helpers/nextjs'
 import AppointmentTooltipContent from '@/components/Calendar/AppointmentTooltipContent'
 import useAppointmentBuilder from '@/hooks/useAppointmentBuilder'
 import AppointmentFormLayout from '@/components/Calendar/AppointmentFormLayout'
+import DefaultModal from '@/components/Modals/DefaultModal'
 
 const RRulePattern = new RegExp('(?<=RRULE:).*', 'gm')
 
@@ -34,6 +34,8 @@ export default function CalendarPage() {
 
   const [currentDate, setCurrentDate] = useState(dayjs())
   const [appointmentFormVisible, setAppointmentFormVisible] = useState(false)
+  const [appointmentData, setAppointmentData] = useState<AppointmentModel>()
+  const [tooltipVisible, setTooltipVisible] = useState(false)
   const builder = useAppointmentBuilder([...chores, ...events])
 
   const getAppointments = (date: Dayjs) =>
@@ -72,53 +74,62 @@ export default function CalendarPage() {
   }
 
   return (
-    <Scheduler data={calendarEntries} firstDayOfWeek={1} locale={locale}>
-      <Toolbar />
-      <ViewState
-        currentDate={currentDate.toISOString()}
-        onCurrentDateChange={currentDateChange}
-      />
-      <ViewSwitcher />
-      <DateNavigator />
-      <TodayButton messages={{ today: t('today') }} />
-      <WeekView
-        displayName={t('week-view.label')}
-        cellDuration={60}
-        startDayHour={6}
-        timeTableCellComponent={(props) => (
-          <WeekView.TimeTableCell
-            {...props}
-            onDoubleClick={() => setAppointmentFormVisible(true)}
-          >
-            {props.children}
-          </WeekView.TimeTableCell>
-        )}
-      />
-      <MonthView displayName={t('month-view.label')} />
-      <Appointments
-        recurringIconComponent={() => null}
-        appointmentComponent={(props) => (
-          <Appointments.Appointment
-            {...props}
-            onDoubleClick={() => {
-              /* Nothing */
-            }}
-          />
-        )}
-      />
-      <AllDayPanel />
-      <AppointmentTooltip contentComponent={AppointmentTooltipContent} />
-      <AppointmentForm
-        // FIX THE ERROR WHEN OPENING A TOOLTIP WHILE THE FORMLAYOUT IS CUSTOM
-        // layoutComponent={(props) => (
-        //   <AppointmentFormLayout
-        //     {...props}
-        //     onClose={() => setAppointmentFormVisible(false)}
-        //   />
-        // )}
-        visible={appointmentFormVisible}
-      />
-    </Scheduler>
+    <>
+      <DefaultModal
+        open={tooltipVisible}
+        onHide={() => setTooltipVisible(false)}
+      >
+        <AppointmentTooltipContent data={appointmentData} />
+      </DefaultModal>
+      <Scheduler data={calendarEntries} firstDayOfWeek={1} locale={locale}>
+        <Toolbar />
+        <ViewState
+          currentDate={currentDate.toISOString()}
+          onCurrentDateChange={currentDateChange}
+        />
+        <ViewSwitcher />
+        <DateNavigator />
+        <TodayButton messages={{ today: t('today') }} />
+        <WeekView
+          displayName={t('week-view.label')}
+          cellDuration={60}
+          startDayHour={6}
+          timeTableCellComponent={(props) => (
+            <WeekView.TimeTableCell
+              {...props}
+              onDoubleClick={() => setAppointmentFormVisible(true)}
+            >
+              {props.children}
+            </WeekView.TimeTableCell>
+          )}
+        />
+        <MonthView displayName={t('month-view.label')} />
+        <Appointments
+          recurringIconComponent={() => null}
+          appointmentComponent={(props) => (
+            <Appointments.Appointment
+              {...props}
+              onClick={(e) => {
+                setAppointmentData(e.data)
+                setTooltipVisible(true)
+              }}
+              onDoubleClick={() => {
+                /* Nothing */
+              }}
+            />
+          )}
+        />
+        <AllDayPanel />
+        <AppointmentForm
+          layoutComponent={() => (
+            <AppointmentFormLayout
+              onClose={() => setAppointmentFormVisible(false)}
+            />
+          )}
+          visible={appointmentFormVisible}
+        />
+      </Scheduler>
+    </>
   )
 }
 

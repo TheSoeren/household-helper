@@ -1,15 +1,19 @@
 interface CardDeleteButtonProps {
   onClick: () => void
+  className?: string
 }
 
-export default function CardDeleteButton({ onClick }: CardDeleteButtonProps) {
+export default function CardDeleteButton({
+  onClick,
+  className,
+}: CardDeleteButtonProps) {
   return (
     <button
       className={
-        'absolute opacity-0 group-hover:opacity-100 -left-4 top-1/3 bg-red-500 border-4 border-slate-100 text-white text-xs' +
-        ' items-center justify-center align-center rounded-full focus:outline-none h-8 w-8 ease-in duration-200'
+        'absolute md:opacity-0 md:group-hover:opacity-100 -left-4 top-3 bg-red-500 border-2 border-slate-100 text-white text-xs' +
+        ' items-center justify-center align-center rounded-full focus:outline-none h-7 w-7 ease-in duration-200 ' +
+        className
       }
-      type="button"
       onClick={onClick}
     >
       <i className="fa-solid fa-trash"></i>

@@ -1,4 +1,3 @@
-import { AppointmentForm } from '@devexpress/dx-react-scheduler'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import { useTranslation } from 'next-i18next'
 import { Appointment, Icon } from '@/models'
@@ -57,7 +56,7 @@ interface FormObject {
   ruleOptions: RuleOptions
 }
 
-type AppointmentCreationProps = Partial<AppointmentForm.LayoutProps> & {
+interface AppointmentCreationProps {
   title: string
   apiKey: string
   afterSubmit: () => void
