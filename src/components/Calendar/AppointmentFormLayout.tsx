@@ -1,13 +1,12 @@
 import API_KEY from '@/utils/apiKey'
-import { AppointmentForm } from '@devexpress/dx-react-scheduler'
 import { useTranslation } from 'next-i18next'
 import AppointmentCreation from '../Forms/AppointmentCreation'
 
-type Props = AppointmentForm.LayoutProps & {
+interface Props {
   onClose: () => void
 }
 
-export default function AppointmentFormLayout({ onClose, ...props }: Props) {
+export default function AppointmentFormLayout({ onClose }: Props) {
   const { t } = useTranslation('calendar-page')
 
   return (
@@ -21,7 +20,6 @@ export default function AppointmentFormLayout({ onClose, ...props }: Props) {
           <i className="fa-solid fa-times"></i>
         </button>
         <AppointmentCreation
-          {...props}
           title={t('create-title')}
           apiKey={API_KEY.event}
           afterSubmit={onClose}
