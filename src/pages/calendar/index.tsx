@@ -20,9 +20,9 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { withPageAuth } from '@supabase/supabase-auth-helpers/nextjs'
 import AppointmentTooltipContent from '@/components/Calendar/AppointmentTooltipContent'
-import useAppointmentBuilder from '@/hooks/useAppointmentBuilder'
 import AppointmentFormLayout from '@/components/Calendar/AppointmentFormLayout'
 import DefaultModal from '@/components/Modals/DefaultModal'
+import AppointmentBuilder from '@/builders/appointmentBuilder'
 
 const RRulePattern = new RegExp('(?<=RRULE:).*', 'gm')
 
@@ -36,7 +36,7 @@ export default function CalendarPage() {
   const [appointmentFormVisible, setAppointmentFormVisible] = useState(false)
   const [appointmentData, setAppointmentData] = useState<AppointmentModel>()
   const [tooltipVisible, setTooltipVisible] = useState(false)
-  const builder = useAppointmentBuilder([...chores, ...events])
+  const builder = new AppointmentBuilder(chores.concat(events))
 
   const getAppointments = (date: Dayjs) =>
     builder
