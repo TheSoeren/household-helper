@@ -6,7 +6,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import dayjs from 'dayjs'
 import { withPageAuth } from '@supabase/supabase-auth-helpers/nextjs'
 import { useUser } from '@supabase/supabase-auth-helpers/react'
-import AppointmentBuilder from '@/builders/appointmentBuilder'
+import AppointmentBuilder from '@/builders/AppointmentBuilder'
 
 export default function Home() {
   const { t } = useTranslation('home-page')

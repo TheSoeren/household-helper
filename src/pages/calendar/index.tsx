@@ -22,7 +22,7 @@ import { withPageAuth } from '@supabase/supabase-auth-helpers/nextjs'
 import AppointmentTooltipContent from '@/components/Calendar/AppointmentTooltipContent'
 import AppointmentFormLayout from '@/components/Calendar/AppointmentFormLayout'
 import DefaultModal from '@/components/Modals/DefaultModal'
-import AppointmentBuilder from '@/builders/appointmentBuilder'
+import AppointmentBuilder from '@/builders/AppointmentBuilder'
 
 const RRulePattern = new RegExp('(?<=RRULE:).*', 'gm')
 
