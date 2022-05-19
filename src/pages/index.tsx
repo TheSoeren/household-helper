@@ -5,20 +5,23 @@ import { Trans, useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import dayjs from 'dayjs'
 import { withPageAuth } from '@supabase/supabase-auth-helpers/nextjs'
-import useAppointmentBuilder from '@/hooks/useAppointmentBuilder'
+import { useUser } from '@supabase/supabase-auth-helpers/react'
+import AppointmentBuilder from '@/builders/appointmentBuilder'
 
 export default function Home() {
   const { t } = useTranslation('home-page')
+  const { user } = useUser()
   const { chores } = useChores()
   const { events } = useEvents()
-  const appointmentsBuilder = useAppointmentBuilder([...chores, ...events])
-  const choresBuilder = useAppointmentBuilder(chores)
+
+  const appointmentsBuilder = new AppointmentBuilder(chores.concat(events))
+  const choresBuilder = new AppointmentBuilder(chores)
 
   const ownAppointmentsToday = appointmentsBuilder
-    .ownAppointments()
+    .ownAppointments(user)
     .appointmentsInDay(dayjs())
     .build()
-  const ownChores = choresBuilder.ownAppointments().build()
+  const ownChores = choresBuilder.ownAppointments(user).build()
 
   const myAppointmentsTodayEmpty = (
     <Trans i18nKey="no-appointments-today" t={t}>
