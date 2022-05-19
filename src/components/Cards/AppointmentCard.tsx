@@ -20,14 +20,10 @@ export default function AppointmentCard({
   return (
     <div className="group relative flex flex-col min-w-0 h-28 break-words bg-white rounded shadow-lg">
       {onDelete ? <CardDeleteButton onClick={onDelete} /> : null}
-      <div className="flex flex-col justify-between flex-auto p-4">
-        <div className="flex flex-wrap">
-          <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-            {/* ToDo: IMPLEMENT HUMAN READABLE RECURRENCE AS SOON AS AVAILABLE
-          <h5 className="text-slate-400 uppercase font-bold text-xs">
-            Occurence (coming soon)
-          </h5> */}
-            <span className="font-semibold text-xl text-slate-700">
+      <div className="flex flex-col justify-between flex-auto p-4 overflow-hidden">
+        <div className="flex justify-between">
+          <div className="overflow-hidden">
+            <span className="font-semibold text-xl text-slate-700 line-clamp-2">
               {title}
             </span>
           </div>
