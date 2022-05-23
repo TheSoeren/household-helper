@@ -1,12 +1,17 @@
 import i18next from 'i18next'
 import { toast } from 'react-hot-toast'
-import { dbChoresToChores, dbEventsToEvents } from '@/utils/dataConverter'
+import {
+  dbChoresToChores,
+  dbEventsToEvents,
+  DBUser,
+  dbUserToUser,
+} from '@/utils/dataConverter'
 
 function t(key: string) {
   return i18next.t(`common: ${key}`)
 }
 
-export function getRequest(url: string) {
+export function getRequest<T = any>(url: string): Promise<T> {
   return fetch(url).then((res) => {
     if (!res.ok) {
       throw new Error(`${res.status}: ${res.statusText}`)
@@ -85,4 +90,8 @@ export function eventFetcher(url: string) {
   return getRequest(url).then((response) =>
     dbEventsToEvents(JSON.parse(response))
   )
+}
+
+export function userFetcher(url: string) {
+  return getRequest<DBUser>(url).then((response) => dbUserToUser(response))
 }

@@ -6,16 +6,22 @@ import { withPageAuth } from '@supabase/supabase-auth-helpers/nextjs'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
+import Select from '@/components/Forms/Select'
+import locales from '@/data/locales'
+import { setCookies } from 'cookies-next'
+import { useRouter } from 'next/router'
 
 export default function UserSettings() {
   const { t } = useTranslation('user-settings-page')
   const { user, mutateUser } = useUserAccount()
+  const router = useRouter()
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
+    control,
   } = useForm<User>()
 
   useEffect(() => {
@@ -32,6 +38,9 @@ export default function UserSettings() {
 
     await putRequest(API_KEY.user, JSON.stringify(data))
     mutateUser()
+
+    setCookies('NEXT_LOCALE', data.locale.value, { sameSite: 'lax' })
+    router.push(router.pathname, undefined, { locale: data.locale.value })
   }
 
   return (
@@ -55,6 +64,24 @@ export default function UserSettings() {
               {errors.displayName && t('fields.display-name.error.required')}
             </span>
           </div>
+          <div className="relative w-full mb-3">
+            <label className="block uppercase text-slate-600 text-xs font-bold mb-2">
+              {t('fields.display-name.label')}
+            </label>
+            <Controller
+              name="locale"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  instanceId={field.name}
+                  placeholder={'Sprache'}
+                  options={locales}
+                  blurInputOnSelect
+                />
+              )}
+            />
+          </div>
         </div>
         <button
           className="bg-slate-800 text-white active:bg-slate-600 text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 cursor-pointer"
@@ -75,6 +102,7 @@ export const getServerSideProps = withPageAuth({
     return {
       props: {
         ...(await serverSideTranslations(locale, [
+          'common',
           'dashboard-layout',
           'user-settings-page',
         ])),

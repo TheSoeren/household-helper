@@ -1,6 +1,5 @@
 import { colors, icons, repetitionPatterns } from '@/data'
 import useValidation from '@/hooks/useValidation'
-import User from '@/models/User'
 import { useTranslation } from 'next-i18next'
 import { Controller, useFormContext } from 'react-hook-form'
 import IconSelect from '../IconSelect'
@@ -11,10 +10,11 @@ import useSWR from 'swr'
 import { useUser } from '@supabase/supabase-auth-helpers/react'
 import Option from '@/models/Option'
 import API_KEY from '@/utils/apiKey'
+import { DBUser } from '@/utils/dataConverter'
 
 const fetcher = (url: string) =>
-  getRequest(url).then((json) =>
-    json.map((u: User) => ({ value: u.id, label: u.displayName }))
+  getRequest<DBUser[]>(url).then((res) =>
+    res.map((u: DBUser) => ({ value: u.id, label: u.displayName }))
   )
 
 export default function AppointmentDataForm() {
