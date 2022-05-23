@@ -2,12 +2,15 @@ import {
   Chore as PrismaChore,
   Event as PrismaEvent,
   Icon as PrismaIcon,
+  User as PrismaUser,
 } from '@prisma/client'
 import Chore from '@/models/Chore'
 import Event from '@/models/Event'
 import { VEvent } from '@/setups/rschedule'
 import Icon from '@/models/Icon'
 import AppointmentType from '@/enums/AppointmentType'
+import User from '@/models/User'
+import locales from '@/data/locales'
 
 export type DBChore = PrismaChore & {
   icon: PrismaIcon | null
@@ -16,6 +19,8 @@ export type DBChore = PrismaChore & {
 export type DBEvent = PrismaEvent & {
   icon: PrismaIcon | null
 }
+
+export type DBUser = PrismaUser
 
 const dbChoreToChore = ({
   id,
@@ -36,9 +41,8 @@ const dbChoreToChore = ({
   allDay,
 })
 
-const dbChoresToChores = (dbChores: DBChore[]): Chore[] => {
-  return dbChores.map(dbChoreToChore)
-}
+const dbChoresToChores = (dbChores: DBChore[]): Chore[] =>
+  dbChores.map(dbChoreToChore)
 
 const dbEventToEvent = ({
   id,
@@ -59,8 +63,13 @@ const dbEventToEvent = ({
   allDay,
 })
 
-const dbEventsToEvents = (dbEvents: DBEvent[]): Event[] => {
-  return dbEvents.map(dbEventToEvent)
+const dbEventsToEvents = (dbEvents: DBEvent[]): Event[] =>
+  dbEvents.map(dbEventToEvent)
+
+const dbUserToUser = (dbUser: DBUser): User => {
+  const locale = locales.find((l) => l.value === dbUser.locale) || locales[0]
+
+  return { ...dbUser, locale }
 }
 
-export { dbChoresToChores, dbEventsToEvents }
+export { dbChoresToChores, dbEventsToEvents, dbUserToUser }

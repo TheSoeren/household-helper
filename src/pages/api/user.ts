@@ -21,10 +21,6 @@ export default async function handler(
         res.status(200).json(users)
       }
       break
-    case 'POST':
-      const createdUser = await createUser(req.body)
-      res.status(200).json(createdUser)
-      break
     case 'PUT':
       const updatedUser = await updateUser(req.body)
       res.status(200).json(updatedUser)
@@ -51,19 +47,11 @@ function getUser(userId: string | string[]) {
   return prisma.user.findUnique({ where })
 }
 
-function createUser(body: string) {
-  const user: User = JSON.parse(body)
-
-  return prisma.user.create({
-    data: user,
-  })
-}
-
 function updateUser(body: string) {
   const user: User = JSON.parse(body)
 
   return prisma.user.update({
     where: { id: user.id },
-    data: user,
+    data: { ...user, locale: user.locale.value },
   })
 }

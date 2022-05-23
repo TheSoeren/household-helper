@@ -55,7 +55,7 @@ export default function DateRangeForm() {
           name="ruleOptions.allDayEnd"
           render={({ field }) => (
             <DatePicker
-              className="w-full border-0 shadow"
+              className="w-full border-0 shadow text-sm"
               placeholderText={t('fields.all-day-end.placeholder')}
               onChange={(date) => field.onChange(date)}
               selected={field.value}
@@ -116,7 +116,7 @@ export default function DateRangeForm() {
             render={({ field }) => (
               <DatePicker
                 showTimeSelect
-                className="w-full border-0 shadow"
+                className="w-full border-0 shadow text-sm"
                 placeholderText={t('fields.start-date.placeholder')}
                 onChange={(date) => field.onChange(date)}
                 selected={field.value}
@@ -142,7 +142,7 @@ export default function DateRangeForm() {
               name="ruleOptions.end"
               render={({ field }) => (
                 <DatePicker
-                  className="w-full border-0 shadow"
+                  className="w-full border-0 shadow text-sm"
                   placeholderText={t('fields.end-date.placeholder')}
                   onChange={(date) => field.onChange(date)}
                   selected={field.value}

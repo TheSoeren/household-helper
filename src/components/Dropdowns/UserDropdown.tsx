@@ -35,25 +35,27 @@ export default function UserDropdown() {
 
   return (
     <div onMouseLeave={close}>
-      <a
-        href="#"
-        className={
-          'flex items-center text-slate-500 hover:bg-slate-100 rounded-full cursor-pointer' +
-          (isOpen ? 'bg-slate-100' : '')
-        }
-        ref={buttonRef}
-        onClick={(e) => {
-          e.preventDefault()
-          isOpen ? close() : open()
-        }}
-      >
-        <div className="inline-flex items-center justify-center w-8 h-8 text-sm text-white rounded-full bg-slate-500">
-          <i className="fa-regular fa-user" />
-        </div>
-        <span className="hidden ml-2 text-sm uppercase md:block">
-          {user?.displayName}
-        </span>
-      </a>
+      {user ? (
+        <a
+          href="#"
+          className={
+            'flex items-center text-slate-500 hover:bg-slate-100 rounded-full cursor-pointer' +
+            (isOpen ? 'bg-slate-100' : '')
+          }
+          ref={buttonRef}
+          onClick={(e) => {
+            e.preventDefault()
+            isOpen ? close() : open()
+          }}
+        >
+          <div className="inline-flex items-center justify-center w-8 h-8 text-sm text-white rounded-full bg-slate-500">
+            <i className="fa-regular fa-user" />
+          </div>
+          <span className="hidden ml-2 text-sm uppercase md:block">
+            {user.displayName}
+          </span>
+        </a>
+      ) : null}
       <div
         ref={popoverRef}
         className={
