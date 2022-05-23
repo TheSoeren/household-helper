@@ -8,5 +8,7 @@
   "no-appointments": "Keine Einträge vorhanden.",
   "create": "Erstellen",
   "no-id-prepared": "Keine ID hinterlegt!",
-  "unable-to-delete-type-appointment": "Der Termin ist vom Typ \"Appointment\"!"
+  "unable-to-delete-type-appointment": "Der Termin ist vom Typ \"Appointment\"!",
+  "english": "Englisch",
+  "german": "Deutsch"
 }

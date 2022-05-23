@@ -8,5 +8,7 @@
   "no-appointments": "Not a single appointment.",
   "create": "Create",
   "no-id-prepared": "No ID prepared!",
-  "unable-to-delete-type-appointment": "This Appointment is of type \"Appointment\"!"
+  "unable-to-delete-type-appointment": "This Appointment is of type \"Appointment\"!",
+  "english": "English",
+  "german": "German"
 }

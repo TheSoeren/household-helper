@@ -102,6 +102,7 @@ export const getServerSideProps = withPageAuth({
     return {
       props: {
         ...(await serverSideTranslations(locale, [
+          'common',
           'dashboard-layout',
           'user-settings-page',
         ])),
