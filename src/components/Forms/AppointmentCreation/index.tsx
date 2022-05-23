@@ -59,12 +59,14 @@ interface FormObject {
 interface AppointmentCreationProps {
   title: string
   apiKey: string
+  startDate?: Date
   afterSubmit: () => void
 }
 
 export default function AppointmentCreation({
   title,
   apiKey,
+  startDate,
   afterSubmit,
 }: AppointmentCreationProps) {
   const { t } = useTranslation('appointment-creation')
@@ -87,7 +89,7 @@ export default function AppointmentCreation({
         byWeekOfMonth: WeekOfMonth.FIRST,
       },
       ruleOptions: {
-        start: new Date(),
+        start: startDate ? startDate : new Date(),
         end: undefined,
         duration: undefined,
         frequency: repetitionPatterns[0],

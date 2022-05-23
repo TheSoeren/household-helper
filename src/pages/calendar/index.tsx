@@ -33,6 +33,7 @@ export default function CalendarPage() {
   const { events } = useEvents()
 
   const [currentDate, setCurrentDate] = useState(dayjs())
+  const [newStartDate, setNewStartDate] = useState<Date>()
   const [appointmentFormVisible, setAppointmentFormVisible] = useState(false)
   const [appointmentData, setAppointmentData] = useState<AppointmentModel>()
   const [tooltipVisible, setTooltipVisible] = useState(false)
@@ -97,7 +98,10 @@ export default function CalendarPage() {
           timeTableCellComponent={(props) => (
             <WeekView.TimeTableCell
               {...props}
-              onDoubleClick={() => setAppointmentFormVisible(true)}
+              onDoubleClick={() => {
+                setNewStartDate(props.startDate)
+                setAppointmentFormVisible(true)
+              }}
             >
               {props.children}
             </WeekView.TimeTableCell>
@@ -123,6 +127,7 @@ export default function CalendarPage() {
         <AppointmentForm
           layoutComponent={() => (
             <AppointmentFormLayout
+              startDate={newStartDate}
               onClose={() => setAppointmentFormVisible(false)}
             />
           )}
