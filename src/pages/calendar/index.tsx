@@ -75,8 +75,8 @@ export default function CalendarPage() {
     setTooltipVisible(true)
   }
 
-  const onCellDoubleClick = (startDate: Date) => {
-    setNewStartDate(startDate)
+  const onCellDoubleClick = (startDate?: Date) => {
+    setNewStartDate(startDate ?? new Date())
     setAppointmentFormVisible(true)
   }
 
