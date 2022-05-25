@@ -13,7 +13,7 @@ const colourStyles: StylesConfig = {
 }
 
 const Select = forwardRef((props: Props, ref: any) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   return (
     <ReactSelect

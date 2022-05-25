@@ -80,6 +80,7 @@ export default function Authenticate() {
                     {t('fields.email.label')}
                   </label>
                   <input
+                    autoFocus
                     type="email"
                     className="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
                     placeholder={t('fields.email.placeholder')}
