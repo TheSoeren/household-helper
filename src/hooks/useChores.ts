@@ -1,6 +1,6 @@
 import Chore from '@/models/Chore'
 import useSWR from 'swr'
-import { choreFetcher, deleteRequest } from '@/utils/httpRequests'
+import { choreFetcher, deleteRequest, postRequest } from '@/utils/httpRequests'
 import API_KEY from '@/utils/apiKey'
 
 export default function useChores(initialValues: Chore[] = []) {
@@ -19,9 +19,19 @@ export default function useChores(initialValues: Chore[] = []) {
     mutate()
   }
 
+  const addChore = async (chore: Chore) => {
+    const temp = [...data]
+    temp.push(chore)
+    mutate(temp, false)
+
+    await postRequest(API_KEY.event, chore.toString())
+    mutate()
+  }
+
   return {
     chores: data,
     mutateChores: mutate,
     deleteChore,
+    addChore,
   }
 }

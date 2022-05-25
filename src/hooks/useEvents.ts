@@ -1,6 +1,6 @@
 import Event from '@/models/Event'
 import useSWR from 'swr'
-import { deleteRequest, eventFetcher } from '@/utils/httpRequests'
+import { deleteRequest, eventFetcher, postRequest } from '@/utils/httpRequests'
 import API_KEY from '@/utils/apiKey'
 
 export default function useEvents(initialValues: Event[] = []) {
@@ -19,9 +19,19 @@ export default function useEvents(initialValues: Event[] = []) {
     mutate()
   }
 
+  const addEvent = async (event: Event) => {
+    const temp = [...data]
+    temp.push(event)
+    mutate(temp, false)
+
+    await postRequest(API_KEY.event, event.toString())
+    mutate()
+  }
+
   return {
     events: data,
     mutateEvents: mutate,
     deleteEvent,
+    addEvent,
   }
 }
