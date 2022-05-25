@@ -1,4 +1,4 @@
-import API_KEY from '@/utils/apiKey'
+import useEvents from '@/hooks/useEvents'
 import { useTranslation } from 'next-i18next'
 import AppointmentCreation from '../Forms/AppointmentCreation'
 
@@ -9,6 +9,7 @@ interface Props {
 
 export default function AppointmentFormLayout({ startDate, onClose }: Props) {
   const { t } = useTranslation('calendar-page')
+  const { addEvent } = useEvents()
 
   return (
     <>
@@ -22,7 +23,7 @@ export default function AppointmentFormLayout({ startDate, onClose }: Props) {
         </button>
         <AppointmentCreation
           title={t('create-title')}
-          apiKey={API_KEY.event}
+          onCreate={addEvent}
           startDate={startDate}
           afterSubmit={onClose}
         />

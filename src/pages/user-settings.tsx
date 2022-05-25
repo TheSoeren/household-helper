@@ -1,7 +1,5 @@
 import useUserAccount from '@/hooks/useUserAccount'
 import User from '@/models/User'
-import API_KEY from '@/utils/apiKey'
-import { putRequest } from '@/utils/httpRequests'
 import { withPageAuth } from '@supabase/supabase-auth-helpers/nextjs'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -14,7 +12,7 @@ import { useRouter } from 'next/router'
 
 export default function UserSettings() {
   const { t } = useTranslation('user-settings-page')
-  const { user, mutateUser } = useUserAccount()
+  const { user, updateUser } = useUserAccount()
   const router = useRouter()
   const {
     register,
@@ -31,13 +29,7 @@ export default function UserSettings() {
   }, [user, reset])
 
   const onSubmit = async (data: User) => {
-    if (!user) return
-
-    // https://swr.vercel.app/docs/mutation#mutation-and-post-request
-    mutateUser(user, false)
-
-    await putRequest(API_KEY.user, JSON.stringify(data))
-    mutateUser()
+    updateUser(data)
 
     setCookies('NEXT_LOCALE', data.locale.value, { sameSite: 'lax' })
     router.push(router.pathname, undefined, { locale: data.locale.value })

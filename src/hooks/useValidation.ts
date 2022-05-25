@@ -45,6 +45,7 @@ export default function useValidation(relevantFields: string[]): any {
         )
       )
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     relevantFields.map((v) => getPropByString(errors, v))
   )
 

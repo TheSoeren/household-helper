@@ -4,7 +4,6 @@ import { Appointment, Icon } from '@/models'
 import Option from '@/models/Option'
 import dayjs from 'dayjs'
 import { DateAdapter, IRuleOptions, RRule, VEvent } from '@/setups/rschedule'
-import { postRequest } from '@/utils/httpRequests'
 import Frequency from '@/enums/Frequency'
 import dynamic from 'next/dynamic'
 import {
@@ -56,19 +55,19 @@ interface FormObject {
   ruleOptions: RuleOptions
 }
 
-interface AppointmentCreationProps {
+interface Props {
   title: string
-  apiKey: string
   startDate?: Date
+  onCreate: (appointment: Appointment) => void
   afterSubmit: () => void
 }
 
 export default function AppointmentCreation({
   title,
-  apiKey,
   startDate,
+  onCreate,
   afterSubmit,
-}: AppointmentCreationProps) {
+}: Props) {
   const { t } = useTranslation('appointment-creation')
 
   const currentDayOfWeek = dayjs()
@@ -194,7 +193,7 @@ export default function AppointmentCreation({
       ruleConfig.allDay
     )
 
-    await postRequest(apiKey, appointment.toString())
+    onCreate(appointment)
     reset()
     afterSubmit()
   }
