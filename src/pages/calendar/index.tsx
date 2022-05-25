@@ -70,6 +70,16 @@ export default function CalendarPage() {
     return output
   })
 
+  const onAppointmentClick = (e: any) => {
+    setAppointmentData(e.data)
+    setTooltipVisible(true)
+  }
+
+  const onCellDoubleClick = (startDate?: Date) => {
+    setNewStartDate(startDate ?? new Date())
+    setAppointmentFormVisible(true)
+  }
+
   const currentDateChange = (date: Date) => {
     setCurrentDate(dayjs(date))
   }
@@ -98,10 +108,7 @@ export default function CalendarPage() {
           timeTableCellComponent={(props) => (
             <WeekView.TimeTableCell
               {...props}
-              onDoubleClick={() => {
-                setNewStartDate(props.startDate)
-                setAppointmentFormVisible(true)
-              }}
+              onDoubleClick={() => onCellDoubleClick(props.startDate)}
             >
               {props.children}
             </WeekView.TimeTableCell>
@@ -113,17 +120,21 @@ export default function CalendarPage() {
           appointmentComponent={(props) => (
             <Appointments.Appointment
               {...props}
-              onClick={(e) => {
-                setAppointmentData(e.data)
-                setTooltipVisible(true)
-              }}
+              onClick={onAppointmentClick}
               onDoubleClick={() => {
                 /* Nothing */
               }}
             />
           )}
         />
-        <AllDayPanel />
+        <AllDayPanel
+          cellComponent={(props) => (
+            <AllDayPanel.Cell
+              {...props}
+              onDoubleClick={() => onCellDoubleClick(props.startDate)}
+            />
+          )}
+        />
         <AppointmentForm
           layoutComponent={() => (
             <AppointmentFormLayout

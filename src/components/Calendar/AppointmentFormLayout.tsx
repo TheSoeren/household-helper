@@ -24,7 +24,7 @@ export default function AppointmentFormLayout({ startDate, onClose }: Props) {
         <AppointmentCreation
           title={t('create-title')}
           onCreate={addEvent}
-          startDate={startDate}
+          defaultDate={startDate}
           afterSubmit={onClose}
         />
       </div>

@@ -60,7 +60,6 @@ export default function DateRangeForm() {
               onChange={(date) => field.onChange(date)}
               selected={field.value}
               dateFormat="dd. MMM yyyy"
-              minDate={new Date()}
             />
           )}
         />
@@ -121,7 +120,6 @@ export default function DateRangeForm() {
                 onChange={(date) => field.onChange(date)}
                 selected={field.value}
                 dateFormat="dd. MMM yyyy (HH:mm)"
-                minDate={new Date()}
               />
             )}
           />

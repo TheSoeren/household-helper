@@ -57,14 +57,14 @@ interface FormObject {
 
 interface Props {
   title: string
-  startDate?: Date
+  defaultDate?: Date
   onCreate: (appointment: Appointment) => void
   afterSubmit: () => void
 }
 
 export default function AppointmentCreation({
   title,
-  startDate,
+  defaultDate,
   onCreate,
   afterSubmit,
 }: Props) {
@@ -88,7 +88,7 @@ export default function AppointmentCreation({
         byWeekOfMonth: WeekOfMonth.FIRST,
       },
       ruleOptions: {
-        start: startDate ? startDate : new Date(),
+        start: defaultDate ? defaultDate : new Date(),
         end: undefined,
         duration: undefined,
         frequency: repetitionPatterns[0],
@@ -96,7 +96,7 @@ export default function AppointmentCreation({
         byDayOfWeek: [currentDayOfWeek],
         byDayOfMonth: currentDayOfMonth,
         byMonthOfYear: [currentMonthOfYear],
-        allDayEnd: new Date(),
+        allDayEnd: defaultDate ? defaultDate : new Date(),
       },
     },
   })
@@ -167,8 +167,8 @@ export default function AppointmentCreation({
     }
 
     if (ruleConfig.allDay) {
-      vevent.duration =
-        start.diff(ruleOptions.allDayEnd, 'd') * 1000 * 60 * 60 * 24
+      const allDayEnd = dayjs(ruleOptions.allDayEnd)
+      vevent.duration = allDayEnd.diff(start, 'd') * 1000 * 60 * 60 * 24
     }
 
     return new VEvent(vevent)
