@@ -1,10 +1,11 @@
 import AppointmentType from '@/enums/AppointmentType'
-import useChores from '@/hooks/useChores'
-import useEvents from '@/hooks/useEvents'
+import API_KEY from '@/utils/apiKey'
+import { choreFetcher, deleteRequest, eventFetcher } from '@/utils/httpRequests'
 import { AppointmentModel } from '@devexpress/dx-react-scheduler'
 import dayjs from 'dayjs'
 import { useTranslation } from 'next-i18next'
 import toast from 'react-hot-toast'
+import useSWR from 'swr'
 import CardDeleteButton from '../Cards/CardDeleteButton'
 
 interface Props {
@@ -13,8 +14,34 @@ interface Props {
 
 export default function AppointmentTooltipContent({ data }: Props) {
   const { t } = useTranslation('common')
-  const { deleteChore } = useChores()
-  const { deleteEvent } = useEvents()
+  const { data: chores = [], mutate: mutateChores } = useSWR(
+    API_KEY.chore,
+    choreFetcher
+  )
+  const { data: events = [], mutate: mutateEvents } = useSWR(
+    API_KEY.event,
+    eventFetcher
+  )
+
+  const deleteChore = async (id: string) => {
+    mutateChores(
+      chores.filter((c) => c.id !== id),
+      false
+    )
+
+    await deleteRequest(`${API_KEY.chore}?id=${id}`)
+    mutateChores()
+  }
+
+  const deleteEvent = async (id: string) => {
+    mutateEvents(
+      events.filter((c) => c.id !== id),
+      false
+    )
+
+    await deleteRequest(`${API_KEY.event}?id=${id}`)
+    mutateEvents()
+  }
 
   if (!data) return <span className="px-3 pb-3 font-bold text-red-800"></span>
 

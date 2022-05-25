@@ -11,8 +11,6 @@ import {
   AllDayPanel,
   AppointmentForm,
 } from '@devexpress/dx-react-scheduler-material-ui'
-import useChores from '@/hooks/useChores'
-import useEvents from '@/hooks/useEvents'
 import dayjs, { Dayjs } from 'dayjs'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
@@ -23,14 +21,17 @@ import AppointmentTooltipContent from '@/components/Calendar/AppointmentTooltipC
 import AppointmentFormLayout from '@/components/Calendar/AppointmentFormLayout'
 import DefaultModal from '@/components/Modals/DefaultModal'
 import AppointmentBuilder from '@/builders/AppointmentBuilder'
+import useSWR from 'swr'
+import API_KEY from '@/utils/apiKey'
+import { choreFetcher, eventFetcher } from '@/utils/httpRequests'
 
 const RRulePattern = new RegExp('(?<=RRULE:).*', 'gm')
 
 export default function CalendarPage() {
   const { locale } = useRouter()
   const { t } = useTranslation('calendar-page')
-  const { chores } = useChores()
-  const { events } = useEvents()
+  const { data: chores = [] } = useSWR(API_KEY.chore, choreFetcher)
+  const { data: events = [] } = useSWR(API_KEY.event, eventFetcher)
 
   const [currentDate, setCurrentDate] = useState(dayjs())
   const [newStartDate, setNewStartDate] = useState<Date>()

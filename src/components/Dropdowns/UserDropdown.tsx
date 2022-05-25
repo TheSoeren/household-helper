@@ -1,14 +1,18 @@
 import { useState, createRef, MouseEventHandler } from 'react'
 import { createPopper } from '@popperjs/core'
 import Link from 'next/link'
-import useUserAccount from '@/hooks/useUserAccount'
 import { supabaseClient } from '@supabase/supabase-auth-helpers/nextjs'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { useUser } from '@supabase/supabase-auth-helpers/react'
+import useSWR from 'swr'
+import API_KEY from '@/utils/apiKey'
+import { userFetcher } from '@/utils/httpRequests'
 
 export default function UserDropdown() {
   const { t } = useTranslation('dashboard-layout')
-  const { user } = useUserAccount()
+  const { user: sbUser } = useUser()
+  const { data: user } = useSWR(`${API_KEY.user}?id=${sbUser?.id}`, userFetcher)
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const buttonRef = createRef<HTMLAnchorElement>()

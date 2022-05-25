@@ -1,7 +1,6 @@
-import useUserAccount from '@/hooks/useUserAccount'
 import User from '@/models/User'
 import API_KEY from '@/utils/apiKey'
-import { putRequest } from '@/utils/httpRequests'
+import { putRequest, userFetcher } from '@/utils/httpRequests'
 import { withPageAuth } from '@supabase/supabase-auth-helpers/nextjs'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -11,10 +10,16 @@ import Select from '@/components/Forms/Select'
 import locales from '@/data/locales'
 import { setCookies } from 'cookies-next'
 import { useRouter } from 'next/router'
+import useSWR from 'swr'
+import { useUser } from '@supabase/supabase-auth-helpers/react'
 
 export default function UserSettings() {
   const { t } = useTranslation('user-settings-page')
-  const { user, mutateUser } = useUserAccount()
+  const { user: sbUser } = useUser()
+  const { data: user, mutate: mutateUser } = useSWR(
+    `${API_KEY.user}?id=${sbUser?.id}`,
+    userFetcher
+  )
   const router = useRouter()
   const {
     register,

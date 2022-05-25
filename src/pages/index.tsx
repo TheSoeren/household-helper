@@ -1,5 +1,3 @@
-import useEvents from '@/hooks/useEvents'
-import useChores from '@/hooks/useChores'
 import AppointmentList from '@/components/Lists/AppointmentList'
 import { Trans, useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -7,12 +5,15 @@ import dayjs from 'dayjs'
 import { withPageAuth } from '@supabase/supabase-auth-helpers/nextjs'
 import { useUser } from '@supabase/supabase-auth-helpers/react'
 import AppointmentBuilder from '@/builders/AppointmentBuilder'
+import useSWR from 'swr'
+import API_KEY from '@/utils/apiKey'
+import { choreFetcher, eventFetcher } from '@/utils/httpRequests'
 
 export default function Home() {
   const { t } = useTranslation('home-page')
   const { user } = useUser()
-  const { chores } = useChores()
-  const { events } = useEvents()
+  const { data: chores = [] } = useSWR(API_KEY.chore, choreFetcher)
+  const { data: events = [] } = useSWR(API_KEY.event, eventFetcher)
 
   const appointmentsBuilder = new AppointmentBuilder(chores.concat(events))
   const choresBuilder = new AppointmentBuilder(chores)
