@@ -24,7 +24,7 @@ export default function useChores(initialValues: Chore[] = []) {
     temp.push(chore)
     mutate(temp, false)
 
-    await postRequest(API_KEY.event, chore.toString())
+    await postRequest(API_KEY.chore, chore.toString())
     mutate()
   }
 
