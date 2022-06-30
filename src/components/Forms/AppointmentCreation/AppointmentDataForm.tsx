@@ -49,6 +49,7 @@ export default function AppointmentDataForm() {
             {t('fields.title.label')}
           </label>
           <input
+            autoFocus
             type="text"
             className="w-full py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-slate-300 text-slate-600 focus:outline-none focus:ring"
             placeholder={t('fields.title.placeholder')}

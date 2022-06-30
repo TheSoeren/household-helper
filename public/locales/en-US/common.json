@@ -10,5 +10,44 @@
   "no-id-prepared": "No ID prepared!",
   "unable-to-delete-type-appointment": "This Appointment is of type \"Appointment\"!",
   "english": "English",
-  "german": "German"
+  "german": "German",
+  "specific-day-of-month": "On specific day of month",
+  "regularity-of-month": "On regularity of month",
+  "month": {
+    "january.short": "Jan",
+    "february.short": "Feb",
+    "march.short": "Mar",
+    "april.short": "Apr",
+    "may.short": "May",
+    "june.short": "Jun",
+    "july.short": "Jul",
+    "august.short": "Aug",
+    "september.short": "Sep",
+    "october.short": "Oct",
+    "november.short": "Nov",
+    "december.short": "Dec",
+    "week-of-month": {
+      "first": "First",
+      "second": "Second",
+      "third": "Third",
+      "fourth": "Fourth",
+      "last": "Last"
+    }
+  },
+  "day": {
+    "monday.short": "Mo",
+    "tuesday.short": "Tu",
+    "wednesday.short": "We",
+    "thursday.short": "Th",
+    "friday.short": "Fr",
+    "saturday.short": "Sa",
+    "sunday.short": "Su"
+  },
+  "repetition": {
+    "none": "None",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "yearly": "Yearly"
+  }
 }

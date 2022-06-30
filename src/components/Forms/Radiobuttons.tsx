@@ -1,5 +1,6 @@
 import { RegisterOptions, useFormContext } from 'react-hook-form'
 import Option from '@/models/Option'
+import { useTranslation } from 'next-i18next'
 
 interface Props<T> {
   options: T[]
@@ -15,6 +16,7 @@ export default function RadioButtons<T extends Option>({
   validation,
 }: Props<T>) {
   const { register } = useFormContext()
+  const { t } = useTranslation('common')
 
   return (
     <>
@@ -27,7 +29,7 @@ export default function RadioButtons<T extends Option>({
             {...register(name, validation)}
           />
           <label className="inline-block text-gray-600 form-check-label">
-            {option.label}
+            {t(option.label)}
           </label>
         </div>
       ))}

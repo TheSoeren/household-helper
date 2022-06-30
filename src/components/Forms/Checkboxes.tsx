@@ -1,6 +1,7 @@
 import { useController, Control } from 'react-hook-form'
 import { useState } from 'react'
 import Option from '@/models/Option'
+import { useTranslation } from 'next-i18next'
 
 interface CheckboxesProps<T> {
   options: T[]
@@ -20,6 +21,7 @@ export default function Checkboxes<T extends Option>({
     name,
   })
   const [value, setValue] = useState(field.value || [])
+  const { t } = useTranslation('common')
 
   return (
     <>
@@ -43,7 +45,7 @@ export default function Checkboxes<T extends Option>({
             value={option.value}
           />
           <label className="inline-block text-gray-600 form-check-label">
-            {option.label}
+            {t(option.label)}
           </label>
         </div>
       ))}
